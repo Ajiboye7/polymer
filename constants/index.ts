@@ -32,6 +32,12 @@ import onboarding1 from"@/assets/images/Group 45.png"
 import onboarding2 from"@/assets/images/Frame 14119.png"
 import onboarding3 from"@/assets/images/Group 2076.png"
 import onboardingBgImg from "@/assets/images/Frame 1.png"
+import animation from "@/assets/images/Animation - 1734593298170.gif"
+
+
+import OnboardingAnimation1 from "@/assets/animations/Animation - 1734593298170.json";
+import OnboardingAnimation2 from "@/assets/animations/onboarding2.json";
+import OnboardingAnimation3 from "@/assets/animations/onboarding3.json";
 
 
 export const icons= {
@@ -70,32 +76,40 @@ export const images ={
     onboarding1,
     onboarding2,
     onboarding3,
-    onboardingBgImg
+    onboardingBgImg,
+    animation
+}
+
+
+export const animations = {
+    OnboardingAnimation1,
+    OnboardingAnimation2,
+    OnboardingAnimation3,
 }
 
 
 
 export const onboarding = [
-
     {
-        id: 1,
-        title: "Make International payments with Ease",
-        description:"Polymer makes the process of making payments internationally seamless. Cross-border transactions  are now simpler, swift and secure.",
-        image:images.onboarding1
+      id: 1,
+      title: "Make International payments with Ease",
+      description:
+        "Polymer makes the process of making payments internationally seamless. Cross-border transactions  are now simpler, swift and secure.",
+      image: images.onboarding1,
     },
-
     {
-        id: 2,
-        title: "Receive Global payments",
-        description:"Effortlessly receive global payments with Polymer, ensuring a secure and streamlined solution for funds from across the world.",
-        image: images.onboarding2
+      id: 2,
+      title: "Receive Global payments",
+      description:
+        "Effortlessly receive global payments with Polymer, ensuring a secure and streamlined solution for funds from across the world.",
+      image: images.onboarding2,
     },
-
     {
-        id: 3,
-        title: "Military-Grade Security",
-        description:"Your data sleeps behind a vault of code. Untouched, Unbreachable. Signup and sleep tight.",
-        image: images.onboarding3
+      id: 3,
+      title: "Military-Grade Security",
+      description:
+        "Your data sleeps behind a vault of code. Untouched, Unbreachable. Signup and sleep tight.",
+      image: images.onboarding3,
     },
-    
-]
+  ];
+  

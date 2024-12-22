@@ -8,6 +8,7 @@ const Button = ({
   iconName,
   buttonStyle,
   textStyle,
+  handleClick,
 }: ButtonProps) => {
 
     const animatedScale = useRef(new Animated.Value(0)).current;
@@ -24,6 +25,7 @@ const Button = ({
   return (
     <Animated.View style={{ transform: [{ scale: animatedScale }] }}>
       <TouchableOpacity
+      onPress={handleClick}
         activeOpacity={0.8}
         className={`flex-row items-center justify-center rounded-lg bg-[#0B274F] px-4 ${buttonStyle}`}
       >
@@ -33,7 +35,7 @@ const Button = ({
             src={icon}
           />
         )}
-        <Text className={`text-white text-lg font-semibold ${textStyle}`}>{title}</Text>
+        <Text className={`text-white text-lg ${textStyle}`}>{title}</Text>
       </TouchableOpacity>
     </Animated.View>
   );
