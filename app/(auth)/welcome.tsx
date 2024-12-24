@@ -10,7 +10,6 @@ import React, { useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 import { animations, images,onboarding } from "@/constants";
-/*import { onboarding } from "@/constants";*/
 import Button from "@/components/Button";
 import LottieView from "lottie-react-native";
 import { router } from "expo-router";
@@ -22,7 +21,7 @@ const Onboarding = () => {
   const isLastSlide = activeIndex === onboarding.length - 1;
 
   const handlePress = () => {
-    router.replace("/(auth)/sign-up");
+    router.replace("/(screens)/create-pin");
   };
 
   return (

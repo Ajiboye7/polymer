@@ -21,6 +21,11 @@ import nigeria from "@/assets/icons/Vector (1).png";
 import instagram from "@/assets/icons/Instagram.png";
 import quote from "@/assets/icons/glass.png";
 import icon from "@/assets/icons/icon.png";
+import nin from "@/assets/icons/external-drive.png"
+import bvn from "@/assets/icons/finger-cricle.png"
+import light from "@/assets/icons/sun.png"
+import caution from "@/assets/icons/grammerly.png"
+
 
 
 import barCode from "@/assets/images/bar-code-svgrepo-com.png"
@@ -33,6 +38,8 @@ import onboarding2 from"@/assets/images/Frame 14119.png"
 import onboarding3 from"@/assets/images/Group 2076.png"
 import onboardingBgImg from "@/assets/images/Frame 1.png"
 import animation from "@/assets/images/Animation - 1734593298170.gif"
+import oppsRetry from "@/assets/images/Group 1484576906.png"
+import exclamation from "@/assets/images/Group 1484576908.png"
 
 
 import OnboardingAnimation1 from "@/assets/animations/Animation - 1734593298170.json";
@@ -64,6 +71,10 @@ export const icons= {
     instagram,
     quote,
     icon,
+    nin,
+    bvn,
+    light,
+    caution
 
 }
 
@@ -77,7 +88,9 @@ export const images ={
     onboarding2,
     onboarding3,
     onboardingBgImg,
-    animation
+    animation,
+    oppsRetry,
+    exclamation
 }
 
 

@@ -33,7 +33,7 @@ const InputField = ({
             {title}
           </Text>
           <View
-            className={`bg-[#F0F0F0] p-4 w-[360px] h-[52px] rounded-[10px] border border-primary-200 focus:border-primary-300 justify-center items-start ${inputStyles}`}
+            className={`bg-[#F0F0F0] p-4 w-full h-[52px] rounded-[10px] border border-primary-200 focus:border-primary-300 justify-center items-start ${inputStyles}`}
           >
             {icon && (
               <Image
@@ -45,7 +45,7 @@ const InputField = ({
               value={value}
               placeholder={placeholder}
               placeholderTextColor="#58585880"
-              className="text-[14px] font-600 w-full"
+              className="text-[14px] font-600 w-full\"
               onChangeText={handleChangeText}
               secureTextEntry={secureTextEntry}
               
