@@ -7,6 +7,7 @@ export interface ButtonProps {
   buttonStyle?: string;
   textStyle?: string;
   handleClick?: () => void;
+  disabled?: boolean;
 }
 
 export interface InputFieldProps {

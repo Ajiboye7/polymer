@@ -27,6 +27,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import { icons } from "@/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import Button from "@/components/Button";
 
 const VerificationScreen: React.FC = () => {
   const [selectedMode, setSelectedMode] = useState<"bvn" | "nin" | null>(null);
@@ -35,12 +36,11 @@ const VerificationScreen: React.FC = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-50 px-3 ">
       <View>
-      <View className="bg-gray-300 w-[29.77px] h-[29.77px] rounded-full">
-            <TouchableOpacity>
+        <View className="bg-gray-300 w-[29.77px] h-[29.77px] rounded-full">
+          <TouchableOpacity>
             <Image source={icons.arrowLeft} />
-            </TouchableOpacity>
-           
-          </View>
+          </TouchableOpacity>
+        </View>
         <View>
           <Text className="text-[32px] text-primary-300 font-gilroyBold mt-5 mb-3 ">
             Verify Identity
@@ -103,7 +103,7 @@ const VerificationScreen: React.FC = () => {
         </TouchableOpacity>
 
         {/* Continue Button */}
-        <TouchableOpacity
+        {/*<TouchableOpacity
           disabled={!selectedMode}
           className={`mt-10 py-3 rounded-lg ${
             selectedMode ? "bg-primary-300" : "bg-secondary-600"
@@ -122,7 +122,20 @@ const VerificationScreen: React.FC = () => {
           >
             Continue
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
+
+        <Button
+          disabled={!selectedMode}
+          title="Continue"
+          buttonStyle={`w-full h-[49.77px] mt-10 ${
+            selectedMode ? "bg-primary-300" : "bg-secondary-600"
+          }`}
+          handleClick={()=> {
+            if (selectedMode) {
+              console.log("Selected Mode:", selectedMode);
+            }
+          }}
+        />
       </View>
     </SafeAreaView>
   );

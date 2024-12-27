@@ -89,8 +89,22 @@ const ScreensLayout = () => {
           }}
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="create-pin"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="confirm-pin"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="accounts-type"
           options={{
             headerShown: false,
           }}

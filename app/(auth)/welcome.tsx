@@ -21,7 +21,7 @@ const Onboarding = () => {
   const isLastSlide = activeIndex === onboarding.length - 1;
 
   const handlePress = () => {
-    router.replace("/(screens)/create-pin");
+    router.replace("/(tabs)/account");
   };
 
   return (

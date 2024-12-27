@@ -1,7 +1,7 @@
 import home from "@/assets/icons/home.png";
 import card from "@/assets/icons/card.png";
 import payment from "@/assets/icons/send-2.png";
-import profile from "@/assets/icons/user-octagon.png";
+import profile from "@/assets/icons/Group 6.png";
 import accessBank from "@/assets/icons/Access Bank svg.png";
 import check from "@/assets/icons/fa_check.png";
 import cancel from "@/assets/icons/foundation_x.png";
@@ -25,6 +25,10 @@ import nin from "@/assets/icons/external-drive.png"
 import bvn from "@/assets/icons/finger-cricle.png"
 import light from "@/assets/icons/sun.png"
 import caution from "@/assets/icons/grammerly.png"
+import businessOwner from "@/assets/icons/Group 160.png"
+import regularUser from "@/assets/icons/user-tick.png"
+import rates from "@/assets/icons/arrange-circle-2.png"
+import send2 from "@/assets/icons/Frame 34 (1).png"
 
 
 
@@ -40,6 +44,7 @@ import onboardingBgImg from "@/assets/images/Frame 1.png"
 import animation from "@/assets/images/Animation - 1734593298170.gif"
 import oppsRetry from "@/assets/images/Group 1484576906.png"
 import exclamation from "@/assets/images/Group 1484576908.png"
+import balanceBg from "@/assets/images/My Balamce.png"
 
 
 import OnboardingAnimation1 from "@/assets/animations/Animation - 1734593298170.json";
@@ -74,7 +79,12 @@ export const icons= {
     nin,
     bvn,
     light,
-    caution
+    caution,
+    businessOwner,
+    regularUser,
+    rates,
+    send2
+
 
 }
 
@@ -90,7 +100,8 @@ export const images ={
     onboardingBgImg,
     animation,
     oppsRetry,
-    exclamation
+    exclamation,
+    balanceBg
 }
 
 

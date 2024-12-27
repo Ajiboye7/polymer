@@ -22,6 +22,10 @@ module.exports = {
           900:"#00000040",
         },
 
+        tertiary:{
+          DEFAULT: "rgba(91, 190, 138, 0.1)"
+        },
+
         danger:{
           DEFAULT:"#FF7171",
         }

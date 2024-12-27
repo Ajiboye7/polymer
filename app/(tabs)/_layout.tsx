@@ -111,7 +111,7 @@ export default function TabLayout() {
           title: 'Account',
           tabBarIcon: ({ color, focused }) => (
             <TabIcon 
-            icon={icons.profile}
+            icon={icons.user}
             name="Account"
             color={color}
             focused={focused}
