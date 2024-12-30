@@ -18,6 +18,7 @@ import send from "@/assets/icons/send-2.png";
 import rotateLeft from "@/assets/icons/rotate-left.png";
 import eye from "@/assets/icons/Group.png";
 import nigeria from "@/assets/icons/Vector (1).png";
+import america from "@/assets/icons/Group 1.png";
 import instagram from "@/assets/icons/Instagram.png";
 import quote from "@/assets/icons/glass.png";
 import icon from "@/assets/icons/icon.png";
@@ -29,6 +30,8 @@ import businessOwner from "@/assets/icons/Group 160.png"
 import regularUser from "@/assets/icons/user-tick.png"
 import rates from "@/assets/icons/arrange-circle-2.png"
 import send2 from "@/assets/icons/Frame 34 (1).png"
+import dropDown from "@/assets/icons/arrow-square-down.png"
+import exchange from "@/assets/icons/Exchange Button.png"
 
 
 
@@ -45,6 +48,7 @@ import animation from "@/assets/images/Animation - 1734593298170.gif"
 import oppsRetry from "@/assets/images/Group 1484576906.png"
 import exclamation from "@/assets/images/Group 1484576908.png"
 import balanceBg from "@/assets/images/My Balamce.png"
+
 
 
 import OnboardingAnimation1 from "@/assets/animations/Animation - 1734593298170.json";
@@ -83,7 +87,10 @@ export const icons= {
     businessOwner,
     regularUser,
     rates,
-    send2
+    send2,
+    dropDown, 
+    exchange,
+    america
 
 
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Children, useRef, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -6,10 +6,14 @@ import {
   Text,
   ImageBackground,
 } from "react-native";
-import { icons, images } from "@/constants"; // Replace with your icons path
+import { icons, images } from "@/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
-const CustomToggler = () => {
+
+const Home = () => {
+  const bottomSheetRef = useRef<BottomSheet>(null)
+
   const [isBusiness, setIsBusiness] = useState(false);
 
   const toggleSwitch = () => setIsBusiness((prevState) => !prevState);
@@ -91,11 +95,12 @@ const CustomToggler = () => {
           </View>
         </TouchableOpacity>
       </View>
+
     </SafeAreaView>
   );
 };
 
-export default CustomToggler;
+export default Home;
 
 
 
