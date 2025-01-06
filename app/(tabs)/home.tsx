@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <SafeAreaView className="bg-primary-300 h-full">
-      <View className="flex flex-row items-center justify-between px-3">
+      <View className="flex flex-row items-center justify-between px-3 mt-10">
         <View className="flex flex-row items-center justify-start gap-3">
           <Image source={icons.profile} resizeMode="contain"  className="w-[50px] h-[50px]"/>
 

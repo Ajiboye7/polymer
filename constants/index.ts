@@ -10,6 +10,7 @@ import user from "@/assets/icons/user-octagon.png";
 import add from "@/assets/icons/add.png";
 import live from "@/assets/icons/Frame 14115.png";
 import gtBank from "@/assets/icons/GUARANTY Trust Bank - jpeg.png";
+import mtn from "@/assets/icons/MTN Nigeria - jpeg.png";
 import setting from "@/assets/icons/information.png";
 import opay from "@/assets/icons/OPay - png.png";
 import facebook from "@/assets/icons/path16.png";
@@ -32,6 +33,8 @@ import rates from "@/assets/icons/arrange-circle-2.png"
 import send2 from "@/assets/icons/Frame 34 (1).png"
 import dropDown from "@/assets/icons/arrow-square-down.png"
 import exchange from "@/assets/icons/Exchange Button.png"
+import ring from "@/assets/icons/Group 2086.png"
+import arrowSquareRight from "@/assets/icons/arrow-square-right.png"
 
 
 
@@ -69,6 +72,7 @@ export const icons= {
     add,
     live,
     gtBank,
+    mtn,
     setting,
     opay,
     facebook,
@@ -90,7 +94,9 @@ export const icons= {
     send2,
     dropDown, 
     exchange,
-    america
+    america,
+    ring,
+    arrowSquareRight
 
 
 }
@@ -143,4 +149,84 @@ export const onboarding = [
       image: images.onboarding3,
     },
   ];
+
+
   
+  export const transactions =[
+    {
+      id: 1,
+      title: "Airtime purchase",
+      amount:"-₦5,000.50",
+      time:"Today 03:09 PM",
+      image:icons.mtn,
+      type: "debit"
+      
+    },
+
+    {
+      id: 2,
+      title: "Sent to GTBank",
+      amount:"-₦55,610.75",
+      time:"Today 11:37 AM",
+      image:icons.gtBank,
+      type: "debit"
+    },
+
+    {
+      id: 3,
+      title: "Recieved from Access Bank",
+      amount:"+₦205,000.00",
+      time:"Today 08:30 PM",
+      image:icons.accessBank,
+      type: "credit"
+
+    },
+
+    {
+      id: 4,
+      title: "Sent to Opay",
+      amount:"-₦23,010.75",
+      time:"Today 08:30 PM",
+      image:icons.opay,
+      type: "debit"
+    },
+  ]
+
+  
+  export  const currencies = [
+    {
+      name: "US Dollar",
+      short: "USD",
+      rate: "1,280.00",
+      symbol: "$",
+      icon: icons.america,
+    },
+    {
+      name: "Canadian Dollar",
+      short: "CAD",
+      rate: "981.28",
+      symbol: "$",
+      icon: icons.gtBank,
+    },
+    {
+      name: "British Pound",
+      short: "GBP",
+      rate: "1,652.05",
+      symbol: "£",
+      icon: icons.opay,
+    },
+    {
+      name: "Euro",
+      short: "EUR",
+      rate: "1,412.01",
+      symbol: "€",
+      icon: icons.mtn,
+    },
+    {
+      name: "Chinese Yuan",
+      short: "CNY",
+      rate: "197.70",
+      symbol: "¥",
+      icon: icons.nigeria,
+    },
+  ];

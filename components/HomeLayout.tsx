@@ -13,12 +13,11 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <GestureHandlerRootView>
       <View className="">
-
         <Home/>
 
         <BottomSheet
           ref={bottomSheetRef}
-          snapPoints={["55%", "85%"]}
+          snapPoints={["47%", "83%"]}
           index={0}
         >
             <BottomSheetScrollView>
