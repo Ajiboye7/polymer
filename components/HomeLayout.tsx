@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React, { useRef } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import Home from "@/app/(tabs)/home";
+import HomeBack from "@/components/HomeBack";
 
 import BottomSheet, {
     BottomSheetScrollView,
@@ -13,7 +13,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <GestureHandlerRootView>
       <View className="">
-        <Home/>
+        <HomeBack/>
 
         <BottomSheet
           ref={bottomSheetRef}

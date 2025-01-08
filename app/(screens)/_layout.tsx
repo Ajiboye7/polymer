@@ -109,6 +109,20 @@ const ScreensLayout = () => {
             headerShown: false,
           }}
         />
+
+        <Stack.Screen
+          name="fund-account"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="personal-details"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );

@@ -10,6 +10,7 @@ import user from "@/assets/icons/user-octagon.png";
 import add from "@/assets/icons/add.png";
 import live from "@/assets/icons/Frame 14115.png";
 import gtBank from "@/assets/icons/GUARANTY Trust Bank - jpeg.png";
+import sterling from "@/assets/icons/image 6.png";
 import mtn from "@/assets/icons/MTN Nigeria - jpeg.png";
 import setting from "@/assets/icons/information.png";
 import opay from "@/assets/icons/OPay - png.png";
@@ -35,6 +36,8 @@ import dropDown from "@/assets/icons/arrow-square-down.png"
 import exchange from "@/assets/icons/Exchange Button.png"
 import ring from "@/assets/icons/Group 2086.png"
 import arrowSquareRight from "@/assets/icons/arrow-square-right.png"
+import copy from "@/assets/icons/copy.png"
+import share from "@/assets/icons/share.png"
 
 
 
@@ -51,6 +54,7 @@ import animation from "@/assets/images/Animation - 1734593298170.gif"
 import oppsRetry from "@/assets/images/Group 1484576906.png"
 import exclamation from "@/assets/images/Group 1484576908.png"
 import balanceBg from "@/assets/images/My Balamce.png"
+import fundAccountBg from "@/assets/images/Background Art.png"
 
 
 
@@ -72,6 +76,7 @@ export const icons= {
     add,
     live,
     gtBank,
+    sterling,
     mtn,
     setting,
     opay,
@@ -96,10 +101,11 @@ export const icons= {
     exchange,
     america,
     ring,
-    arrowSquareRight
-
-
+    arrowSquareRight,
+    copy,
+    share,
 }
+
 
 export const images ={
     barCode,
@@ -114,7 +120,8 @@ export const images ={
     animation,
     oppsRetry,
     exclamation,
-    balanceBg
+    balanceBg,
+    fundAccountBg,
 }
 
 
