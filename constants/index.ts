@@ -38,6 +38,7 @@ import ring from "@/assets/icons/Group 2086.png"
 import arrowSquareRight from "@/assets/icons/arrow-square-right.png"
 import copy from "@/assets/icons/copy.png"
 import share from "@/assets/icons/share.png"
+import modalBusinessImage from "@/assets/icons/Group 2091.png"
 
 
 
@@ -55,6 +56,7 @@ import oppsRetry from "@/assets/images/Group 1484576906.png"
 import exclamation from "@/assets/images/Group 1484576908.png"
 import balanceBg from "@/assets/images/My Balamce.png"
 import fundAccountBg from "@/assets/images/Background Art.png"
+import profileCreationImage from "@/assets/images/P Frames.png"
 
 
 
@@ -104,6 +106,7 @@ export const icons= {
     arrowSquareRight,
     copy,
     share,
+    modalBusinessImage
 }
 
 
@@ -122,6 +125,7 @@ export const images ={
     exclamation,
     balanceBg,
     fundAccountBg,
+    profileCreationImage
 }
 
 

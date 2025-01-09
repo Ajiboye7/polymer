@@ -29,7 +29,7 @@ const Button = ({
       disabled={disabled}
       onPress={handleClick}
         activeOpacity={0.8}
-        className={`flex-row items-center justify-center rounded-lg bg-[#0B274F] px-4 ${buttonStyle}`}
+        className={`flex-row items-center justify-center rounded-lg bg-primary-300 px-4 ${buttonStyle}`}
       >
         {iconName && (
           <Image

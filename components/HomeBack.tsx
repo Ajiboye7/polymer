@@ -1,20 +1,20 @@
-import React, { Children, useRef, useState,  } from "react";
+import React, { Children, useRef, useState } from "react";
 import {
   View,
   TouchableOpacity,
   Image,
   Text,
   ImageBackground,
-  Modal
+  Modal,
 } from "react-native";
 import { icons, images } from "@/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
-
+import Button from "./Button";
 
 const HomeBack = () => {
-  const bottomSheetRef = useRef<BottomSheet>(null)
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
   /*const [isBusiness, setIsBusiness] = useState(false);
 
@@ -31,7 +31,7 @@ const HomeBack = () => {
   };
 
   const handleCancel = () => {
-    setIsBusiness(false); // Revert toggle if user cancels
+    setIsBusiness(false);
     setModalVisible(false);
   };
 
@@ -39,7 +39,11 @@ const HomeBack = () => {
     <SafeAreaView className="bg-primary-300 h-full">
       <View className="flex flex-row items-center justify-between px-3 mt-10">
         <View className="flex flex-row items-center justify-start gap-3">
-          <Image source={icons.profile} resizeMode="contain"  className="w-[50px] h-[50px]"/>
+          <Image
+            source={icons.profile}
+            resizeMode="contain"
+            className="w-[50px] h-[50px]"
+          />
 
           <Text className="text-[16px] font-gilroyBold text-white">
             Hi, User
@@ -119,40 +123,33 @@ const HomeBack = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        {/* Blurred Background Layer */}
-        <BlurView intensity={30} tint="dark" className="flex-1 justify-center items-center">
-          {/* Modal Content */}
-          <View className="w-4/5 bg-white rounded-lg p-5 items-center">
-            <Image
-              source={icons.businessOwner}
-              className="w-16 h-16 mb-4"
-            />
-            <Text className="text-[20px] font-bold text-gray-900">
+        <BlurView
+          intensity={30}
+          tint="dark"
+          className="flex-1 justify-end items-center"
+        >
+          <View className="w-[358px] h-[330px] bg-white rounded-lg px-4 py-5  mb-5">
+            <Image source={icons.modalBusinessImage} className="w-16 h-16 mb-4 mx-auto"/>
+            <Text className="text-[20px] text-center font-bold text-gray-900">
               Set Up Your Business Profile
             </Text>
-            <Text className="text-center text-gray-600 mt-2 mb-4">
-              Hey there! We noticed you haven’t set up your business profile. Set it up now to start making payments in the name of your business.
+            <Text className="text-[12px] text-center text-secondary-500 mt-2 mb-4 leading-[25px] font-semibold">
+              Hey there! We noticed you haven’t set up your business {'\n'} profile.
+              Set it up now to start making payments in the {'\n'} name of your
+              business.
             </Text>
 
-            <TouchableOpacity
-              onPress={() => setModalVisible(false)}
-              className="w-full bg-primary-500 p-3 rounded-lg"
-            >
-              <Text className="text-white text-center font-bold">
-                Set Up Now
-              </Text>
-            </TouchableOpacity>
+            <Button title="Set up now"
+             buttonStyle=" h-[49.77px] w-full my-3 bg-primary-200"
+             
+             handleClick={() => setModalVisible(false)} />
 
-            <TouchableOpacity
-              onPress={handleCancel}
-              className="mt-4"
-            >
-              <Text className="text-gray-500 underline">Not Now</Text>
+            <TouchableOpacity onPress={handleCancel} className="mt-4">
+              <Text className="text-[16px] text-primary-200 font-gilroyBold text-center ">Not Now</Text>
             </TouchableOpacity>
           </View>
         </BlurView>
       </Modal>
-
     </SafeAreaView>
   );
 };
