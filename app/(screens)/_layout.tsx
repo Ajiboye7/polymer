@@ -137,6 +137,20 @@ const ScreensLayout = () => {
             headerShown: false,
           }}
         />
+
+        <Stack.Screen
+          name="international-transfer"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="bank-details"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );

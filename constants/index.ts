@@ -6,6 +6,7 @@ import accessBank from "@/assets/icons/Access Bank svg.png";
 import check from "@/assets/icons/fa_check.png";
 import cancel from "@/assets/icons/foundation_x.png";
 import arrowLeft from "@/assets/icons/Arrow Left.png";
+import arrowRight from "@/assets/icons/Vector.png";
 import user from "@/assets/icons/user-octagon.png";
 import add from "@/assets/icons/add.png";
 import live from "@/assets/icons/Frame 14115.png";
@@ -39,6 +40,11 @@ import arrowSquareRight from "@/assets/icons/arrow-square-right.png"
 import copy from "@/assets/icons/copy.png"
 import share from "@/assets/icons/share.png"
 import modalBusinessImage from "@/assets/icons/Group 2091.png"
+import analytic from "@/assets/icons/status.png"
+import pole from "@/assets/icons/Rectangle 3447.png"
+import fee from "@/assets/icons/Group 2098.png"
+import totalToPay from "@/assets/icons/Group 2099.png"
+import ratePlusBonus from "@/assets/icons/Group 2100.png"
 
 
 
@@ -55,8 +61,11 @@ import animation from "@/assets/images/Animation - 1734593298170.gif"
 import oppsRetry from "@/assets/images/Group 1484576906.png"
 import exclamation from "@/assets/images/Group 1484576908.png"
 import balanceBg from "@/assets/images/My Balamce.png"
-import fundAccountBg from "@/assets/images/Background Art.png"
+import BgBoxes from "@/assets/images/Background Art.png"
 import profileCreationImage from "@/assets/images/P Frames.png"
+import internationalTransfer from "@/assets/images/Frame 14117.png"
+import localTransfer from "@/assets/images/Frame 14118.png"
+
 
 
 
@@ -106,7 +115,13 @@ export const icons= {
     arrowSquareRight,
     copy,
     share,
-    modalBusinessImage
+    modalBusinessImage,
+    analytic,
+    pole,
+    fee,
+    totalToPay,
+    ratePlusBonus,
+    arrowRight
 }
 
 
@@ -124,8 +139,10 @@ export const images ={
     oppsRetry,
     exclamation,
     balanceBg,
-    fundAccountBg,
-    profileCreationImage
+    BgBoxes,
+    profileCreationImage,
+    internationalTransfer,
+    localTransfer,
 }
 
 

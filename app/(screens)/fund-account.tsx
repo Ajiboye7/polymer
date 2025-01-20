@@ -4,18 +4,18 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  Alert
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons, images } from "@/constants";
-import * as Clipboard from 'expo-clipboard';
+import * as Clipboard from "expo-clipboard";
+
 
 const FundAccount = () => {
   const [isBusiness, setIsBusiness] = useState(false);
 
   const toggleSwitch = () => setIsBusiness((prevState) => !prevState);
-
 
   const accountNumber = "0235676005";
 
@@ -25,11 +25,11 @@ const FundAccount = () => {
   };
 
   return (
-    
-    <SafeAreaView className="mt-4">
+      <SafeAreaView className="flex-1 white">
+      <View className="h-[20%] px-3">
       <ImageBackground
-        source={images.fundAccountBg}
-        className="w-full h-[80px] justify-center"
+        source={images.BgBoxes}
+        className="w-full h-[91px] justify-center"
       >
         <View className="flex flex-row items-center justify-between">
           <TouchableOpacity>
@@ -65,8 +65,10 @@ const FundAccount = () => {
           </View>
         </View>
       </ImageBackground>
+      </View>
+      
 
-      <View className="bg-primary-300 h-full rounded-t-[20px] px-3 ">
+      <View className="bg-primary-300 rounded-t-[20px] px-3 flex-1 -mt-12">
         <Text className="text-[20px] text-white font-gilroyBold mt-6 mb-5 ">
           My Account Number
         </Text>
@@ -112,24 +114,19 @@ const FundAccount = () => {
         </View>
 
         <View className=" px-5 flex flex-row items-center justify-start bg-secondary-500 rounded-[20px] h-[80px] ">
-        <View className="flex flex-row items-center  gap-2">
+          <View className="flex flex-row items-center  gap-2">
             <TouchableOpacity>
-            <Image
-            source={icons.setting} 
-            />
-        </TouchableOpacity>
-        <Text className="text-[12px] font-interItalic text-secondary-100 w-[288px]">
-        When you deposit directly into this account, it reflects on your Naira account balance. 
-        </Text>
-            </View>
-        
+              <Image source={icons.setting} />
+            </TouchableOpacity>
+            <Text className="text-[12px] font-interItalic text-secondary-100 w-[288px]">
+              When you deposit directly into this account, it reflects on your
+              Naira account balance.
+            </Text>
+          </View>
+        </View>
       </View>
-
-
-      </View>
-
-     
     </SafeAreaView>
+    
   );
 };
 

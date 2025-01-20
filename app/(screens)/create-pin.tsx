@@ -49,31 +49,13 @@ const CreatePin = () => {
           autoFocus
         />
 
-        {/*<TouchableOpacity
-        className={`h-[50px] w-full rounded-lg justify-center items-center ${
-          pin.length === 4 ? "bg-primary-300" : "bg-secondary-500"
-        }`}
-        disabled={pin.length < 4}
-        onPress={() => {
-          console.log("PIN Created:", pin);
-        }}
-      >
-        <Text
-          className={`text-lg font-semibold ${
-            pin.length === 4 ? "text-white" : "text-gray-400"
-          }`}
-        >
-          Continue
-        </Text>
-      </TouchableOpacity>*/}
-
         <Button
           title="Continue"
           buttonStyle={`h-[50px] w-full ${
             pin.length === 4 ? "bg-primary-300" : "bg-secondary-500"
           }`}
           disabled={pin.length < 4}
-          handleClick={()=>{
+          handleClick={() => {
             console.log("PIN Created:", pin);
           }}
         />

@@ -1,302 +1,131 @@
-/*import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, Dimensions } from "react-native";
-import Swiper from "react-native-swiper";
-import axios from "axios";
-import HomeLayout from "@/components/HomeLayout";
-
-const { width } = Dimensions.get("window");
-
-interface ExchangeRate {
-  currency: string;
-  rate: number;
-}
-
-const CurrencyConversionSwiper: React.FC = () => {
-  const [exchangeRates, setExchangeRates] = useState<ExchangeRate[]>([]);
-  const [currentCurrency, setCurrentCurrency] = useState<string>("USD");
-  const [currentRate, setCurrentRate] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const fetchExchangeRates = async (): Promise<void> => {
-    try {
-      const response = await axios.get(
-        "https://api.freecurrencyapi.com/v1/latest",
-        {
-          params: {
-            apikey: "fca_live_bI6zOcQeLTdG5tKru30UB1UiBIabBQbZJmxJT7Bk",
-          },
-        }
-      );
-
-      const data = response.data;
-      const rates = data.data;
-
-      // Format rates for the required currencies
-      const formattedRates: ExchangeRate[] = [
-        { currency: "USD", rate: 1 }, // Base currency
-        { currency: "EUR", rate: rates.EUR },
-        { currency: "GBP", rate: rates.GBP },
-        { currency: "CAD", rate: rates.CAD },
-        { currency: "CNY", rate: rates.CNY },
-        { currency: "NGN", rate: rates.NGN },
-      ];
-
-      setExchangeRates(formattedRates);
-      setCurrentRate(rates.NGN); // Initialize with Naira rate
-    } catch (error) {
-      console.error("Error fetching exchange rates:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchExchangeRates();
-  }, []);
-
-  const handleCurrencyChange = (index: number): void => {
-    if (exchangeRates.length > 0) {
-      const selectedCurrency = exchangeRates[index];
-      setCurrentCurrency(selectedCurrency.currency);
-      setCurrentRate(selectedCurrency.rate);
-    }
-  };
-
-  if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#3555F5" />
-      </View>
-    );
-  }
-
-  return (
-    <HomeLayout>
-      <View className="flex-1 bg-gray-100 justify-center items-center">
-      {/* Top Section: Naira Conversion 
-      <View className="mb-5">
-        <Text className="text-[24px] font-bold text-primary-500">
-          {`₦ ${(currentRate * 1).toFixed(2)}`}
-        </Text>
-        <Text className="text-[16px] text-gray-600">
-          1 {currentCurrency} = {`₦ ${(currentRate * 1).toFixed(2)}`}
-        </Text>
-      </View>
-
-      {/* Swiper Section: Currency Carousel 
-      <View className="h-[100px] w-full">
-        <Swiper
-          loop={true}
-          autoplay={true}
-          autoplayTimeout={3}
-          showsPagination={false}
-          onIndexChanged={(index) => handleCurrencyChange(index)}
-        >
-          {exchangeRates.map((item, index) => (
-            <View
-              key={index}
-              className="flex justify-center items-center h-[100px] bg-white mx-5 rounded-lg shadow-lg"
-            >
-              <Text className="text-[20px] font-semibold">{item.currency}</Text>
-              <Text className="text-gray-500">1 {item.currency}</Text>
-            </View>
-          ))}
-        </Swiper>
-      </View>
-    </View>
-    </HomeLayout>
-    
-  );
-};
-
-export default CurrencyConversionSwiper;*/
-
-import { View, Text, Image, ImageBackground, ScrollView } from "react-native";
-import React  from "react";
-import { useEffect, useState } from "react";
-import HomeLayout from "@/components/HomeLayout";
+/*import React, { useState } from "react";
+import { SafeAreaView, View, Text, StatusBar } from "react-native";
 import { icons } from "@/constants";
-import Swiper from "react-native-swiper";
-import { transactions } from "@/constants";
-import { currencies } from "@/constants";
 
+import SwipeButton from "rn-swipe-button";
 
+const App: React.FC = () => {
+  const defaultStatusMessage = "Swipe status appears here";
+  const [swipeStatusMessage, setSwipeStatusMessage] =
+    useState(defaultStatusMessage);
 
-
-const account = () => {
-
-  const [currentCurrencyIndex, setCurrentCurrencyIndex] = useState(0);
-
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentCurrencyIndex((prev) => (prev + 1) % currencies.length);
-    }, 3000);
-
-    return () => clearInterval(interval); 
-  }, [currencies.length]);
-
-  const currentCurrency = currencies[currentCurrencyIndex];
-
+  const updateSwipeStatusMessage = (message: string) =>
+    setSwipeStatusMessage(message);
 
   return (
-    <HomeLayout>
-      <View className="flex flex-row items-center justify-between px-3 mb-3 mt-5">
-        <View className="flex flex-row items-center justify-center gap-2 ">
-          <Text className="text-[20px] text-primary-300 font-gilroyBold">
-            Exchange rate
-          </Text>
-          <Image
-            source={icons.live}
-            resizeMode="contain"
-            className="w-[54px] h-[25px]"
+    <>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView>
+        <View className="mt-16">
+          <SwipeButton
+            thumbIconBackgroundColor="white"
+            thumbIconImageSource={icons.arrowRight}
+            thumbIconBorderColor="white"
+            railBackgroundColor="#F8F8F8"
+            railBorderColor="transparent"
+            title="Proceed to bank details"
+            titleStyles={{
+              color: "#184484",
+              fontSize: 16,
+              fontWeight: "bold",
+            }}
+            shouldResetAfterSuccess
+            onSwipeFail={() => updateSwipeStatusMessage("Incomplete swipe!")}
+            onSwipeStart={() => updateSwipeStatusMessage("Swipe started!")}
+            onSwipeSuccess={() =>
+              updateSwipeStatusMessage("Submitted successfully!")
+            }
           />
+
+          <Text>{swipeStatusMessage}</Text>
         </View>
-
-        <Text className="text-[12px] text-primary-200 underline font-sfProRoundedMedium ">
-          View More
-        </Text>
-      </View>
-
-      <View className="flex gap-1 mb-2">
-        <View className="flex flex-row items-center justify-between w-full px-3 h-[64px] border-y-[1px] border-gray-200">
-          <View className="flex flex-row items-center justify-start gap-4">
-            <Text className="text-[12px] text-secondary-600 font-semibold">
-              From
-            </Text>
-
-            <View className="flex flex-row items-center justify-between p-3 w-[158px] h-[44px] border border-solid border-gray-100 rounded-[25px] bg-secondary-300  ">
-              <Image source={icons.nigeria} resizeMode="contain" />
-              <Text className="text-[12px] text-[#303030] font-semibold">
-                Nigeria Naira
-              </Text>
-              <Image source={icons.dropDown} resizeMode="contain" />
-            </View>
-          </View>
-
-          <Text className="text-[16px] text-[#303030] font-bold">
-             ₦{currentCurrency.rate.toLocaleString()}
-          </Text>
-        </View>
-
-        <View className="relative">
-          <Image
-            source={icons.exchange}
-            className="absolute right-[90px] top-[-27px] z-10"
-            resizeMode="contain"
-          />
-        </View>
-
-        <View className="flex flex-row items-center justify-between w-full px-3 h-[64px] border-y-[1px] border-gray-200">
-          <View className="flex flex-row items-center justify-start gap-8">
-            <Text className="text-[12px] text-secondary-600 font-semibold">
-              To
-            </Text>
-
-            <View className="flex flex-row items-center justify-between p-3 w-[158px] h-[44px] border border-solid border-gray-100 rounded-[25px] bg-secondary-300  ">
-              <Image source= {currentCurrency.icon} resizeMode="contain" />
-              <Text className="text-[12px] text-[#303030] font-semibold">
-              {currentCurrency.name}
-              </Text>
-              <Image source={icons.dropDown} resizeMode="contain" />
-            </View>
-          </View>
-
-          <Text className="text-[16px] text-[#303030] font-bold">{currentCurrency.symbol}1.00</Text>
-        </View>
-      </View>
-
-      <Swiper
-        showsButtons={false}
-        dotStyle={{ backgroundColor: "#ccc", width: 5, height: 5 }}
-        activeDotStyle={{ backgroundColor: "#0B274F", width: 15, height: 5 }}
-        autoplay
-        autoplayTimeout={3}
-        loop
-        style={{ height: 60 }}
-      >
-        {currencies.map((currency, index) => (
-          <View
-            key={index}
-            className="flex items-center justify-center "
-          >
-            <Text className="text-[16px] text-primary-300 font-bold">
-              {currency.short} - ₦{currency.rate.toLocaleString()}
-            </Text>
-          </View>
-        ))}
-      </Swiper>
-
-
-      <View className="bg-primary-200 mx-3 rounded-[20px] px-5 py-2  ">
-        <View className="flex flex-row items-center gap-4 h-[90px]">
-          <ImageBackground
-            source={icons.ring}
-            className="w-[62px] h-[62px] items-center justify-center"
-          >
-            <Text className="text-[18px] text-white font-gilroyBold">1/3</Text>
-          </ImageBackground>
-
-          <View className="w-[175px]">
-            <View className="flex gap-2 ">
-              <Text className="text-white text-[14px] font-gilroyHeavy">
-                Finish setting up your account
-              </Text>
-              <Text className="text-[10px] text-secondary-300 ">
-                Continue setting up your polymer account by adding your bank
-                details.
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-
-      <View className="mx-3 mt-7">
-        <View className="flex flex-row items-center justify-between">
-          <Text className="text-[20px] text-primary-300 font-gilroyBold">
-            Transactions
-          </Text>
-          <Text className="text-[12px] text-primary-300 underline">
-            View All
-          </Text>
-        </View>
-
-        <ScrollView
-        style={{ maxHeight: 300 }} 
-        showsVerticalScrollIndicator={false}
-      >
-          {transactions.map((item) => (
-            <View key={item.id} className="my-3 ">
-              <View className="flex justify-center px-4 gap-2 border h-[90px] border-gray-100 rounded-[20px] ">
-                <View className="flex flex-row items-center justify-between ">
-                  <View className="flex flex-row items-center justify-start gap-2">
-                    <Image source={item.image} resizeMode="contain" />
-                    <Text className="text-[14px] font-sfProRoundedBold">
-                      {item.title}
-                    </Text>
-                  </View>
-                  <Image source={icons.arrowSquareRight} />
-                </View>
-
-                <View className="flex flex-row items-center justify-between">
-                  <Text
-                    className={`text-[16px] font-sfProRoundedBold ${
-                      item.type === "credit" ? "text-green-500" : "text-danger"
-                    }`}
-                  >
-                    {item.amount}
-                  </Text>
-                  <Text className="text-[12px] text-secondary-500 font-sfProRoundedBold">
-                    {item.time}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-    </HomeLayout>
+      </SafeAreaView>
+    </>
   );
 };
 
-export default account;
+export default App;*/
+
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import CustomSwipeButton from "@/components/CustomSwipeButton";
+import { icons } from "@/constants";
+
+const App: React.FC = () => {
+  const [isPinInputVisible, setPinInputVisible] = useState(false);
+  const [pin, setPin] = useState("");
+
+  const handleSwipeSuccess = () => {
+    // Show PIN input when swipe is successful
+    setPinInputVisible(true);
+  };
+
+  const handlePinChange = (value: string) => {
+    setPin(value);
+    if (value.length === 4) {
+      // PIN complete; you can add your logic here (e.g., validate PIN)
+      console.log("PIN Entered:", value);
+      setPinInputVisible(false); // Optionally hide the PIN input
+    }
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View>
+          {!isPinInputVisible ? (
+            <CustomSwipeButton
+              title="Proceed to enter PIN"
+              onSwipeSuccess={handleSwipeSuccess}
+            />
+          ) : (
+            <View>
+              <Text className="text-[32px] text-primary-300 font-bold">
+                Enter your 4-Digit PIN
+              </Text>
+              <Text className="text-[14px] text-secondary-600 my-5">
+                Enter your PIN to make transfer
+              </Text>
+
+              {/* PIN Dots */}
+              <View className="flex-row justify-around items-center mb-8 bg-gray-200 w-[140px] h-[50px] rounded-[10px] self-center">
+                {Array(4)
+                  .fill(0)
+                  .map((_, index) => (
+                    <View
+                      key={index}
+                      className={`w-[10px] h-[10px] rounded-full ${
+                        pin.length > index ? "bg-primary-300" : "bg-secondary-700"
+                      }`}
+                    />
+                  ))}
+              </View>
+
+              {/* Hidden Text Input */}
+              <TextInput
+                style={{ opacity: 0, position: "absolute" }}
+                keyboardType="numeric"
+                maxLength={4}
+                value={pin}
+                onChangeText={handlePinChange}
+                autoFocus
+              />
+            </View>
+          )}
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+};
+
+export default App;

@@ -139,6 +139,7 @@ const HomeBack = () => {
               business.
             </Text>
 
+
             <Button title="Set up now"
              buttonStyle=" h-[49.77px] w-full my-3 bg-primary-200"
              
