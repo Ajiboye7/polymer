@@ -12,10 +12,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { icons, images } from "@/constants";
 import * as Clipboard from "expo-clipboard";
 import InputField from "@/components/InputField";
-//import SwipeButton from "@/components/SwipeButton";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import SwipeButton from "rn-swipe-button";
+import CustomSwipeButton from "@/components/CustomSwipeButton";
+import { useRouter } from "expo-router";
+import PinInputModal from "@/components/PinInputModal";
 
 const BankDetails = () => {
   const [form, setForm] = useState({
@@ -26,11 +25,7 @@ const BankDetails = () => {
     remark: "",
   });
 
-  const handleSwipeComplete = () => {
-    console.log("Swipe action completed!");
-    // Navigate to the next screen or perform any desired action.
-  };
-
+  
   const [isBusiness, setIsBusiness] = useState(false);
 
   const toggleSwitch = () => setIsBusiness((prevState) => !prevState);
@@ -41,6 +36,19 @@ const BankDetails = () => {
     await Clipboard.setStringAsync(accountNumber);
     Alert.alert("Copied!", "Account number copied to clipboard.");
   };
+  const [isPinInputVisible, setPinInputVisible] = useState(false);
+  const router = useRouter()
+  const handleSwipeSuccess = () => {
+    setPinInputVisible(true);
+    console.log("This is true")
+    
+  };
+
+  const handlePinVerified = (pin: string) => {
+    alert(`PIN Verified: ${pin}! Proceeding to payment...`);
+    router.push("/(tabs)/home");
+  };
+
 
   return (
     <ScrollView>
@@ -86,7 +94,7 @@ const BankDetails = () => {
           </ImageBackground>
         </View>
 
-        <View className="bg-primary-300 rounded-t-[20px] px-3 -mt-12">
+        <View className="bg-primary-300 rounded-t-[20px] px-3 -mt-12 ">
           <View>
             <InputField
               title="Bank Name"
@@ -119,6 +127,7 @@ const BankDetails = () => {
               }
               keyboardType="numeric"
               textContentType="none"
+              icon={icons.copy}
             />
 
             <InputField
@@ -133,35 +142,6 @@ const BankDetails = () => {
               textContentType="none"
             />
 
-            {/*<GestureHandlerRootView style={{ flex: 1 }}>
-              <SwipeButton
-                text="Swipe to Unlock"
-                showKeyboard={true}
-                onSwipeComplete={() => console.log("Swipe Completed!")}
-              />
-            </GestureHandlerRootView>*/}
-
-<View className="flex-1 justify-center items-center bg-gray-200 p-4">
-      <Text className="text-lg font-bold text-gray-700 mb-4">
-        Slide to Complete
-      </Text>
-      <SwipeButton
-        text="Swipe to Confirm"
-        onSwipeSuccess={() => Alert.alert("Success", "Payment Confirmed!")}
-        thumbIconBackgroundColor="white"
-        thumbIconBorderColor="gray"
-        railBackgroundColor="#D1D5DB" // Tailwind `bg-gray-300`
-        railFillBackgroundColor="#10B981" // Tailwind `bg-green-500`
-        railFillBorderColor="#10B981"
-        titleColor="#111827" // Tailwind `text-gray-900`
-        titleFontSize={16}
-        style={{
-          height: 60,
-        }}
-        className="w-full rounded-lg"
-      />
-    </View>
-
             <InputField
               title="Remarks (Optional)"
               placeholder="Enter note (within 200 characters)"
@@ -173,18 +153,22 @@ const BankDetails = () => {
             />
           </View>
 
-          <TouchableOpacity>
-            <View className="flex flex-row items-center justify-start mt-8 mb-12 pl-2 h-[60px] bg-white rounded-[50px]">
-              <TouchableOpacity className="mr-6 ">
-                <Image source={icons.arrowRight} resizeMode="contain" />
-              </TouchableOpacity>
-
-              <Text className="text-[16px] font-gilroySemiBold">
-                Proceed to bank details
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <View className="mt-16 mb-10">
+          <CustomSwipeButton
+          title="Swipe to make payment"
+          onSwipeSuccess={handleSwipeSuccess}
+          containerStyles={{ width: "100%", alignSelf: "center" }}
+          />
+          </View>
+          
         </View>
+
+        <PinInputModal
+          isVisible={isPinInputVisible}
+          onClose={() => setPinInputVisible(false)}
+          onPinEntered={handlePinVerified}
+        />
+
       </SafeAreaView>
     </ScrollView>
   );

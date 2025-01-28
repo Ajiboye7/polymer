@@ -17,6 +17,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@gorhom/bottom-sheet": "^5.0.6",
+    "@react-native-community/blur": "^4.4.1",
     "@react-navigation/bottom-tabs": "^7.0.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/stack": "^7.1.1",
@@ -35,6 +36,7 @@
     "expo-system-ui": "~4.0.5",
     "expo-web-browser": "~14.0.1",
     "lottie-react-native": "^5.1.4",
+    "lucide-react-native": "^0.474.0",
     "nativewind": "^2.0.11",
     "react": "18.3.1",
     "react-dom": "18.3.1",

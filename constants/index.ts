@@ -45,6 +45,8 @@ import pole from "@/assets/icons/Rectangle 3447.png"
 import fee from "@/assets/icons/Group 2098.png"
 import totalToPay from "@/assets/icons/Group 2099.png"
 import ratePlusBonus from "@/assets/icons/Group 2100.png"
+import close from "@/assets/icons/close.png"
+import del from "@/assets/icons/Chevron Left.png"
 
 
 
@@ -121,7 +123,9 @@ export const icons= {
     fee,
     totalToPay,
     ratePlusBonus,
-    arrowRight
+    arrowRight,
+    close,
+    del,
 }
 
 

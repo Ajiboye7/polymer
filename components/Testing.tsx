@@ -1,49 +1,5 @@
-/*import React from "react";
-import { View, Text } from "react-native";
-import SwipeButton from "rn-swipe-button";
-import { icons } from "@/constants";
 
-
-interface CustomSwipeButtonProps {
-  title: string;
-  onSwipeSuccess: () => void;
-  titleStyles?: object; 
-  containerStyles?: object;
-}
-
-const CustomSwipeButton: React.FC<CustomSwipeButtonProps> = ({
-  title,
-  onSwipeSuccess,
-  titleStyles,
-  containerStyles,
-}) => {
-  return (
-    <View>
-      <SwipeButton
-        thumbIconBackgroundColor="white"
-        thumbIconImageSource={icons.arrowRight}
-        thumbIconBorderColor="transparent"
-        railBackgroundColor="#F8F8F8"
-        railBorderColor="transparent"
-        title={title}
-        titleStyles={{
-          color: "#184484",
-          fontSize: 16,
-          fontWeight: "bold",
-          ...titleStyles,
-        }}
-        containerStyles={containerStyles}
-        shouldResetAfterSuccess
-        onSwipeSuccess={onSwipeSuccess}
-        
-      />
-    </View>
-  );
-};
-
-export default CustomSwipeButton;*/
-
-/*import { useState } from "react";
+import { useState } from "react";
 import { View, Text, KeyboardAvoidingView, Platform, TextInput } from "react-native";
 import SwipeButton from "rn-swipe-button";
 import { icons } from "@/constants";
@@ -145,43 +101,26 @@ const CustomSwipeButton: React.FC<CustomSwipeButtonProps> = ({
   );
 };
 
-export default CustomSwipeButton;*/
-
-import SwipeButton from "rn-swipe-button";
-import { icons } from "@/constants";
-
-interface CustomSwipeButtonProps {
-  title: string;
-  onSwipeSuccess: () => void;
-  titleStyles?: object;
-  containerStyles?: object;
-}
-
-const CustomSwipeButton: React.FC<CustomSwipeButtonProps> = ({
-  title,
-  onSwipeSuccess,
-  titleStyles,
-  containerStyles,
-}) => {
-  return (
-    <SwipeButton
-      thumbIconBackgroundColor="white"
-      thumbIconImageSource={icons.arrowRight}
-      thumbIconBorderColor="transparent"
-      railBackgroundColor="#F8F8F8"
-      railBorderColor="transparent"
-      title={title}
-      titleStyles={{
-        color: "#184484",
-        fontSize: 16,
-        fontWeight: "bold",
-        ...titleStyles,
-      }}
-      containerStyles={containerStyles}
-      shouldResetAfterSuccess
-      onSwipeSuccess={onSwipeSuccess}
-    />
-  );
-};
-
 export default CustomSwipeButton;
+
+
+{/*<View>
+      <SwipeButton
+        thumbIconBackgroundColor="white"
+        thumbIconImageSource={icons.arrowRight}
+        thumbIconBorderColor="transparent"
+        railBackgroundColor="#F8F8F8"
+        railBorderColor="transparent"
+        title={title}
+        titleStyles={{
+          color: "#184484",
+          fontSize: 16,
+          fontWeight: "bold",
+          ...titleStyles,
+        }}
+        containerStyles={containerStyles}
+        shouldResetAfterSuccess
+        onSwipeSuccess={onSwipeSuccess}
+        
+      />
+    </View>*/}

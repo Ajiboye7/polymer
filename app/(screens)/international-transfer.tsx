@@ -6,13 +6,19 @@ import {
   ImageBackground,
   Alert,
   ScrollView,
+  Platform,
+  KeyboardAvoidingView,
+  TextInput,
 } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons, images } from "@/constants";
 import * as Clipboard from "expo-clipboard";
+import CustomSwipeButton from "@/components/CustomSwipeButton";
+import { useRouter } from "expo-router";
 
 const InternationalTransfer = () => {
+  const router = useRouter();
   const [isBusiness, setIsBusiness] = useState(false);
 
   const toggleSwitch = () => setIsBusiness((prevState) => !prevState);
@@ -22,6 +28,23 @@ const InternationalTransfer = () => {
   const handleCopyToClipboard = async () => {
     await Clipboard.setStringAsync(accountNumber);
     Alert.alert("Copied!", "Account number copied to clipboard.");
+  };
+
+  const [isPinInputVisible, setPinInputVisible] = useState(false);
+  const [pin, setPin] = useState("");
+
+  const handleSwipeSuccess = () => {
+    //setPinInputVisible(true);
+    router.replace("/(screens)/bank-details");
+    //console.log("Swipe successful!");
+  };
+
+  const handlePinChange = (value: string) => {
+    setPin(value);
+    if (value.length === 4) {
+      console.log("PIN Entered:", value);
+      setPinInputVisible(false);
+    }
   };
 
   return (
@@ -163,7 +186,7 @@ const InternationalTransfer = () => {
             </View>
           </View>
 
-          <View className=" flex flex-row items-center justify-start bg-secondary-500 px-5 mt-4 rounded-[20px] h-[80px] ">
+          <View className=" flex flex-row items-center justify-start bg-secondary-500 px-5 mt-4 mb-5 rounded-[20px] h-[80px] ">
             <View className="flex flex-row items-center  gap-2">
               <TouchableOpacity>
                 <Image source={icons.setting} />
@@ -175,18 +198,63 @@ const InternationalTransfer = () => {
             </View>
           </View>
 
-          <TouchableOpacity>
-          <View className="flex flex-row items-center justify-start mt-8 mb-12 pl-2 h-[60px] bg-white rounded-[50px]">
-            <TouchableOpacity className="mr-6 ">
-              <Image source={icons.arrowRight} resizeMode="contain" />
-            </TouchableOpacity>
+          {/*<KeyboardAvoidingView
+          className="mb-10"
+            style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20 }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <View>
+              {!isPinInputVisible ? (
+                <CustomSwipeButton
+                  title="Proceed to bank details"
+                  onSwipeSuccess={handleSwipeSuccess}
+                  
+                />
+              ) : (
+                <View>
+                  <Text className="text-[32px] text-primary-300 font-bold">
+                    Enter your 4-Digit PIN
+                  </Text>
+                  <Text className="text-[14px] text-secondary-600 my-5">
+                    Enter your PIN to make transfer
+                  </Text>
 
-            <Text className="text-[16px] font-gilroySemiBold">
-              Proceed to bank details
-            </Text>
+                
+                  <View className="flex-row justify-around items-center mb-8 bg-gray-200 w-[140px] h-[50px] rounded-[10px] self-center">
+                    {Array(4)
+                      .fill(0)
+                      .map((_, index) => (
+                        <View
+                          key={index}
+                          className={`w-[10px] h-[10px] rounded-full ${
+                            pin.length > index
+                              ? "bg-primary-300"
+                              : "bg-secondary-700"
+                          }`}
+                        />
+                      ))}
+                  </View>
+                 
+                  <TextInput
+                    style={{ opacity: 0, position: "absolute" }}
+                    keyboardType="numeric"
+                    maxLength={4}
+                    value={pin}
+                    onChangeText={handlePinChange}
+                    autoFocus
+                  />
+                </View>
+              )}
+            </View>
+
+          </KeyboardAvoidingView>*/}
+          <View className="mb-10">
+            <CustomSwipeButton
+              title="Proceed to bank details"
+              onSwipeSuccess={handleSwipeSuccess}
+              containerStyles={{ width: "100%", alignSelf: "center" }}
+            />
           </View>
-          </TouchableOpacity>
-          
         </View>
       </SafeAreaView>
     </ScrollView>
