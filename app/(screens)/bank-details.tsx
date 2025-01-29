@@ -15,6 +15,8 @@ import InputField from "@/components/InputField";
 import CustomSwipeButton from "@/components/CustomSwipeButton";
 import { useRouter } from "expo-router";
 import PinInputModal from "@/components/PinInputModal";
+import TransferHeader from "@/components/TransferHeader";
+import CustomView from "@/components/CustomView";
 
 const BankDetails = () => {
   const [form, setForm] = useState({
@@ -25,7 +27,6 @@ const BankDetails = () => {
     remark: "",
   });
 
-  
   const [isBusiness, setIsBusiness] = useState(false);
 
   const toggleSwitch = () => setIsBusiness((prevState) => !prevState);
@@ -37,11 +38,10 @@ const BankDetails = () => {
     Alert.alert("Copied!", "Account number copied to clipboard.");
   };
   const [isPinInputVisible, setPinInputVisible] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
   const handleSwipeSuccess = () => {
     setPinInputVisible(true);
-    console.log("This is true")
-    
+    console.log("This is true");
   };
 
   const handlePinVerified = (pin: string) => {
@@ -49,52 +49,12 @@ const BankDetails = () => {
     router.push("/(tabs)/home");
   };
 
-
   return (
     <ScrollView>
       <SafeAreaView className="flex-1 white">
-        <View className="h-[20%] px-3">
-          <ImageBackground
-            source={images.BgBoxes}
-            className="w-full h-[91px] justify-center"
-          >
-            <View className="flex flex-row items-center justify-between">
-              <TouchableOpacity>
-                <Image source={icons.arrowLeft} resizeMode="contain" />
-              </TouchableOpacity>
+        <TransferHeader title="Bank details" />
 
-              <Text className="text-[20px] font-gilroyBold text-primary-300">
-                Bank Detail
-              </Text>
-
-              <View className="w-[46.25px] h-[25px] bg-white rounded-full flex-row justify-between items-center px-[4px] relative">
-                <Image
-                  source={icons.regularUser}
-                  className={`w-[14px] h-[14px] ${
-                    isBusiness ? "opacity-50" : "opacity-100"
-                  }`}
-                  resizeMode="contain"
-                />
-                <Image
-                  source={icons.businessOwner}
-                  className={`w-[14px] h-[14px] ${
-                    isBusiness ? "opacity-100" : "opacity-50"
-                  }`}
-                  resizeMode="contain"
-                />
-
-                <TouchableOpacity
-                  onPress={toggleSwitch}
-                  className={`w-[18px] h-[18px] bg-[#5BBE8A] rounded-full absolute ${
-                    isBusiness ? "right-[2px]" : "left-[2px]"
-                  } shadow-md`}
-                />
-              </View>
-            </View>
-          </ImageBackground>
-        </View>
-
-        <View className="bg-primary-300 rounded-t-[20px] px-3 -mt-12 ">
+        <CustomView>
           <View>
             <InputField
               title="Bank Name"
@@ -154,21 +114,19 @@ const BankDetails = () => {
           </View>
 
           <View className="mt-16 mb-10">
-          <CustomSwipeButton
-          title="Swipe to make payment"
-          onSwipeSuccess={handleSwipeSuccess}
-          containerStyles={{ width: "100%", alignSelf: "center" }}
-          />
+            <CustomSwipeButton
+              title="Swipe to make payment"
+              onSwipeSuccess={handleSwipeSuccess}
+              containerStyles={{ width: "100%", alignSelf: "center" }}
+            />
           </View>
-          
-        </View>
+        </CustomView>
 
         <PinInputModal
           isVisible={isPinInputVisible}
           onClose={() => setPinInputVisible(false)}
           onPinEntered={handlePinVerified}
         />
-
       </SafeAreaView>
     </ScrollView>
   );

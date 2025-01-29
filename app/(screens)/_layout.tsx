@@ -151,6 +151,20 @@ const ScreensLayout = () => {
             headerShown: false,
           }}
         />
+
+        <Stack.Screen
+          name="transfer-succesful"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="transaction-details"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );

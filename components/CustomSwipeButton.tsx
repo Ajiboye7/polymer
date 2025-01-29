@@ -162,6 +162,7 @@ const CustomSwipeButton: React.FC<CustomSwipeButtonProps> = ({
   onSwipeSuccess,
   titleStyles,
   containerStyles,
+  ...props
 }) => {
   return (
     <SwipeButton
@@ -180,6 +181,7 @@ const CustomSwipeButton: React.FC<CustomSwipeButtonProps> = ({
       containerStyles={containerStyles}
       shouldResetAfterSuccess
       onSwipeSuccess={onSwipeSuccess}
+      {...props}
     />
   );
 };

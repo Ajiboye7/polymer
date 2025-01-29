@@ -47,6 +47,8 @@ import totalToPay from "@/assets/icons/Group 2099.png"
 import ratePlusBonus from "@/assets/icons/Group 2100.png"
 import close from "@/assets/icons/close.png"
 import del from "@/assets/icons/Chevron Left.png"
+import qrCode from "@/assets/icons/Qr.png"
+import pee from "@/assets/icons/Frame.png"
 
 
 
@@ -67,6 +69,7 @@ import BgBoxes from "@/assets/images/Background Art.png"
 import profileCreationImage from "@/assets/images/P Frames.png"
 import internationalTransfer from "@/assets/images/Frame 14117.png"
 import localTransfer from "@/assets/images/Frame 14118.png"
+import transferSuccesful from "@/assets/images/Transfer screen.png"
 
 
 
@@ -126,6 +129,8 @@ export const icons= {
     arrowRight,
     close,
     del,
+    qrCode,
+    pee
 }
 
 
@@ -147,6 +152,7 @@ export const images ={
     profileCreationImage,
     internationalTransfer,
     localTransfer,
+    transferSuccesful
 }
 
 

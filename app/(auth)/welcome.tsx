@@ -21,7 +21,7 @@ const Onboarding = () => {
   const isLastSlide = activeIndex === onboarding.length - 1;
 
   const handlePress = () => {
-    router.replace("/(screens)/bank-details");
+    router.replace("/(screens)/transaction-details");
   };
 
   return (
