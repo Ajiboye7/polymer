@@ -35,7 +35,7 @@ const InternationalTransfer = () => {
 
   const handleSwipeSuccess = () => {
     //setPinInputVisible(true);
-    router.replace("/(screens)/bank-details");
+    router.replace("/(screens)/international-bank-details");
     //console.log("Swipe successful!");
   };
 

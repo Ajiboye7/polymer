@@ -349,74 +349,74 @@ export const banks = [
 ];
 
 
-export const beneficiary = [
+export const beneficiaries = [
   {
     id: "1",
     name: "Chinonso Okafor",
     accountNumber: "1012345678",
-    icon: icon.gtBank
+    icon: icons.gtBank
   },
 
   {
     id: "2",
     name: "Ngozi Nwosu",
     accountNumber: "2023456789",
-    icon: icon.accessBank
+    icon: icons.accessBank
   },
 
   {
     id: "3",
     name: "Emeka Eze",
     accountNumber: "3034567890",
-    icon: icon.opay
+    icon: icons.opay
   },
 
   {
     id: "4",
     name: "Amina Bello",
     accountNumber: "4045678901",
-    icon: icon.gtBank
+    icon: icons.gtBank
   },
 
   {
     id: "5",
     name: "Tolu Ajayi",
     accountNumber: "5056789012",
-    icon: icon.accessBank
+    icon: icons.accessBank
   },
 
   {
     id: "6",
     name: "Chika Ibe",
     accountNumber: "6067890123",
-    icon: icon.opay
+    icon: icons.opay
   },
 
   {
     id: "7",
     name: "Ifeoma Uche",
     accountNumber: "7078901234",
-    icon: icon.gtBank
+    icon: icons.gtBank
   },
 
   {
     id: "8",
     name: "Sani Bello",
     accountNumber: "8089012345",
-    icon: icon.accessBank
+    icon: icons.accessBank
   },
 
   {
     id: "9",
     name: "Olufemi Adeyemi",
     accountNumber: "9090123456",
-    icon: icon.opay
+    icon: icons.opay
   },
 
   {
     id: "10",
     name: "Zainab Ibrahim",
     accountNumber: "1001234567",
-    icon: icon.gtBank
+    icon: icons.gtBank
   },
 ]

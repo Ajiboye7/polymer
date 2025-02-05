@@ -167,7 +167,7 @@ const ScreensLayout = () => {
         />
 
         <Stack.Screen
-          name="local-transfer"
+          name="new-transfer"
           options={{
             headerShown: false,
           }}

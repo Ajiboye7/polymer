@@ -21,7 +21,7 @@ import { useRouter } from "expo-router";
 import { banks } from "@/constants";
 import { BlurView } from "expo-blur";
 
-const LocalTransfer = () => {
+const NewTransfer = () => {
   const router = useRouter();
 
   const [details, setDetails] = useState({
@@ -34,9 +34,14 @@ const LocalTransfer = () => {
     setModalVisible(false);
   };
 
+  const handleBeneficiary = () => {
+    setSelectMode("beneficiary")
+    router.replace("/(screens)/beneficiary");
+  }
+
   const handleSwipeSuccess = () => {
     //setPinInputVisible(true);
-    router.replace("/(screens)/bank-details");
+    router.replace("/(screens)/local-bank-details");
     //console.log("Swipe successful!");
   };
 
@@ -46,6 +51,36 @@ const LocalTransfer = () => {
   const [selectedMode, setSelectMode] = useState<"newTransfer" | "beneficiary">(
     "newTransfer"
   );
+
+  const ListHeader = () => {
+    return (
+      <>
+        <TouchableOpacity onPress={() => setModalVisible(false)}>
+          <View className="flex flex-row justify-end">
+            <Image
+              source={icons.cancel}
+              resizeMode="contain"
+              className="w-[20px] h-[20px]"
+            />
+          </View>
+        </TouchableOpacity>
+        <Text className="text-[20px] text-primary-300 font-gilroyBold">
+          Banks
+        </Text>
+
+        <InputField
+          placeholder="Search Bank"
+          icon={icons.search}
+          value={searchBank}
+          handleChangeText={setSearchBank}
+          inputStyles="border border-primary-100 focus:border-primary-100"
+          otherStyles="mb-5"
+          iconStyle="w-[16px] h-[16px]"
+        />
+      </>
+    );
+  };
+
   return (
     <ScrollView className="">
       <SafeAreaView className="flex-1">
@@ -78,7 +113,7 @@ const LocalTransfer = () => {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setSelectMode("beneficiary")}>
+            <TouchableOpacity onPress={handleBeneficiary}>
               <View
                 className={` w-[166.5px] h-[80px] items-center justify-center rounded-[20px] space-y-2 ${
                   selectedMode === "beneficiary" ? "bg-primary-300" : "bg-none"
@@ -133,7 +168,7 @@ const LocalTransfer = () => {
             textContentType="name"
             icon={icons.arrowSquareDown}
             iconStyle="w-[7.06px] h-[7.52px] top-1"
-            onFocus={() => setModalVisible(true)} // Show modal on focus
+            onFocus={() => setModalVisible(true)}
           />
           <View>
             <InputField
@@ -160,33 +195,11 @@ const LocalTransfer = () => {
             >
               <View className="flex-1 justify-end bg-black/30 w-full">
                 <View className="bg-[#FCFCFC] px-3 rounded-t-[25px] pt-8 h-[557px] w-full">
-                  <TouchableOpacity onPress={() => setModalVisible(false)}>
-                    <View className="flex flex-row justify-end">
-                      <Image
-                        source={icons.cancel}
-                        resizeMode="contain"
-                        className="w-[20px] h-[20px]"
-                      />
-                    </View>
-                  </TouchableOpacity>
-                  <Text className="text-[20px] text-primary-300 font-gilroyBold">
-                    Banks
-                  </Text>
-
-                  <InputField
-                    placeholder="Search Bank"
-                    icon={icons.search}
-                    value={searchBank}
-                    handleChangeText={setSearchBank}
-                    inputStyles="border border-primary-100 focus:border-primary-100"
-                    otherStyles="mb-5"
-                    iconStyle="w-[16px] h-[16px]"
-                  />
-
                   <FlatList
                     data={banks.filter((bank) =>
                       bank.name.toLowerCase().includes(searchBank.toLowerCase())
                     )}
+                    ListHeaderComponent={ListHeader}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                       <TouchableOpacity
@@ -239,4 +252,4 @@ const LocalTransfer = () => {
   );
 };
 
-export default LocalTransfer;
+export default NewTransfer;
