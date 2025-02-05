@@ -47,8 +47,12 @@ const PinInputModal: React.FC<PinInputModalProps> = ({
 
   return (
     <Modal transparent animationType="slide" visible={isVisible}>
-      <BlurView intensity={50} className="absolute inset-0" />
-      <View className="bg-white rounded-t-2xl p-6 absolute bottom-0 w-full">
+      <BlurView
+              intensity={30}
+              tint="dark"
+              className="flex-1 justify-end items-center"
+            >
+              <View className="bg-white rounded-t-2xl p-6 absolute bottom-0 w-full">
         <View className="flex-row justify-between mb-4">
           <Text className="text-xl text-center">Enter Transaction PIN</Text>
           <TouchableOpacity onPress={onClose}>
@@ -131,6 +135,8 @@ const PinInputModal: React.FC<PinInputModalProps> = ({
   </View>
 </View>
       </View>
+            </BlurView>
+      
     </Modal>
   );
 };

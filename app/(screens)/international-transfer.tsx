@@ -197,57 +197,6 @@ const InternationalTransfer = () => {
               </Text>
             </View>
           </View>
-
-          {/*<KeyboardAvoidingView
-          className="mb-10"
-            style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20 }}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <View>
-              {!isPinInputVisible ? (
-                <CustomSwipeButton
-                  title="Proceed to bank details"
-                  onSwipeSuccess={handleSwipeSuccess}
-                  
-                />
-              ) : (
-                <View>
-                  <Text className="text-[32px] text-primary-300 font-bold">
-                    Enter your 4-Digit PIN
-                  </Text>
-                  <Text className="text-[14px] text-secondary-600 my-5">
-                    Enter your PIN to make transfer
-                  </Text>
-
-                
-                  <View className="flex-row justify-around items-center mb-8 bg-gray-200 w-[140px] h-[50px] rounded-[10px] self-center">
-                    {Array(4)
-                      .fill(0)
-                      .map((_, index) => (
-                        <View
-                          key={index}
-                          className={`w-[10px] h-[10px] rounded-full ${
-                            pin.length > index
-                              ? "bg-primary-300"
-                              : "bg-secondary-700"
-                          }`}
-                        />
-                      ))}
-                  </View>
-                 
-                  <TextInput
-                    style={{ opacity: 0, position: "absolute" }}
-                    keyboardType="numeric"
-                    maxLength={4}
-                    value={pin}
-                    onChangeText={handlePinChange}
-                    autoFocus
-                  />
-                </View>
-              )}
-            </View>
-
-          </KeyboardAvoidingView>*/}
           <View className="mb-10">
             <CustomSwipeButton
               title="Proceed to bank details"

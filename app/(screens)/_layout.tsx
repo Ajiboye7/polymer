@@ -146,14 +146,14 @@ const ScreensLayout = () => {
         />
 
         <Stack.Screen
-          name="bank-details"
+          name="international-bank-details"
           options={{
             headerShown: false,
           }}
         />
 
         <Stack.Screen
-          name="transfer-succesful"
+          name="transfer-successful"
           options={{
             headerShown: false,
           }}
@@ -161,6 +161,27 @@ const ScreensLayout = () => {
 
         <Stack.Screen
           name="transaction-details"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="local-transfer"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="local-bank-details"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="beneficiary"
           options={{
             headerShown: false,
           }}

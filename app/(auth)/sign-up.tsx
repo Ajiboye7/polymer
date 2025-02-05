@@ -82,7 +82,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import Button from "@/components/Button";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const SignUp = () => {
   const [form, setForm] = useState({
     name: "",
@@ -93,8 +93,8 @@ const SignUp = () => {
   });
 
   return (
-    <SafeAreaView className="mt-5">
-      <ScrollView>
+    <ScrollView className="">
+      <SafeAreaView className="mt-5">
         <View className="px-2">
           <StatusBar hidden />
           <View className="bg-gray-300 w-[29.77px] h-[29.77px] rounded-full">
@@ -109,7 +109,7 @@ const SignUp = () => {
               ease, security and speed.
             </Text>
           </View>
-          <View>
+          <View className="border border-solid-violet-500">
             <InputField
               title="Full Name"
               placeholder="John Doe"
@@ -150,18 +150,20 @@ const SignUp = () => {
               icon={icons.eye}
             />
 
-            <InputField
-              title="Retype Password"
-              placeholder="Re-enter your password"
-              value={form.confirmPassword}
-              handleChangeText={(value) =>
-                setForm({ ...form, confirmPassword: value })
-              }
-              secureTextEntry={true}
-              keyboardType="default"
-              textContentType="password"
-              icon={icons.eye}
-            />
+            <View >
+              <InputField
+                title="Retype Password"
+                placeholder="Re-enter your password"
+                value={form.confirmPassword}
+                handleChangeText={(value) =>
+                  setForm({ ...form, confirmPassword: value })
+                }
+                secureTextEntry={true}
+                keyboardType="default"
+                textContentType="password"
+                icon={icons.eye}
+              />
+            </View>
           </View>
 
           <Button
@@ -174,8 +176,8 @@ const SignUp = () => {
             <Text className="text-primary-300 font-semibold">Log in</Text>
           </Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 

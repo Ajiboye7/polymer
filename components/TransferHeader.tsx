@@ -12,15 +12,16 @@ import { icons } from "@/constants";
 
 interface TransferHeaderProps {
   title?: string;
+  headerStyle?: string
 }
 
-const TransferHeader: React.FC<TransferHeaderProps> = ({ title }) => {
+const TransferHeader: React.FC<TransferHeaderProps> = ({ title, headerStyle }) => {
   const [isBusiness, setIsBusiness] = useState(false);
 
   const toggleSwitch = () => setIsBusiness((prevState) => !prevState);
 
   return (
-    <View className="h-[20%] px-3">
+    <View className={`h-[20%] px-3 ${headerStyle}` }>
       <ImageBackground
         source={images.BgBoxes}
         className="w-full h-[91px] justify-center"

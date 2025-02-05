@@ -21,7 +21,7 @@ const Onboarding = () => {
   const isLastSlide = activeIndex === onboarding.length - 1;
 
   const handlePress = () => {
-    router.replace("/(screens)/transaction-details");
+    router.replace("/(tabs)/home");
   };
 
   return (
@@ -32,10 +32,10 @@ const Onboarding = () => {
           ref={swiperRef}
           loop={false}
           dot={
-            <View className="w-[5px] h-[5px] mx-1 bg-gray-300 rounded-full" />
+            <View className="w-[5px] h-[5px] mx-1 bg-gray-300 rounded-full"/>
           }
           activeDot={
-            <View className="w-[15px] h-[5px] mx-1 bg-[#0B274F] rounded-full" />
+            <View className="w-[15px] h-[5px] mx-1 bg-[#0B274F] rounded-full"/>
           }
           onIndexChanged={(index) => setActiveIndex(index)}
         >

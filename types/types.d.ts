@@ -19,9 +19,13 @@ export interface InputFieldProps {
   keyboardType?: KeyboardTypeOptions;
   textContentType?: TextInputProps["textContentType"];
   secureTextEntry?: boolean;
-  inputStyles?: string | object;
+  inputStyles?: string;
   iconStyle?: string;
   icon?: any;
+  iconClick?: () => void
+  onFocus?: () => void; 
+  editable?: boolean
+
 }
 
 export interface SwipeButtonProps {

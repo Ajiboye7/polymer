@@ -18,7 +18,7 @@ import PinInputModal from "@/components/PinInputModal";
 import TransferHeader from "@/components/TransferHeader";
 import CustomView from "@/components/CustomView";
 
-const BankDetails = () => {
+const InternationalBankDetails = () => {
   const [form, setForm] = useState({
     bankName: "",
     recipientName: "",
@@ -39,6 +39,7 @@ const BankDetails = () => {
   };
   const [isPinInputVisible, setPinInputVisible] = useState(false);
   const router = useRouter();
+
   const handleSwipeSuccess = () => {
     setPinInputVisible(true);
     console.log("This is true");
@@ -132,4 +133,4 @@ const BankDetails = () => {
   );
 };
 
-export default BankDetails;
+export default InternationalBankDetails;

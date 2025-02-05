@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
 import Button from "@/components/Button";
 
-const TransferSuccesful = () => {
+const TransferSuccessful = () => {
   return (
     <SafeAreaView className="pt-20 px-3 bg-white h-full">
       <View className="items-center ">
@@ -33,4 +33,4 @@ const TransferSuccesful = () => {
   );
 };
 
-export default TransferSuccesful;
+export default TransferSuccessful;
