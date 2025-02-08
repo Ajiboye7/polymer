@@ -1,127 +1,127 @@
-import { View, Text, TouchableOpacity, Image, FlatList, ScrollView } from "react-native";
-import { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import TransferHeader from "@/components/TransferHeader";
-import CustomView from "@/components/CustomView";
-import { icons, images } from "@/constants";
-import InputField from "@/components/InputField";
-import { beneficiaries } from "@/constants";
-import { useRouter } from "expo-router";
+{/*import { View, Text } from 'react-native'
+import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import EmailHeader from '@/components/EmailHeader'
 
-const Beneficiary = () => {
+const BusinessVerificationSuccessfulEmail = () => {
+  return (
+<SafeAreaView className=' px-4 pt-3 '>
+  <EmailHeader 
+  text='Polymer business'
+  />
 
-  const router = useRouter()
-
-  const handlenewTransfer = () => {
-    setSelectMode("beneficiary")
-    router.replace("/(screens)/new-transfer");
-  }
-
-
-  const [selectedMode, setSelectMode] = useState<"newTransfer" | "beneficiary">(
-    "beneficiary"
-  );
-  const [searchBeneficiary, setSearchBeneficiary] = useState("");
-
-  const ListHeader = () =>  (
-    <>
-    <View className="flex flex-row justify-between items-center h-[100px] bg-primary-200 px-2 my-5 rounded-[25px]">
-          <TouchableOpacity onPress={handlenewTransfer}>
-            <View
-              className={` w-[166.5px] h-[80px] items-center justify-center rounded-[20px]  space-y-3 ${
-                selectedMode === "newTransfer" ? "bg-primary-300" : "bg-none"
-              }`}
-            >
-              <Image
-                source={
-                  selectedMode === "newTransfer"
-                    ? icons.activeBank
-                    : icons.inActiveBank
-                }
-              />
-              <Text
-                className={`text-[12px] font-gilroyBold  ${
-                  selectedMode === "newTransfer"
-                    ? "text-white"
-                    : "text-secondary-600"
-                } `}
-              >
-                New Transfer
-              </Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => setSelectMode("beneficiary")}>
-            <View
-              className={` w-[166.5px] h-[80px] items-center justify-center rounded-[20px] space-y-2 ${
-                selectedMode === "beneficiary" ? "bg-primary-300" : "bg-none"
-              }`}
-            >
-              <Image
-                source={
-                  selectedMode === "beneficiary"
-                    ? icons.activeBeneficiary
-                    : icons.inActiveBeneficiary
-                }
-              />
-              <Text
-                className={`text-[12px] font-gilroyBold  ${
-                  selectedMode === "beneficiary"
-                    ? "text-white"
-                    : "text-secondary-600"
-                } `}
-              >
-                Beneficiary
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <InputField
-          placeholder="Search for Beneficiary"
-          icon={icons.search}
-          value={searchBeneficiary}
-          handleChangeText={setSearchBeneficiary}
-          inputStyles="border border-primary-100 focus:border-primary-100"
-          otherStyles="mb-5"
-          iconStyle="w-[16px] h-[16px]"
-        />
-    </>
+</SafeAreaView>
   )
+}
+
+export default BusinessVerificationSuccessfulEmail*/}
+
+
+import React from 'react';
+import { ScrollView, Text, View, Dimensions } from 'react-native';
+import { BarChart, LineChart, PieChart } from 'react-native-chart-kit';
+import { VictoryPie } from 'victory-native';
+
+const screenWidth = Dimensions.get('window').width;
+
+// Define types for chart data
+interface PieChartData {
+  name: string;
+  amount: number;
+  color: string;
+  legendFontColor: string;
+  legendFontSize: number;
+}
+
+interface ChartData {
+  x: string;
+  y: number;
+}
+
+{/*const AnalyticsScreen = () => {
+  const debitCreditData = [
+    { x: 'Debit', y: 40 },
+    { x: 'Credit', y: 60 },
+  ];
+}*/}
+
+const AnalyticsScreen: React.FC = () => {
+  const debitCreditData: PieChartData[] = [
+    { name: 'Debit', amount: 400, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 12 },
+    { name: 'Credit', amount: 600, color: 'green', legendFontColor: '#7F7F7F', legendFontSize: 12 },
+  ];
+
+  const monthlyData: number[] = [400, 500, 600, 700, 650, 800]; // Example monthly data
 
   return (
-    <SafeAreaView className="flex-1">
-      <TransferHeader title="Local Transfer" />
-      <CustomView>
+    <ScrollView className='px-4'>
+      <View>
+        <Text className="text-lg font-bold mb-3">Bar Chart</Text>
+        <BarChart
+  data={{
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [{ data: monthlyData }],
+  }}
+  width={screenWidth - 32}
+  height={220}
+  yAxisLabel="$"
+  yAxisSuffix="" // Provide a suffix to avoid TypeScript error
+  chartConfig={{
+    backgroundColor: '#e26a00',
+    backgroundGradientFrom: '#fb8c00',
+    backgroundGradientTo: '#ffa726',
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    barPercentage: 0.5,
+  }}
+  style={{ marginVertical: 8, borderRadius: 16 }}
+/>
 
-        <FlatList
-          data={beneficiaries.filter((beneficiary) =>
-            beneficiary.name
-              .toLocaleLowerCase()
-              .includes(searchBeneficiary.toLocaleLowerCase())
-          )}
-          keyExtractor={(item) => item.id}
-          ListHeaderComponent={ListHeader}
-          renderItem={({ item }) => (
-            <TouchableOpacity>
-              <View className=" flex flex-row items-center justify-between bg-[#7E95B7] my-2 px-5 h-[60px] rounded-[25px]">
-                <View className="flex flex-row items-center space-x-3">
-                  <Image source={item.icon} resizeMode="contain"/>
-
-                  <View className="space-y-2">
-                    <Text className="text-secondary-100 text-[16px] font-gilroyBold  ">{item.name}</Text>
-                    <Text className="text-secondary-100 text-[12px] font-gilroyBold ">{item.accountNumber}</Text>
-                  </View>
-                </View>
-
-                <Image source={icons.trash} />
-              </View>
-            </TouchableOpacity>
-          )}
+        <Text className="text-lg font-bold mt-5 mb-3">Pie Chart</Text>
+        
+        <VictoryPie
+        data={debitCreditData}
+        colorScale={['red', 'green']}
+        innerRadius={50}
+        padAngle={3} // Creates space between segments
+        labels={({ datum }: { datum: ChartData }) => `${datum.x}: ${datum.y}%`}
+        style={{
+          labels: { fill: 'white', fontSize: 12, fontWeight: 'bold' },
+        }}
+      />
+         
+        <PieChart
+          data={debitCreditData}
+          width={screenWidth - 32}
+          height={220}
+          chartConfig={{
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          }}
+          accessor="amount"
+          backgroundColor="transparent"
+          paddingLeft="15"
         />
-      </CustomView>
-    </SafeAreaView>
+
+        <Text className="text-lg font-bold mt-5 mb-3">Line Chart</Text>
+        <LineChart
+          data={{
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{ data: monthlyData }],
+          }}
+          width={screenWidth - 32}
+          height={220}
+          yAxisLabel="$"
+          chartConfig={{
+            backgroundColor: '#022173',
+            backgroundGradientFrom: '#1c92d2',
+            backgroundGradientTo: '#f2fcfe',
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          }}
+          bezier
+          style={{ marginVertical: 8, borderRadius: 16 }}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
-export default Beneficiary;
+export default AnalyticsScreen;

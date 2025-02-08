@@ -186,6 +186,99 @@ const ScreensLayout = () => {
             headerShown: false,
           }}
         />
+
+        <Stack.Screen
+          name="email-otp"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="email-otp"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="customer-onboarding-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="login-successful-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="business-account-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="international-transfer-sent-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="local-transfer-sent-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="international-transfer-received-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="local-transfer-received-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="business-verification-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="business-verification-successful-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="business-verification-error-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+<Stack.Screen
+          name="business-verification-expired-email"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+
       </Stack>
     </>
   );

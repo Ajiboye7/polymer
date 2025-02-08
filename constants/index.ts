@@ -15,6 +15,8 @@ import sterling from "@/assets/icons/image 6.png";
 import mtn from "@/assets/icons/MTN Nigeria - jpeg.png";
 import setting from "@/assets/icons/information.png";
 import opay from "@/assets/icons/OPay - png.png";
+import linkedIn from "@/assets/icons/Linked IN.png";
+import twitter from "@/assets/icons/Group (1).png";
 import facebook from "@/assets/icons/path16.png";
 import tick from "@/assets/icons/shield-tick.png";
 import send from "@/assets/icons/send-2.png";
@@ -57,6 +59,9 @@ import inActiveBeneficiary from "@/assets/icons/user-cirlce-add2.png";
 import success from "@/assets/icons/shield-tick.png";
 import search from "@/assets/icons/search-normal.png";
 import trash from "@/assets/icons/trash.png";
+import star from "@/assets/icons/mdi_star-outline.png";
+import list from "@/assets/icons/list.png";
+
 
 
 import cardSvg from "@/assets/icons/card.svg";
@@ -148,6 +153,10 @@ export const icons = {
   success,
   search,
   trash,
+  star,
+  linkedIn,
+  twitter,
+  list,
 
   homeSvg,
   paymentSvg,
@@ -354,69 +363,79 @@ export const beneficiaries = [
     id: "1",
     name: "Chinonso Okafor",
     accountNumber: "1012345678",
-    icon: icons.gtBank
+    icon: icons.gtBank,
+    bank: "Guaranty Trust Bank (GTB)"
   },
 
   {
     id: "2",
     name: "Ngozi Nwosu",
     accountNumber: "2023456789",
-    icon: icons.accessBank
+    icon: icons.accessBank,
+    bank: "Accesss Bank"
   },
 
   {
     id: "3",
     name: "Emeka Eze",
     accountNumber: "3034567890",
-    icon: icons.opay
+    icon: icons.opay,
+    bank: "Opay"
   },
 
   {
     id: "4",
     name: "Amina Bello",
     accountNumber: "4045678901",
-    icon: icons.gtBank
+    icon: icons.gtBank,
+    bank: "Guaranty Trust Bank (GTB)"
   },
 
   {
     id: "5",
     name: "Tolu Ajayi",
     accountNumber: "5056789012",
-    icon: icons.accessBank
+    icon: icons.accessBank,
+    bank: "Access Bank"
   },
 
   {
     id: "6",
     name: "Chika Ibe",
     accountNumber: "6067890123",
-    icon: icons.opay
+    icon: icons.opay,
+    bank: "Opay"
   },
 
   {
     id: "7",
     name: "Ifeoma Uche",
     accountNumber: "7078901234",
-    icon: icons.gtBank
+    icon: icons.gtBank,
+    bank: "Guaranty Trust Bank (GTB)"
   },
 
   {
     id: "8",
     name: "Sani Bello",
     accountNumber: "8089012345",
-    icon: icons.accessBank
+    icon: icons.accessBank,
+    bank: "Access Bank"
   },
 
   {
     id: "9",
     name: "Olufemi Adeyemi",
     accountNumber: "9090123456",
-    icon: icons.opay
+    icon: icons.opay,
+    bank: "Opay"
   },
 
   {
     id: "10",
     name: "Zainab Ibrahim",
     accountNumber: "1001234567",
-    icon: icons.gtBank
+    icon: icons.gtBank,
+    bank: "Guaranty Trust Bank (GTB)"
   },
 ]

@@ -22,10 +22,9 @@ export interface InputFieldProps {
   inputStyles?: string;
   iconStyle?: string;
   icon?: any;
-  iconClick?: () => void
-  onFocus?: () => void; 
-  editable?: boolean
-
+  iconClick?: () => void;
+  onFocus?: () => void;
+  editable?: boolean;
 }
 
 export interface SwipeButtonProps {
@@ -44,3 +43,21 @@ export type RootStackParamList = {
   VerificationScreen: undefined;
   InputIdentity: { selectedMode: "bvn" | "nin" };
 };
+
+export interface EmailHeaderProps{
+  text?: string
+}
+
+export interface EmailContentProps {
+  containerStyle?: string;
+  headerText?: string;
+  message?: string;
+  footerText?: string;
+  messageStyle?: string
+  link?: string
+}
+
+export interface EmailBannerProps {
+  parentContainer?: string;
+  childContainer?: string;
+}

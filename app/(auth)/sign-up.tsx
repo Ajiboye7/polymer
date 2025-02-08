@@ -109,7 +109,7 @@ const SignUp = () => {
               ease, security and speed.
             </Text>
           </View>
-          <View className="border border-solid-violet-500">
+          <View>
             <InputField
               title="Full Name"
               placeholder="John Doe"
