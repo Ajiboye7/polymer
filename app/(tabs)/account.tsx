@@ -1,127 +1,103 @@
-{/*import { View, Text } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import EmailHeader from '@/components/EmailHeader'
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  Switch,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import TransferHeader from "@/components/TransferHeader";
+import CustomView from "@/components/CustomView";
+import { icons, images } from "@/constants";
+import { account } from "@/constants";
 
-const BusinessVerificationSuccessfulEmail = () => {
-  return (
-<SafeAreaView className=' px-4 pt-3 '>
-  <EmailHeader 
-  text='Polymer business'
-  />
+const Account = () => {
+  const [isSwitch1Enabled, setIsSwitch1Enabled] = useState(false);
+  const [isSwitch2Enabled, setIsSwitch2Enabled] = useState(false);
 
-</SafeAreaView>
-  )
-}
+  const toggleSwitch1 = () => setIsSwitch1Enabled((prevState) => !prevState);
+  const toggleSwitch2 = () => setIsSwitch2Enabled((prevState) => !prevState);
 
-export default BusinessVerificationSuccessfulEmail*/}
-
-
-import React from 'react';
-import { ScrollView, Text, View, Dimensions } from 'react-native';
-import { BarChart, LineChart, PieChart } from 'react-native-chart-kit';
-import { VictoryPie } from 'victory-native';
-
-const screenWidth = Dimensions.get('window').width;
-
-// Define types for chart data
-interface PieChartData {
-  name: string;
-  amount: number;
-  color: string;
-  legendFontColor: string;
-  legendFontSize: number;
-}
-
-interface ChartData {
-  x: string;
-  y: number;
-}
-
-{/*const AnalyticsScreen = () => {
-  const debitCreditData = [
-    { x: 'Debit', y: 40 },
-    { x: 'Credit', y: 60 },
-  ];
-}*/}
-
-const AnalyticsScreen: React.FC = () => {
-  const debitCreditData: PieChartData[] = [
-    { name: 'Debit', amount: 400, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 12 },
-    { name: 'Credit', amount: 600, color: 'green', legendFontColor: '#7F7F7F', legendFontSize: 12 },
-  ];
-
-  const monthlyData: number[] = [400, 500, 600, 700, 650, 800]; // Example monthly data
-
-  return (
-    <ScrollView className='px-4'>
-      <View>
-        <Text className="text-lg font-bold mb-3">Bar Chart</Text>
-        <BarChart
-  data={{
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [{ data: monthlyData }],
-  }}
-  width={screenWidth - 32}
-  height={220}
-  yAxisLabel="$"
-  yAxisSuffix="" // Provide a suffix to avoid TypeScript error
-  chartConfig={{
-    backgroundColor: '#e26a00',
-    backgroundGradientFrom: '#fb8c00',
-    backgroundGradientTo: '#ffa726',
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    barPercentage: 0.5,
-  }}
-  style={{ marginVertical: 8, borderRadius: 16 }}
-/>
-
-        <Text className="text-lg font-bold mt-5 mb-3">Pie Chart</Text>
-        
-        <VictoryPie
-        data={debitCreditData}
-        colorScale={['red', 'green']}
-        innerRadius={50}
-        padAngle={3} // Creates space between segments
-        labels={({ datum }: { datum: ChartData }) => `${datum.x}: ${datum.y}%`}
-        style={{
-          labels: { fill: 'white', fontSize: 12, fontWeight: 'bold' },
-        }}
-      />
-         
-        <PieChart
-          data={debitCreditData}
-          width={screenWidth - 32}
-          height={220}
-          chartConfig={{
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          }}
-          accessor="amount"
-          backgroundColor="transparent"
-          paddingLeft="15"
-        />
-
-        <Text className="text-lg font-bold mt-5 mb-3">Line Chart</Text>
-        <LineChart
-          data={{
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{ data: monthlyData }],
-          }}
-          width={screenWidth - 32}
-          height={220}
-          yAxisLabel="$"
-          chartConfig={{
-            backgroundColor: '#022173',
-            backgroundGradientFrom: '#1c92d2',
-            backgroundGradientTo: '#f2fcfe',
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          }}
-          bezier
-          style={{ marginVertical: 8, borderRadius: 16 }}
-        />
+  const ListHeader = () => (
+    <View>
+      <View className="flex flex-row items-center justify-between">
+        <Text className="text-[16px] text-secondary-600 font-gilroyBold">
+          Hi, Ajiboye
+        </Text>
+        <Image source={icons.profile} className="w-[50px] h-[50px]" />
       </View>
-    </ScrollView>
+
+      <View className="mb-5">
+        <ImageBackground
+          source={images.balanceBg}
+          className="-mx-3 mt-5 py-2 h-[91px] "
+        >
+          <View className="flex flex-row justify-between items-center mb-3 mx-3 text-[14px]">
+            <Text className="text-white">Enable Finger Print/Face ID</Text>
+            <Switch
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={isSwitch1Enabled ? "#3555F5" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch1}
+              value={isSwitch1Enabled}
+            />
+          </View>
+
+          <View className="flex flex-row justify-between items-center mb-3 mx-3 text-[14px]">
+            <Text className="text-white">Show Dashboard Account Balance</Text>
+            <Switch
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={isSwitch2Enabled ? "#3555F5" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch2}
+              value={isSwitch2Enabled}
+            />
+          </View>
+        </ImageBackground>
+      </View>
+    </View>
+  );
+
+  return (
+    <SafeAreaView className="flex-1">
+      <TransferHeader title="My Account" />
+
+      <CustomView viewStyle="bg-primary-300 px-0">
+        <View className="">
+        <FlatList
+          data={account}
+          contentContainerStyle={{ paddingLeft: 12, paddingRight: 12, backgroundColor:"" }}
+          keyExtractor={(items) => items.id}
+          ListHeaderComponent={ListHeader}
+          renderItem={({ item, index }) => (
+            <View style={{ backgroundColor: 'rgba(128, 139, 150, 0.2)', height:40, padding: 5,  }}>
+                <TouchableOpacity>
+              <View className="flex flex-row items-center justify-between">
+                <View className="flex flex-row items-center space-x-2">
+                  <Image 
+                  source={item.icon}
+                  />
+                  <Text className= {`text-[14px] ${index === account.length -1 ? "text-danger": "text-white"}` }>{item.title}</Text>
+
+                </View>
+                <Image 
+                source={icons.arrowSquareRight}
+                />
+              </View>
+            </TouchableOpacity>
+            </View>
+          
+          )}
+        />
+        </View>
+        
+      </CustomView>
+    </SafeAreaView>
   );
 };
 
-export default AnalyticsScreen;
+export default Account;
+

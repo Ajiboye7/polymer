@@ -21,6 +21,8 @@ const EmailOtp = () => {
         message="1 2 3 4 5 6"
         messageStyle="text-[20px] text-primary-200 font-bold"
         containerStyle="items-center space-y-8"
+        footerText="true"
+        showFooterText ={true}
       />
 
       <EmailFooter />

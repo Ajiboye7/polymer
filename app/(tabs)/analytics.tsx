@@ -1,136 +1,141 @@
-import {
+/*import {
   View,
   Text,
-  TouchableOpacity,
-  Image,
   ImageBackground,
-  Alert,
-  ScrollView
+  Image,
+  TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { icons, images } from "@/constants";
-import * as Clipboard from "expo-clipboard";
-
-
-const FundAccount = () => {
-  const [isBusiness, setIsBusiness] = useState(false);
-
-  const toggleSwitch = () => setIsBusiness((prevState) => !prevState);
-
-  const accountNumber = "0235676005";
-
-  const handleCopyToClipboard = async () => {
-    await Clipboard.setStringAsync(accountNumber);
-    Alert.alert("Copied!", "Account number copied to clipboard.");
-  };
-
+import TransferHeader from "@/components/TransferHeader";
+import CustomView from "@/components/CustomView";
+import { images, icons } from "@/constants";
+import BarCharts from "@/components/BarChart";
+import PieCharts from "@/components/PieChart";
+import LineCharts from "@/components/LineChart";
+import Layout from "@/components/Layout";
+const Analytics = () => {
+  const [selectChart, setSelectChart] = useState<"bar" | "pie" | "line">("bar");
   return (
     <ScrollView>
-      <SafeAreaView className=" flex-1 white">
-      <View className="h-[25%] px-3">
-      <ImageBackground
-        source={images.BgBoxes}
-        className="w-full h-[91px] justify-center"
-      >
-        <View className="flex flex-row items-center justify-between">
-          <TouchableOpacity>
-            <Image source={icons.arrowLeft} resizeMode="contain" />
-          </TouchableOpacity>
-
-          <Text className="text-[20px] font-gilroyBold text-primary-300">
-            Fund Account
+      <SafeAreaView className="flex-1">
+        <TransferHeader title="Analytics" />
+        <CustomView>
+          <Text className="text-white text-[20px] my-5 font-gilroyBold ">
+            Your Spending
           </Text>
+          <ImageBackground
+            source={images.balanceBg}
+            className="h-[91px] justify-center p-3 -mx-3"
+          >
+            <View className="flex- flex-row items-center justify-between">
+              <View className="space-y-2">
+                <Text className="text-[12px] text-secondary-600">
+                  In the last week
+                </Text>
+                <Text className="text-[25px] font-gilroyBold text-white">
+                  ₦ 187,000.00
+                </Text>
+              </View>
+              <View className="flex flex-row justify-center items-center space-x-2 w-[94px] h-[44px] bg-white rounded-[25px]">
+                <Text>Weekly</Text>
+                <TouchableOpacity>
+                  <Image source={icons.arrowSquareDown} resizeMode="contain" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ImageBackground>
 
-          <View className="w-[46.25px] h-[25px] bg-white rounded-full flex-row justify-between items-center px-[4px] relative">
-            <Image
-              source={icons.regularUser}
-              className={`w-[14px] h-[14px] ${
-                isBusiness ? "opacity-50" : "opacity-100"
-              }`}
-              resizeMode="contain"
-            />
-            <Image
-              source={icons.businessOwner}
-              className={`w-[14px] h-[14px] ${
-                isBusiness ? "opacity-100" : "opacity-50"
-              }`}
-              resizeMode="contain"
-            />
+          <View className="bg-primary-200 h-[256px] mt-5 -mx-3 ">
+            <View className="items-center mt-4">
+              <View className="flex flex-row w-[300px] h-[35px] items-center justify-between bg-primary-300 rounded-[25px] p-[2px]">
+                <TouchableOpacity onPress={() => setSelectChart("bar")}>
+                  <View
+                    className={`rounded-[20px] w-[90px] h-[32px] items-center justify-center ${
+                      selectChart === "bar" ? "bg-primary-200" : ""
+                    }`}
+                  >
+                    <Image source={icons.barChart} />
+                  </View>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={toggleSwitch}
-              className={`w-[18px] h-[18px] bg-[#5BBE8A] rounded-full absolute ${
-                isBusiness ? "right-[2px]" : "left-[2px]"
-              } shadow-md`}
-            />
-          </View>
-        </View>
-      </ImageBackground>
-      </View>
-      
+                <TouchableOpacity onPress={() => setSelectChart("pie")}>
+                  <View
+                    className={`rounded-[20px] w-[90px] h-[32px] items-center justify-center ${
+                      selectChart === "pie" ? "bg-primary-200" : ""
+                    }`}
+                  >
+                    <Image source={icons.pieChart} />
+                  </View>
+                </TouchableOpacity>
 
-      <View className="bg-primary-300  rounded-t-[20px] px-3 -mt-12 pb-5">
-        <Text className="text-[20px] text-white font-gilroyBold mt-6 mb-5 ">
-          My Account Number
-        </Text>
-        <View className="px-3 mb-6 flex flex-row items-center justify-between h-[90px] bg-primary-200 rounded-[20px]  ">
-          <View className="flex gap-2">
-            <Text className="text-[12px] text-[#7E95B7] ">Account Number</Text>
-            <View className="flex flex-row items-center">
-              <Text className="text-[25px] font-gilroyExtraBold text-white">
-                {accountNumber}
-              </Text>
-              <TouchableOpacity onPress={handleCopyToClipboard}>
-                <Image source={icons.copy} />
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => setSelectChart("line")}>
+                  <View
+                    className={`rounded-[20px] w-[90px] h-[32px] items-center justify-center ${
+                      selectChart === "line" ? "bg-primary-200" : ""
+                    }`}
+                  >
+                    <Image source={icons.lineChart} />
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View>
+                {selectChart === "bar" && <BarCharts />}
+                {selectChart === "pie" && <PieCharts />}
+                {selectChart === "line" && <LineCharts />}
+              </View>
             </View>
           </View>
-          <View className="w-[94.86px] h-[40px] items-center justify-center bg-white rounded-[25px]">
-            <Image source={icons.sterling} />
-          </View>
-        </View>
+          <View className="flex flex-row items-center justify-around mt-8">
+            <View className="flex flex-row items-center justify-center space-x-3 w-[157px] h-[54px] bg-white rounded-[20px]">
+              <View className="items-center justify-center w-[24px] h-[24px] bg-primary-300 rounded-[5px]">
+                <Image source={icons.income} />
+              </View>
 
-        <ImageBackground
-          source={images.balanceBg}
-          className="-mx-3 px-3 h-[91px] justify-center items-start"
-        >
-          <View className="flex gap-2 ">
-            <Text className="text-[12px] text-secondary-600">Account Name</Text>
-            <Text className="text-[25px] font-gilroyBold text-white">
-              Ajiboye Muyideen
-            </Text>
-          </View>
-        </ImageBackground>
-
-        <View className="flex flex-row items-center justify-start pl-2 h-[60px] bg-white rounded-[50px] my-10">
-          <TouchableOpacity className="mr-6 ">
-            <View className="bg-primary-200 w-[41.67px] h-[41.67px] items-center justify-center rounded-full">
-              <Image source={icons.share} resizeMode="contain" />
+              <View className="space-y-1">
+                <Text className="text-[10px] text-primary-300 font-gilroyMedium">
+                  Income
+                </Text>
+                <Text className="text-[14px] text-primary-300 font-gilroyBold">
+                  {" "}
+                  ₦ 123,000.00
+                </Text>
+              </View>
             </View>
-          </TouchableOpacity>
 
-          <Text className="text-[16px] font-gilroySemiBold">
-            Share Account Information
-          </Text>
-        </View>
+            <View className="flex flex-row items-center justify-center space-x-3 w-[157px] h-[54px] bg-[#578CD8] rounded-[20px]">
+              <View className="items-center justify-center w-[24px] h-[24px] bg-white rounded-[5px]">
+                <Image source={icons.expenses} />
+              </View>
 
-        <View className=" px-5 flex flex-row items-center justify-start bg-secondary-500 rounded-[20px] h-[80px] ">
-          <View className="flex flex-row items-center  gap-2">
-            <TouchableOpacity>
-              <Image source={icons.setting} />
-            </TouchableOpacity>
-            <Text className="text-[12px] font-interItalic text-secondary-100 w-[288px]">
-              When you deposit directly into this account, it reflects on your
-              Naira account balance.
-            </Text>
+              <View className="space-y-1">
+                <Text className="text-[10px] text-white font-gilroyMedium">
+                  Expenses
+                </Text>
+                <Text className="text-[14px] text-white font-gilroyBold">
+                  {" "}
+                  ₦ 123,000.00
+                </Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-    </SafeAreaView>
+        </CustomView>
+      </SafeAreaView>
     </ScrollView>
-    
   );
 };
 
-export default FundAccount;
+export default Analytics;*/
+
+import { View, Text } from 'react-native'
+import React from 'react'
+import AnalyticScreen from '@/components/AnalyticScreen'
+
+const Analytics = () => {
+  return (
+    <AnalyticScreen/>
+  )
+}
+
+export default Analytics

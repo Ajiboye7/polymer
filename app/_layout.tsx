@@ -2,7 +2,8 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { useEffect } from 'react';
+import { useEffect, } from 'react';
+import { View } from 'react-native';
 import 'react-native-reanimated';
 
 
@@ -50,7 +51,7 @@ export default function RootLayout() {
   }
 
   return (
-  
+    <View style={{ flex: 1, backgroundColor: "#0B274F" }}>  
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
@@ -58,6 +59,8 @@ export default function RootLayout() {
         <Stack.Screen name="(screens)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
+    </View>
+      
       
   );
 }

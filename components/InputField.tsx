@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import React from "react";
 import { InputFieldProps } from "@/types/types";
-import { icons } from "@/constants";
 
 const InputField = ({
   title,

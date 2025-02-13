@@ -28,6 +28,10 @@ module.exports = {
 
         danger:{
           DEFAULT:"#FF7171",
+        },
+
+        customGray:{
+          DEFAULT : '#808B96',
         }
       },
 

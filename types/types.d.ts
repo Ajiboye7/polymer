@@ -1,8 +1,8 @@
-import { KeyboardTypeOptions, TextInputProps } from "react-native";
+import { KeyboardTypeOptions, TextInputProps , ImageSourcePropType} from "react-native";
 
 export interface ButtonProps {
   title: string;
-  icon?: string;
+  icon?: ImageSourcePropType;
   iconName?: string;
   buttonStyle?: string;
   textStyle?: string;
@@ -21,7 +21,7 @@ export interface InputFieldProps {
   secureTextEntry?: boolean;
   inputStyles?: string;
   iconStyle?: string;
-  icon?: any;
+  icon?: ImageSourcePropType;
   iconClick?: () => void;
   onFocus?: () => void;
   editable?: boolean;
@@ -39,6 +39,12 @@ export type RootStackParamList = {
   Home: undefined;
 };
 
+export interface LayoutProps {
+  children: React.ReactNode;
+  backgroundComponent?: React.ReactNode;
+  snapPoints?: Array<number | string>
+}
+
 export type RootStackParamList = {
   VerificationScreen: undefined;
   InputIdentity: { selectedMode: "bvn" | "nin" };
@@ -55,9 +61,16 @@ export interface EmailContentProps {
   footerText?: string;
   messageStyle?: string
   link?: string
+  showFooterText?: boolean
+  icon?: ImageSourcePropType;
+  iconName?: string
 }
 
 export interface EmailBannerProps {
   parentContainer?: string;
   childContainer?: string;
+}
+
+export interface TransactionTypeProps {
+  transactionType?: string
 }

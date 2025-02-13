@@ -4,7 +4,9 @@ import React from 'react'
 
 const EmailFooter = () => {
   return (
-    <View className="bg-primary-300 py-7 px-3 -mx-4 h-[191px]">
+
+    <>
+     <View className="bg-primary-300 py-7 px-3 -mx-4 h-[191px]">
         <View className="space-y-8 ">
           <View className="flex flex-row space-x-4">
             <TouchableOpacity>
@@ -45,6 +47,10 @@ const EmailFooter = () => {
           </View>
         </View>
       </View>
+
+      <Text className='text-[12px] text-center mt-3 font-gilroyBold '>@2023. All rights reserved.</Text>
+    </>
+   
   )
 }
 

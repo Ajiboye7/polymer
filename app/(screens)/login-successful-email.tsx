@@ -17,6 +17,7 @@ const LoginSuccessfulEmail = () => {
     headerText='Login successful'
     message='You have successfully logged into your Polymer account, if this was not you , click the link below to reset your password.'
     link='abbcebvcvbhh//ggddjhuhuffjjdddh/nig.com'
+    showFooterText={true}
     />
     <EmailFooter/>
    </SafeAreaView>

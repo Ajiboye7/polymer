@@ -11,7 +11,18 @@ import user from "@/assets/icons/user-octagon.png";
 import add from "@/assets/icons/add.png";
 import live from "@/assets/icons/Frame 14115.png";
 import gtBank from "@/assets/icons/GUARANTY Trust Bank - jpeg.png";
-import sterling from "@/assets/icons/image 6.png";
+import sterling from "@/assets/icons/Sterling Bank.png";
+import wema from "@/assets/icons/wema.png";
+import access from "@/assets/icons/Access Bank Diamond.png";
+import providus from "@/assets/icons/Providus Bank.png";
+import polaris from "@/assets/icons/Polaris Bank.png";
+import uba from "@/assets/icons/United Bank for Africa.png";
+import union from "@/assets/icons/Union Bank of Nigeria.png";
+import zenith from "@/assets/icons/Zenith Bank.png";
+import kuda from "@/assets/icons/Kuda Bank.png";
+import fcmb from "@/assets/icons/First City Monument Bank.png";
+import alatByWema from "@/assets/icons/Alat by Wema.png";
+import verve from "@/assets/icons/VFD.png";
 import mtn from "@/assets/icons/MTN Nigeria - jpeg.png";
 import setting from "@/assets/icons/information.png";
 import opay from "@/assets/icons/OPay - png.png";
@@ -24,6 +35,10 @@ import rotateLeft from "@/assets/icons/rotate-left.png";
 import eye from "@/assets/icons/Group.png";
 import nigeria from "@/assets/icons/Vector (1).png";
 import america from "@/assets/icons/Group 1.png";
+import china from "@/assets/icons/CN.png";
+import euro from "@/assets/icons/EU.png";
+import canada from "@/assets/icons/CA.png";
+import britain from "@/assets/icons/GB.png";
 import instagram from "@/assets/icons/Instagram.png";
 import quote from "@/assets/icons/glass.png";
 import icon from "@/assets/icons/icon.png";
@@ -61,6 +76,22 @@ import search from "@/assets/icons/search-normal.png";
 import trash from "@/assets/icons/trash.png";
 import star from "@/assets/icons/mdi_star-outline.png";
 import list from "@/assets/icons/list.png";
+import verificationSuccessful from "@/assets/icons/fa_check.png";
+import verificationError from "@/assets/icons/foundation_x.png";
+import scan from "@/assets/icons/scan.png";
+import settings from "@/assets/icons/setting-2.png";
+import money from "@/assets/icons/money-3.png";
+import wallet from "@/assets/icons/wallet-minus.png";
+import help from "@/assets/icons/help.png";
+import security from "@/assets/icons/security-safe.png";
+import cardControl from "@/assets/icons/cardControl.png";
+import contact from "@/assets/icons/call.png";
+import logOut from "@/assets/icons/radar-2.png";
+import barChart from "@/assets/icons/chart.png";
+import pieChart from "@/assets/icons/graph.png";
+import lineChart from "@/assets/icons/activity.png";
+import income from "@/assets/icons/import.png";
+import expenses from "@/assets/icons/export.png";
 
 
 
@@ -89,6 +120,8 @@ import internationalTransfer from "@/assets/images/Frame 14117.png";
 import localTransfer from "@/assets/images/Frame 14118.png";
 import transferSuccesful from "@/assets/images/Transfer screen.png";
 
+
+
 import OnboardingAnimation1 from "@/assets/animations/Animation - 1734593298170.json";
 import OnboardingAnimation2 from "@/assets/animations/onboarding2.json";
 import OnboardingAnimation3 from "@/assets/animations/onboarding3.json";
@@ -107,6 +140,17 @@ export const icons = {
   live,
   gtBank,
   sterling,
+  wema,
+  access,
+  providus,
+  polaris,
+  union,
+  uba,
+  fcmb,
+  alatByWema,
+  verve,
+  kuda,
+  zenith,
   mtn,
   setting,
   opay,
@@ -116,6 +160,10 @@ export const icons = {
   rotateLeft,
   eye,
   nigeria,
+  britain,
+  china,
+  canada,
+  euro,
   instagram,
   quote,
   icon,
@@ -157,6 +205,23 @@ export const icons = {
   linkedIn,
   twitter,
   list,
+  verificationError,
+  verificationSuccessful,
+  scan,
+  settings,
+  money,
+  wallet,
+  help,
+  security,
+  cardControl,
+  contact,
+  logOut,
+  barChart,
+  lineChart,
+  pieChart,
+  income,
+  expenses,
+  
 
   homeSvg,
   paymentSvg,
@@ -226,16 +291,16 @@ export const onboarding = [
 
 export const transactions = [
   {
-    id: 1,
+    id: "1",
     title: "Airtime purchase",
     amount: "-₦5,000.50",
     time: "Today 03:09 PM",
     image: icons.mtn,
     type: "debit",
   },
-
+  
   {
-    id: 2,
+    id: "2",
     title: "Sent to GTBank",
     amount: "-₦55,610.75",
     time: "Today 11:37 AM",
@@ -244,8 +309,8 @@ export const transactions = [
   },
 
   {
-    id: 3,
-    title: "Recieved from Access Bank",
+    id: "3",
+    title: "Received from Access Bank",
     amount: "+₦205,000.00",
     time: "Today 08:30 PM",
     image: icons.accessBank,
@@ -253,14 +318,114 @@ export const transactions = [
   },
 
   {
-    id: 4,
+    id: "4",
     title: "Sent to Opay",
     amount: "-₦23,010.75",
     time: "Today 08:30 PM",
     image: icons.opay,
     type: "debit",
   },
+  
+  {
+    id: "5",
+    title: "Salary Payment from Union Bank",
+    amount: "+₦120,000.00",
+    time: "Yesterday 02:15 PM",
+    image: icons.union,
+    type: "credit",
+  },
+
+  {
+    id: "6",
+    title: "Payment for Services to Wema Bank",
+    amount: "-₦8,500.00",
+    time: "Yesterday 06:45 PM",
+    image: icons.wema,
+    type: "debit",
+  },
+
+  {
+    id: "7",
+    title: "Fund Transfer from Zenith Bank",
+    amount: "+₦100,000.00",
+    time: "Yesterday 10:00 AM",
+    image: icons.zenith,
+    type: "credit",
+  },
+
+  {
+    id: "8",
+    title: "Sent to Providus Bank",
+    amount: "-₦12,000.00",
+    time: "Yesterday 07:30 PM",
+    image: icons.providus,
+    type: "debit",
+  },
+
+  {
+    id: "9",
+    title: "Payment for Groceries to Polaris Bank",
+    amount: "-₦3,250.00",
+    time: "Today 01:10 PM",
+    image: icons.polaris,
+    type: "debit",
+  },
+
+  {
+    id: "10",
+    title: "Refund from FCMB",
+    amount: "+₦9,500.00",
+    time: "Today 04:50 PM",
+    image: icons.fcmb,
+    type: "credit",
+  },
+
+  {
+    id: "11",
+    title: "Sent to UBA for Bill Payment",
+    amount: "-₦15,000.00",
+    time: "Yesterday 09:00 AM",
+    image: icons.uba,
+    type: "debit",
+  },
+
+  {
+    id: "12",
+    title: "Received from ALAT by Wema",
+    amount: "+₦50,000.00",
+    time: "Today 12:30 PM",
+    image: icons.alatByWema,
+    type: "credit",
+  },
+
+  {
+    id: "13",
+    title: "Subscription for Verve Card",
+    amount: "-₦1,500.00",
+    time: "Today 09:00 AM",
+    image: icons.verve,
+    type: "debit",
+  },
+
+  {
+    id: "14",
+    title: "Deposit to Kuda Account",
+    amount: "+₦60,000.00",
+    time: "Yesterday 11:00 AM",
+    image: icons.kuda,
+    type: "credit",
+  },
+
+  {
+    id: "15",
+    title: "Loan Repayment to Sterling Bank",
+    amount: "-₦25,000.00",
+    time: "Yesterday 08:00 PM",
+    image: icons.sterling,
+    type: "debit",
+  },
 ];
+
 
 export const currencies = [
   {
@@ -275,28 +440,28 @@ export const currencies = [
     short: "CAD",
     rate: "981.28",
     symbol: "$",
-    icon: icons.gtBank,
+    icon: icons.canada,
   },
   {
     name: "British Pound",
     short: "GBP",
     rate: "1,652.05",
     symbol: "£",
-    icon: icons.opay,
+    icon: icons.britain,
   },
   {
     name: "Euro",
     short: "EUR",
     rate: "1,412.01",
     symbol: "€",
-    icon: icons.mtn,
+    icon: icons.euro,
   },
   {
     name: "Chinese Yuan",
     short: "CNY",
     rate: "197.70",
     symbol: "¥",
-    icon: icons.nigeria,
+    icon: icons.china,
   },
 ];
 
@@ -372,7 +537,7 @@ export const beneficiaries = [
     name: "Ngozi Nwosu",
     accountNumber: "2023456789",
     icon: icons.accessBank,
-    bank: "Accesss Bank"
+    bank: "Access Bank"
   },
 
   {
@@ -387,55 +552,148 @@ export const beneficiaries = [
     id: "4",
     name: "Amina Bello",
     accountNumber: "4045678901",
-    icon: icons.gtBank,
-    bank: "Guaranty Trust Bank (GTB)"
+    icon: icons.sterling,
+    bank: "Sterling Bank"
   },
 
   {
     id: "5",
     name: "Tolu Ajayi",
     accountNumber: "5056789012",
-    icon: icons.accessBank,
-    bank: "Access Bank"
+    icon: icons.wema,
+    bank: "Wema Bank"
   },
 
   {
     id: "6",
     name: "Chika Ibe",
     accountNumber: "6067890123",
-    icon: icons.opay,
-    bank: "Opay"
+    icon: icons.fcmb,
+    bank: "FCMB"
   },
 
   {
     id: "7",
     name: "Ifeoma Uche",
     accountNumber: "7078901234",
-    icon: icons.gtBank,
-    bank: "Guaranty Trust Bank (GTB)"
+    icon: icons.uba,
+    bank: "UBA"
   },
 
   {
     id: "8",
     name: "Sani Bello",
     accountNumber: "8089012345",
-    icon: icons.accessBank,
-    bank: "Access Bank"
+    icon: icons.providus,
+    bank: "Providus Bank"
   },
 
   {
     id: "9",
     name: "Olufemi Adeyemi",
     accountNumber: "9090123456",
-    icon: icons.opay,
-    bank: "Opay"
+    icon: icons.polaris,
+    bank: "Polaris Bank"
   },
 
   {
     id: "10",
     name: "Zainab Ibrahim",
     accountNumber: "1001234567",
-    icon: icons.gtBank,
-    bank: "Guaranty Trust Bank (GTB)"
+    icon: icons.zenith,
+    bank: "Zenith Bank"
+  },
+
+  {
+    id: "11",
+    name: "Chukwuemeka Okeke",
+    accountNumber: "1112345678",
+    icon: icons.alatByWema,
+    bank: "ALAT by Wema"
+  },
+
+  {
+    id: "12",
+    name: "Ngozi Okeke",
+    accountNumber: "1223456789",
+    icon: icons.kuda,
+    bank: "Kuda Bank"
+  },
+
+  {
+    id: "13",
+    name: "Seyi Adewale",
+    accountNumber: "1334567890",
+    icon: icons.verve,
+    bank: "Verve Bank"
+  },
+
+  {
+    id: "14",
+    name: "Grace Akintoye",
+    accountNumber: "1445678901",
+    icon: icons.sterling,
+    bank: "Sterling"
+  },
+
+  {
+    id: "15",
+    name: "Jibola Ogunyemi",
+    accountNumber: "1556789012",
+    icon: icons.union,
+    bank: "Union Bank"
+  }
+];
+
+
+
+
+export const account = [
+  {
+    id: "1",
+    title: "Update Profile",
+    icon: icons.settings,
+  },
+
+  {
+    id: "2",
+    title: "Retrieve Financial Overview",
+    icon: icons.money,
+  },
+
+  {
+    id: "3",
+    title: "Manage Payments",
+    icon: icons.settings,
+  },
+
+  {
+    id: "4",
+    title: "Self Help",
+    icon: icons.help,
+  },
+
+  {
+    id: "5",
+    title: "Security",
+    icon: icons.security,
+  },
+
+  {
+    id: "6",
+    title: "Card Control",
+    icon: icons.cardControl,
+  },
+
+  {
+    id: "7",
+    title: "Contact Us",
+    icon: icons.contact,
+  },
+
+  {
+    id: "8",
+    title: "Log Out",
+    icon: icons.logOut,
   },
 ]

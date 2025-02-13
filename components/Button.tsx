@@ -34,7 +34,7 @@ const Button = ({
         {iconName && (
           <Image
             className="mr-2"
-            src={icon}
+            source={icon}
           />
         )}
         <Text className={`text-white text-lg ${textStyle}`}>{title}</Text>
