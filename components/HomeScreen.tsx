@@ -24,7 +24,7 @@ const HomeScreen = () => {
 
   return (
     <View className="flex-1 bg-primary-300">
-      <Layout backgroundComponent={<HomeBackground />}>
+      <Layout backgroundComponent={<HomeBackground />} snapPoints={["48", "50"]}>
         <View className="flex flex-row items-center justify-between px-3 mb-3 mt-5">
           <View className="flex flex-row items-center justify-center gap-2 ">
             <Text className="text-[20px] text-primary-300 font-gilroyBold">

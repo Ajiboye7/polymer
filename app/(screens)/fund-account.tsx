@@ -9,8 +9,8 @@ import {
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons, images } from "@/constants";
+import TransferHeader from "@/components/TransferHeader";
 import * as Clipboard from "expo-clipboard";
-
 
 const FundAccount = () => {
   const [isBusiness, setIsBusiness] = useState(false);
@@ -25,48 +25,9 @@ const FundAccount = () => {
   };
 
   return (
-      <SafeAreaView className="flex-1 white">
-      <View className="h-[20%] px-3">
-      <ImageBackground
-        source={images.BgBoxes}
-        className="w-full h-[91px] justify-center"
-      >
-        <View className="flex flex-row items-center justify-between">
-          <TouchableOpacity>
-            <Image source={icons.arrowLeft} resizeMode="contain" />
-          </TouchableOpacity>
-
-          <Text className="text-[20px] font-gilroyBold text-primary-300">
-            Fund Account
-          </Text>
-
-          <View className="w-[46.25px] h-[25px] bg-white rounded-full flex-row justify-between items-center px-[4px] relative">
-            <Image
-              source={icons.regularUser}
-              className={`w-[14px] h-[14px] ${
-                isBusiness ? "opacity-50" : "opacity-100"
-              }`}
-              resizeMode="contain"
-            />
-            <Image
-              source={icons.businessOwner}
-              className={`w-[14px] h-[14px] ${
-                isBusiness ? "opacity-100" : "opacity-50"
-              }`}
-              resizeMode="contain"
-            />
-
-            <TouchableOpacity
-              onPress={toggleSwitch}
-              className={`w-[18px] h-[18px] bg-[#5BBE8A] rounded-full absolute ${
-                isBusiness ? "right-[2px]" : "left-[2px]"
-              } shadow-md`}
-            />
-          </View>
-        </View>
-      </ImageBackground>
-      </View>
+    <SafeAreaView className="flex-1 white">
       
+      <TransferHeader title="Fund Account"/>
 
       <View className="bg-primary-300 rounded-t-[20px] px-3 flex-1 -mt-12">
         <Text className="text-[20px] text-white font-gilroyBold mt-6 mb-5 ">
@@ -126,7 +87,6 @@ const FundAccount = () => {
         </View>
       </View>
     </SafeAreaView>
-    
   );
 };
 

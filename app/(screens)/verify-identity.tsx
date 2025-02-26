@@ -1,46 +1,18 @@
-/*import { View, Text } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-
-const verifyIdentity = () => {
-  return (
-    <SafeAreaView>
-       <View>
-            <Text className="text-[32px] text-primary-300 font-gilroyBold mt-5 mb-3 ">
-              Verify Identity
-            </Text>
-            <Text className="text-[14px] text-secondary-600 leading-[20px] w-[358px] ">
-            Let’s get you verified and get your payments  {"\n"}
-            international.
-            </Text>
-          </View>
-
-    </SafeAreaView>
-    
-  )
-}
-export default verifyIdentity*/
-
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-
 import { icons } from "@/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 import Button from "@/components/Button";
+import { ROUTES } from "@/constants/routes";
+import { useRouter } from "expo-router";
 
 const VerificationScreen: React.FC = () => {
   const [selectedMode, setSelectedMode] = useState<"bvn" | "nin" | null>(null);
-  const navigation = useNavigation();
 
+  const router = useRouter();
   return (
-    <SafeAreaView className="flex-1 bg-gray-50 px-3 ">
+    <SafeAreaView className="flex-1 bg-gray-50 px-3 pt-5">
       <View>
-        <View className="bg-gray-300 w-[29.77px] h-[29.77px] rounded-full">
-          <TouchableOpacity>
-            <Image source={icons.arrowLeft} />
-          </TouchableOpacity>
-        </View>
         <View>
           <Text className="text-[32px] text-primary-300 font-gilroyBold mt-5 mb-3 ">
             Verify Identity
@@ -51,7 +23,6 @@ const VerificationScreen: React.FC = () => {
           </Text>
         </View>
 
-        {/* Selection Buttons */}
         <TouchableOpacity
           onPress={() => setSelectedMode("bvn")}
           className={`flex-row items-center bg-primary-200 rounded-lg border ${
@@ -102,36 +73,15 @@ const VerificationScreen: React.FC = () => {
           </View>
         </TouchableOpacity>
 
-        {/* Continue Button */}
-        {/*<TouchableOpacity
-          disabled={!selectedMode}
-          className={`mt-10 py-3 rounded-lg ${
-            selectedMode ? "bg-primary-300" : "bg-secondary-600"
-          }`}
-          onPress={() => {
-            if (selectedMode) {
-              console.log("Selected Mode:", selectedMode);
-            }
-
-          }}
-        >
-          <Text
-            className={`text-center text-lg font-semibold ${
-              selectedMode ? "text-white" : "text-secondary-100"
-            }`}
-          >
-            Continue
-          </Text>
-        </TouchableOpacity>*/}
-
         <Button
           disabled={!selectedMode}
           title="Continue"
           buttonStyle={`w-full h-[49.77px] mt-10 ${
             selectedMode ? "bg-primary-300" : "bg-secondary-600"
           }`}
-          handleClick={()=> {
+          handleClick={() => {
             if (selectedMode) {
+              router.push(ROUTES.INPUT_IDENTITY);
               console.log("Selected Mode:", selectedMode);
             }
           }}

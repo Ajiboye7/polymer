@@ -4,11 +4,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import Button from "@/components/Button";
+import { Link, useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
 const BusinessProfile = () => {
   const [form, setForm] = useState({
     name: "",
   });
+
+  const router = useRouter()
 
   return (
     <SafeAreaView className="mt-5">
@@ -40,6 +44,11 @@ const BusinessProfile = () => {
         <Button
           title="Create a profile"
           buttonStyle="w-[358px] h-[49.77px] mt-14"
+          handleClick={()=>{
+            console.log("profile", form.name)
+            router.replace(ROUTES.BUSINESS_PROFILE_ANIMATION_SCREEN)
+          }}
+
         />
       </View>
     </SafeAreaView>

@@ -194,12 +194,6 @@ const ScreensLayout = () => {
           }}
         />
 
-        <Stack.Screen
-          name="email-otp"
-          options={{
-            headerShown: false,
-          }}
-        />
 
         <Stack.Screen
           name="customer-onboarding-email"

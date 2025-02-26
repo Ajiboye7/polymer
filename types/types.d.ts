@@ -1,8 +1,10 @@
-import { KeyboardTypeOptions, TextInputProps , ImageSourcePropType} from "react-native";
+import { KeyboardTypeOptions, TextInputProps } from "react-native";
+
+
 
 export interface ButtonProps {
   title: string;
-  icon?: ImageSourcePropType;
+  icon?: any;
   iconName?: string;
   buttonStyle?: string;
   textStyle?: string;
@@ -21,10 +23,18 @@ export interface InputFieldProps {
   secureTextEntry?: boolean;
   inputStyles?: string;
   iconStyle?: string;
-  icon?: ImageSourcePropType;
+  icon?: any;
   iconClick?: () => void;
   onFocus?: () => void;
   editable?: boolean;
+}
+
+export interface SignUpFormProps{
+  name:string,
+  account: number,
+  email: string,
+  password: string,
+  confirmPassword: string,
 }
 
 export interface SwipeButtonProps {
@@ -39,19 +49,13 @@ export type RootStackParamList = {
   Home: undefined;
 };
 
-export interface LayoutProps {
-  children: React.ReactNode;
-  backgroundComponent?: React.ReactNode;
-  snapPoints?: Array<number | string>
-}
-
 export type RootStackParamList = {
   VerificationScreen: undefined;
   InputIdentity: { selectedMode: "bvn" | "nin" };
 };
 
-export interface EmailHeaderProps{
-  text?: string
+export interface EmailHeaderProps {
+  text?: string;
 }
 
 export interface EmailContentProps {
@@ -59,11 +63,8 @@ export interface EmailContentProps {
   headerText?: string;
   message?: string;
   footerText?: string;
-  messageStyle?: string
-  link?: string
-  showFooterText?: boolean
-  icon?: ImageSourcePropType;
-  iconName?: string
+  messageStyle?: string;
+  link?: string;
 }
 
 export interface EmailBannerProps {
@@ -71,6 +72,3 @@ export interface EmailBannerProps {
   childContainer?: string;
 }
 
-export interface TransactionTypeProps {
-  transactionType?: string
-}

@@ -3,8 +3,12 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
 import Button from "@/components/Button";
+import {  useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
 const TransferSuccessful = () => {
+
+  const router = useRouter()
   return (
     <SafeAreaView className="pt-20 px-3 bg-white h-full">
       <View className="items-center ">
@@ -22,6 +26,9 @@ const TransferSuccessful = () => {
       <Button
         title="View Receipt"
         buttonStyle="w-full h-[49.77px] bg-primary-300"
+        handleClick={()=>{
+          router.replace(ROUTES.TRANSACTION_DETAILS)
+        }}
       />
 
       <Text className="text-[16px] text-primary-200 font-gilroyBold text-center mt-7">

@@ -11,7 +11,10 @@ const createToken = (_id: string) => {
 };
 
 export const signUpUser = async (req: Request, res: Response) => {
+  console.log("Signup request received:", req.body); 
+
   const { name, account, email, password, confirmPassword } = req.body;
+
   try {
     const user = await User.signUp(
       name,
@@ -20,10 +23,14 @@ export const signUpUser = async (req: Request, res: Response) => {
       password,
       confirmPassword
     );
-
     const token = createToken(user._id);
-    res.status(201).json({ name, email, account, token });
+    res.status(201).json({
+      success: true,
+      message: "User created successfully",
+      data: { name, email, account, token },
+    });
   } catch (error) {
+    console.error("Signup error:", error);
     if (error instanceof Error) {
       res.status(400).json({ error: error.message });
     } else {
@@ -32,21 +39,21 @@ export const signUpUser = async (req: Request, res: Response) => {
   }
 };
 
-
 export const signInUser = async (req: Request, res: Response) => {
-    const {email, password} = req.body
-    try{
-        const user = await User.signIn(
-            email,
-            password,
-        )
-        const token = createToken(user._id)
-        res.status(200).json({token, email, password})
-    }catch(error){
-        if(error instanceof Error ){
-            res.status(400).json({error: error.message})
-        }
+  const { email, password } = req.body;
+  try {
+    const user = await User.signIn(email, password);
+    const token = createToken(user._id);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "User signed in successfully",
+        data: { token, email, password },
+      });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(400).json({ error: error.message });
     }
-}
-
-
+  }
+};

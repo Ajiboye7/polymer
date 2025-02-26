@@ -9,10 +9,11 @@ import {
 import React, { useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
-import { animations, images,onboarding } from "@/constants";
+import { animations, images, onboarding } from "@/constants";
 import Button from "@/components/Button";
 import LottieView from "lottie-react-native";
-import { router } from "expo-router";
+import { router, Link } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
 const Onboarding = () => {
   const swiperRef = useRef<Swiper>(null);
@@ -20,8 +21,13 @@ const Onboarding = () => {
 
   const isLastSlide = activeIndex === onboarding.length - 1;
 
-  const handlePress = () => {
-    router.replace("/(tabs)/home");
+  const handleGetStarted = () => {
+    if (isLastSlide) {
+      //router.push(ROUTES.SIGN_IN); 
+      router.push(ROUTES.EMAIL_OTP); 
+    } else {
+      swiperRef.current?.scrollBy(1);
+    }
   };
 
   return (
@@ -32,19 +38,15 @@ const Onboarding = () => {
           ref={swiperRef}
           loop={false}
           dot={
-            <View className="w-[5px] h-[5px] mx-1 bg-gray-300 rounded-full"/>
+            <View className="w-[5px] h-[5px] mx-1 bg-gray-300 rounded-full" />
           }
           activeDot={
-            <View className="w-[15px] h-[5px] mx-1 bg-[#0B274F] rounded-full"/>
+            <View className="w-[15px] h-[5px] mx-1 bg-[#0B274F] rounded-full" />
           }
           onIndexChanged={(index) => setActiveIndex(index)}
         >
           {onboarding.map((item) => (
-            
             <View key={item.id} className="flex-1">
-                
-
-                
               <ImageBackground
                 source={images.onboardingBgImg}
                 resizeMode="cover"
@@ -72,13 +74,19 @@ const Onboarding = () => {
                   <Button
                     title={isLastSlide ? "Get Started" : "Next"}
                     buttonStyle="w-[145px] h-[50px]"
-                    handleClick={handlePress}
+                    handleClick={handleGetStarted}
                   />
                 </View>
 
                 <Text className="mb-10">
-                  Already have an account?{" "}
-                  <Text className="text-primary-300 font-bold">Log in</Text>
+                  Already have an account?
+                  {/*<Text className="text-primary-300 font-bold">Log in</Text>*/}
+                  <Link
+                    href={ROUTES.SIGN_IN}
+                    className="text-primary-300 font-semibold"
+                  >
+                    Log in
+                  </Link>
                 </Text>
               </View>
             </View>

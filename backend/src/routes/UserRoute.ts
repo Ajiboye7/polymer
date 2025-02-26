@@ -3,8 +3,8 @@ import express from "express"
 
 const router = express.Router()
 
-router.post("/api/users", signUpUser);
+router.post('/sign-up', signUpUser);
 
-router.post("/api/users/login", signInUser);
+router.post('/sign-in', signInUser);
 
 export default router

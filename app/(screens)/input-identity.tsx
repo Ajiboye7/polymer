@@ -1,15 +1,22 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { icons } from "@/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import Button from "@/components/Button";
+import { router } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
 const InputIdentity = () => {
+  const [verificationNumber, setVerificationNumber] = useState("");
   return (
-    <SafeAreaView className="mx-4">
+    <SafeAreaView className="mx-3 pt-5">
       <View className="bg-gray-300 w-[29.77px] h-[29.77px] rounded-full">
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            router.back();
+          }}
+        >
           <Image source={icons.arrowLeft} />
         </TouchableOpacity>
       </View>
@@ -22,14 +29,22 @@ const InputIdentity = () => {
           international.
         </Text>
       </View>
-
       <InputField
-        title="Bank Verification Number"
-        placeholder="Enter your Bvn"
+        title="Account Number"
+        placeholder="Enter your BVN"
+        value={verificationNumber}
+        handleChangeText={(value) => setVerificationNumber(value)}
         keyboardType="numeric"
+        textContentType="none"
       />
 
-      <Button title="Continue" buttonStyle="w-full h-[49.77px] mt-8" />
+      <Button title="Continue" buttonStyle="w-full h-[49.77px] mt-8"
+      handleClick={()=>{
+        router.replace(ROUTES.CREATE_FOUR_DIGIT_PIN)
+        //console.log("BVN", verificationNumber)
+
+      }}
+       />
     </SafeAreaView>
   );
 };

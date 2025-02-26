@@ -12,7 +12,7 @@ const ScreenWrapper = ({ children, scrollable = true }: ScreenWrapperProps) => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    setTimeout(() => setRefreshing(false), 2000); // Simulate refresh
+    setTimeout(() => setRefreshing(false), 2000); 
   };
 
   const Wrapper = scrollable ? ScrollView : View;

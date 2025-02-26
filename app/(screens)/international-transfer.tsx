@@ -16,6 +16,9 @@ import { icons, images } from "@/constants";
 import * as Clipboard from "expo-clipboard";
 import CustomSwipeButton from "@/components/CustomSwipeButton";
 import { useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
+import TransferHeader from "@/components/TransferHeader";
+import CustomView from "@/components/CustomView";
 
 const InternationalTransfer = () => {
   const router = useRouter();
@@ -35,7 +38,7 @@ const InternationalTransfer = () => {
 
   const handleSwipeSuccess = () => {
     //setPinInputVisible(true);
-    router.replace("/(screens)/international-bank-details");
+    router.push(ROUTES.INTERNATIONAL_BANK_DETAILS);
     //console.log("Swipe successful!");
   };
 
@@ -50,48 +53,9 @@ const InternationalTransfer = () => {
   return (
     <ScrollView>
       <SafeAreaView className="flex-1 white">
-        <View className="h-[20%] px-3">
-          <ImageBackground
-            source={images.BgBoxes}
-            className="w-full h-[91px] justify-center"
-          >
-            <View className="flex flex-row items-center justify-between">
-              <TouchableOpacity>
-                <Image source={icons.arrowLeft} resizeMode="contain" />
-              </TouchableOpacity>
+        <TransferHeader title="International Transfer"/>
 
-              <Text className="text-[20px] font-gilroyBold text-primary-300">
-                International Transfer
-              </Text>
-
-              <View className="w-[46.25px] h-[25px] bg-white rounded-full flex-row justify-between items-center px-[4px] relative">
-                <Image
-                  source={icons.regularUser}
-                  className={`w-[14px] h-[14px] ${
-                    isBusiness ? "opacity-50" : "opacity-100"
-                  }`}
-                  resizeMode="contain"
-                />
-                <Image
-                  source={icons.businessOwner}
-                  className={`w-[14px] h-[14px] ${
-                    isBusiness ? "opacity-100" : "opacity-50"
-                  }`}
-                  resizeMode="contain"
-                />
-
-                <TouchableOpacity
-                  onPress={toggleSwitch}
-                  className={`w-[18px] h-[18px] bg-[#5BBE8A] rounded-full absolute ${
-                    isBusiness ? "right-[2px]" : "left-[2px]"
-                  } shadow-md`}
-                />
-              </View>
-            </View>
-          </ImageBackground>
-        </View>
-
-        <View className="bg-primary-300 rounded-t-[20px] px-3 -mt-12">
+        <CustomView viewStyle="-mt-20">
           <Text className="text-[20px] text-white font-gilroyBold mt-6 mb-5 ">
             My Balance
           </Text>
@@ -197,14 +161,14 @@ const InternationalTransfer = () => {
               </Text>
             </View>
           </View>
-          <View className="mb-10">
+          <View className="mb-20">
             <CustomSwipeButton
               title="Proceed to bank details"
               onSwipeSuccess={handleSwipeSuccess}
-              containerStyles={{ width: "100%", alignSelf: "center" }}
+              containerStyles={{ width: "100%", alignSelf: "center", }}
             />
           </View>
-        </View>
+        </CustomView>
       </SafeAreaView>
     </ScrollView>
   );

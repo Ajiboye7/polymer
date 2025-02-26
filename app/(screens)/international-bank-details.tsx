@@ -17,6 +17,7 @@ import { useRouter } from "expo-router";
 import PinInputModal from "@/components/PinInputModal";
 import TransferHeader from "@/components/TransferHeader";
 import CustomView from "@/components/CustomView";
+import { ROUTES } from "@/constants/routes";
 
 const InternationalBankDetails = () => {
   const [form, setForm] = useState({
@@ -42,12 +43,13 @@ const InternationalBankDetails = () => {
 
   const handleSwipeSuccess = () => {
     setPinInputVisible(true);
-    console.log("This is true");
+
+    //console.log("This is true");
   };
 
   const handlePinVerified = (pin: string) => {
     alert(`PIN Verified: ${pin}! Proceeding to payment...`);
-    router.push("/(tabs)/home");
+    router.push(ROUTES.TRANSFER_SUCCESSFUL);
   };
 
   return (

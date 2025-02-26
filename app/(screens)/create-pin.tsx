@@ -4,9 +4,13 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import Button from "@/components/Button";
+import { useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
+import { icons } from "@/constants";
 
 const CreatePin = () => {
   const [pin, setPin] = useState("");
@@ -16,6 +20,8 @@ const CreatePin = () => {
       setPin(text);
     }
   };
+
+  const router = useRouter();
 
   return (
     <SafeAreaView className="mt-10">
@@ -56,6 +62,7 @@ const CreatePin = () => {
           }`}
           disabled={pin.length < 4}
           handleClick={() => {
+            router.replace(ROUTES.CONFIRM_FOUR_DIGIT_PIN);
             console.log("PIN Created:", pin);
           }}
         />

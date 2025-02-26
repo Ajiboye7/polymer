@@ -9,8 +9,9 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { InputFieldProps } from "@/types/types";
+import { icons } from "@/constants";
 
 const InputField = ({
   title,
@@ -18,13 +19,15 @@ const InputField = ({
   value,
   placeholder,
   handleChangeText,
-  icon,
   secureTextEntry,
   inputStyles,
   iconStyle,
-  iconClick,
   ...props
 }: InputFieldProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPasswordField =
+    title === "Create Password" || title === "Retype Password" || title === "Password";
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -35,27 +38,40 @@ const InputField = ({
             {title}
           </Text>
           <View
-            className={`bg-[#F0F0F0] p-4 w-full h-[52px] rounded-[10px] border border-primary-200 focus:border-primary-300 justify-center items-start ${inputStyles}`}
+            className={`bg-[#F0F0F0] w-full h-[52px] rounded-[10px] border border-primary-200 focus:border-primary-300 justify-center  ${inputStyles}`}
+            style={{ paddingHorizontal: 16 }} 
           >
-            <TouchableOpacity onPress={iconClick}>
-            {icon && (
-              <Image
-                source={icon}
-                className={`w-6 h-6 ml-4 absolute left-72 ${iconStyle}`}
-              />
-            )}
-            </TouchableOpacity>
-           
             <TextInput
               value={value}
               placeholder={placeholder}
               placeholderTextColor="#58585880"
-              className="text-[14px] font-600 w-full text-secondary-800 "
+              className="text-[14px] font-600 w-full -mt-2 text-secondary-800"
               onChangeText={handleChangeText}
-              secureTextEntry={secureTextEntry}
+              secureTextEntry={isPasswordField && !showPassword}
+              style={{ 
+                height: "100%", // r
+                paddingVertical: 0, 
+                textAlignVertical: "center", 
+              }}
               {...props}
-              
             />
+            {isPasswordField && (
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={{ 
+                  position: "absolute", 
+                  right: 16, 
+                  top: "50%", 
+                  transform: [{ translateY: -12 }], 
+                  zIndex: 10,
+                }}
+              >
+                <Image
+                  source={showPassword ? icons.eyeHide : icons.eye}
+                  className={`w-6 h-6 ${iconStyle}`}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>

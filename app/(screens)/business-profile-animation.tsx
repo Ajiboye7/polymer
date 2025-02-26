@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
 import Button from "@/components/Button";
 import { useRouter } from "expo-router";
+import {ROUTES} from "@/constants/routes"
 
 const BusinessProfileAnimation = () => {
   const router = useRouter();
@@ -31,20 +32,19 @@ const BusinessProfileAnimation = () => {
         useNativeDriver: true,
       }),
       Animated.timing(borderPosition, {
-        toValue: 0, // Slides in and stops
+        toValue: 0, 
         duration: 500,
         useNativeDriver: true,
       }),
     ]).start(() => {
       setTimeout(() => {
-        //router.push("/home"); // Keeping it commented as per your original code
+        router.replace(ROUTES.HOME); 
       }, 9000);
     });
   }, []);
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary-300">
-     
       <Animated.Image
         source={images.splash}
         style={{
@@ -54,7 +54,6 @@ const BusinessProfileAnimation = () => {
         }}
       />
 
-      
       <Animated.Text
         style={{
           fontSize: 24,
@@ -63,32 +62,34 @@ const BusinessProfileAnimation = () => {
             inputRange: [0, 0.8, 1],
             outputRange: [0, 0, 1],
           }),
-          transform: [{ translateY: 30, }, {translateX:30}],
+          transform: [{ translateY: 30 }, { translateX: 30 }],
         }}
       >
         <Text className="text-white text-[37px] font-gilroyExtraBold">
-        Polymer
+          Polymer
         </Text>
-       
       </Animated.Text>
 
       {/* Sliding Border Box Animation */}
       <Animated.View
         style={{
-            position: "absolute",
-            bottom: 50,
-            right: 0, 
-            left: 0,
-            backgroundColor: "white",
-            borderWidth: 2,
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-            width: "100%",
+          position: "absolute",
+          bottom: 50,
+          right: 0,
+          left: 0,
+          backgroundColor: "white",
+          borderWidth: 2,
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          width: "100%",
           transform: [{ translateX: borderPosition }, { translateY: -130 }],
         }}
       >
         <View className="flex items-end px-3 mr-5">
-            <Text className="text-[28px] font-gilroySemiBold text-primary-300"><Text className="text-[18px] font-gilroyLight" >for</Text> {"\n"}Businesses</Text>
+          <Text className="text-[28px] font-gilroySemiBold text-primary-300">
+            <Text className="text-[18px] font-gilroyLight">for</Text> {"\n"}
+            Businesses
+          </Text>
         </View>
       </Animated.View>
     </SafeAreaView>

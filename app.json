@@ -41,6 +41,9 @@
       "assets/*",
       "assets/images/*",
       "assets/icon/*"
-    ]
+    ],
+    "extra": {
+      "host": "http://192.168.0.2:5000"  
+    }
   }
 }

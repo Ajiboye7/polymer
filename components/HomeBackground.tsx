@@ -12,8 +12,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
 import Button from "./Button";
+import { Link, useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
 const  HomeBackground = () => {
+
+  const router = useRouter();
+
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   /*const [isBusiness, setIsBusiness] = useState(false);
@@ -95,22 +100,24 @@ const  HomeBackground = () => {
       </ImageBackground>
 
       <View className="flex flex-row items-center justify-around mt-5">
-        <TouchableOpacity>
-          <View className="gap-2">
+        <TouchableOpacity onPress={()=>{
+          router.push(ROUTES.FUND_ACCOUNT)
+        }}>
+          <View className="space-y-2">
             <Image source={icons.add} resizeMode="contain" />
             <Text className="text-[12px] text-secondary-600">Fund</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity>
-          <View className="gap-2">
+        <TouchableOpacity >
+          <View className="space-y-2">
             <Image source={icons.send2} resizeMode="contain" />
             <Text className="text-[12px] text-secondary-600">Send</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <View className="gap-2">
+          <View className="space-y-2">
             <Image source={icons.rates} resizeMode="contain" />
             <Text className="text-[12px] text-secondary-600">Rates</Text>
           </View>

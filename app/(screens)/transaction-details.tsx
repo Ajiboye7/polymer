@@ -149,7 +149,7 @@ const TransactionDetails = () => {
       <View className="mx-3 mt-10 mb-28">
 
       <Button
-        title="View Receipt"
+        title="Download Receipt"
         buttonStyle="w-full h-[49.77px] bg-primary-300"
       />
 

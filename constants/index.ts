@@ -32,7 +32,8 @@ import facebook from "@/assets/icons/path16.png";
 import tick from "@/assets/icons/shield-tick.png";
 import send from "@/assets/icons/send-2.png";
 import rotateLeft from "@/assets/icons/rotate-left.png";
-import eye from "@/assets/icons/Group.png";
+import eye from "@/assets/icons/eye 1.png";
+import eyeHide from "@/assets/icons/eye-off 1.png";
 import nigeria from "@/assets/icons/Vector (1).png";
 import america from "@/assets/icons/Group 1.png";
 import china from "@/assets/icons/CN.png";
@@ -159,6 +160,7 @@ export const icons = {
   send,
   rotateLeft,
   eye,
+  eyeHide,
   nigeria,
   britain,
   china,

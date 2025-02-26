@@ -1,6 +1,7 @@
 import { TouchableOpacity, Text, Animated, View, Image } from "react-native";
 import React, { useEffect, useRef } from 'react';
 import { ButtonProps } from "@/types/types";
+import { icons } from "@/constants";
 
 const Button = ({
   title,

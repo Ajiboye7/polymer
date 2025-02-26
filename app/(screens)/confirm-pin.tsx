@@ -4,11 +4,20 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  Image
 } from "react-native";
 import React, { useState } from "react";
 import Button from "@/components/Button";
+import { icons } from "@/constants";
+import {  useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
 const ConfirmPin = () => {
+
+  const router = useRouter()
+
+ 
+
   const [pin, setPin] = useState("");
 
   const handleInput = (text: string) => {
@@ -20,6 +29,15 @@ const ConfirmPin = () => {
   return (
     <SafeAreaView className="mt-10">
       <View className="px-4">
+
+      <TouchableOpacity  onPress={()=>{
+         router.back();
+      }} className="mb-5">
+          <View className="bg-gray-300 w-[29.77px] h-[29.77px] rounded-full">
+            <Image source={icons.arrowLeft} />
+          </View>
+          </TouchableOpacity>
+
         <Text className="text-[32px] text-primary-300 font-gilroyBold">
           Confirm your 4-Digit PIN
         </Text>
@@ -49,24 +67,6 @@ const ConfirmPin = () => {
           autoFocus
         />
 
-        {/*<TouchableOpacity
-          className={`h-[50px] w-full rounded-lg justify-center items-center ${
-            pin.length === 4 ? "bg-primary-300" : "bg-secondary-500"
-          }`}
-          disabled={pin.length < 4}
-          onPress={() => {
-            console.log("PIN Created:", pin);
-          }}
-        >
-          <Text
-            className={`text-lg font-semibold ${
-              pin.length === 4 ? "text-white" : "text-gray-400"
-            }`}
-          >
-            Continue
-          </Text>
-        </TouchableOpacity>*/}
-
         <Button
           title="Continue"
           buttonStyle={`h-[50px] w-full ${
@@ -74,7 +74,8 @@ const ConfirmPin = () => {
           }`}
           disabled={pin.length < 4}
           handleClick={() => {
-            console.log("PIN Created:", pin);
+            router.replace(ROUTES.ACCOUNT_TYPE)
+            console.log("PIN Created confirmed:", pin);
           }}
         />
       </View>

@@ -3,10 +3,14 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "@/constants";
 import Button from "@/components/Button";
+import { useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
 const AccountType = () => {
 
   const [selectedMode, setSelectMode]= useState < "business" | "regular" | null>(null)
+
+  const router = useRouter()
   return (
     <SafeAreaView className="px-3 mt-8">
       <Text className="text-[32px] text-primary-300 font-gilroyBold ">What suits you?</Text>
@@ -49,6 +53,7 @@ const AccountType = () => {
       buttonStyle={`w-full h-[49.77px] mt-10  ${selectedMode ? "bg-primary-300" : "bg-secondary-600"}`}
       handleClick={()=> {
         if(selectedMode){
+          router.replace(ROUTES.HOME)
           console.log("Selected Mode :" , selectedMode)
         }
       }}
