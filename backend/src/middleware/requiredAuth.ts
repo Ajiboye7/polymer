@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-
 import User from "../models/UserModels";
 import { Request, Response, NextFunction } from "express";
+import { JWT_SECRET } from "../config/env";
 
 interface AuthRequest extends Request {
   user?: { _id: string };
@@ -19,12 +19,12 @@ const requiredAuth = async (
   }
   const token = authorization.split(" ")[1];
 
-  if (!process.env.SECRET) {
+  if (!JWT_SECRET) {
     return res.status(500).json({ error: "JWT secret is not defined" });
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.SECRET) as { _id: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as { _id: string };
 
     const user = await User.findById(decoded._id).select("_id");
 

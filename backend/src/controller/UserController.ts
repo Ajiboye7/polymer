@@ -1,13 +1,14 @@
 import User from "../models/UserModels";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config/env";
 
 const createToken = (_id: string) => {
-  if (!process.env.SECRET) {
+  if (!JWT_SECRET) {
     throw new Error("JWT secret is not defined");
   }
 
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "1h" });
+  return jwt.sign({ _id }, JWT_SECRET, { expiresIn: "1h" });
 };
 
 export const signUpUser = async (req: Request, res: Response) => {

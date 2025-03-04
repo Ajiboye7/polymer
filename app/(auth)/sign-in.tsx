@@ -17,7 +17,7 @@ import Constants from "expo-constants";
 import { ROUTES } from "@/constants/routes";
 
 const SignUp = () => {
-  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.2:5000";
+  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
 
   const router = useRouter();
 

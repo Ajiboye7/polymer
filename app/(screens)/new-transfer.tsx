@@ -20,6 +20,7 @@ import CustomSwipeButton from "@/components/CustomSwipeButton";
 import { useRouter } from "expo-router";
 import { banks } from "@/constants";
 import { BlurView } from "expo-blur";
+import { ROUTES } from "@/constants/routes";
 
 const NewTransfer = () => {
   const router = useRouter();
@@ -41,7 +42,7 @@ const NewTransfer = () => {
 
   const handleSwipeSuccess = () => {
     //setPinInputVisible(true);
-    router.replace("/(screens)/local-bank-details");
+    router.replace(ROUTES.LOCAL_BANK_DETAILS);
     //console.log("Swipe successful!");
   };
 
@@ -205,8 +206,8 @@ const NewTransfer = () => {
                       <TouchableOpacity
                         onPress={() => handleBankSelection(item.name)}
                       >
-                        <View className="flex flex-row  items-center rounded-[25px] h-[60px] bg-[#EAEAEA] my-1 px-5 space-x-4">
-                          <View className="w-[40px] h-[40px] items-center justify-center bg-white rounded-full ">
+                        <View className="flex flex-row  items-center rounded-[25px] h-[60px] bg-[#F0F0F0] my-1 px-5 space-x-4">
+                          <View className="w-[40px] h-[40px] items-center justify-center rounded-full ">
                             <Image source={item.icon} />
                           </View>
                           <Text className="text-[16px] text-secondary-700 font-sfProRoundedHeavy">

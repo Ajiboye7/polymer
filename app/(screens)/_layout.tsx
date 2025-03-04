@@ -156,6 +156,7 @@ const ScreensLayout = () => {
           name="transfer-successful"
           options={{
             headerShown: false,
+            gestureEnabled: false, 
           }}
         />
 
@@ -168,6 +169,13 @@ const ScreensLayout = () => {
 
         <Stack.Screen
           name="new-transfer"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+         <Stack.Screen
+          name="local-transfer"
           options={{
             headerShown: false,
           }}

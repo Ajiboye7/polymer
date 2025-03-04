@@ -6,9 +6,6 @@ import {
   ImageBackground,
   Alert,
   ScrollView,
-  Platform,
-  KeyboardAvoidingView,
-  TextInput,
 } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,9 +19,7 @@ import CustomView from "@/components/CustomView";
 
 const InternationalTransfer = () => {
   const router = useRouter();
-  const [isBusiness, setIsBusiness] = useState(false);
-
-  const toggleSwitch = () => setIsBusiness((prevState) => !prevState);
+  
 
   const accountNumber = "0235676005";
 

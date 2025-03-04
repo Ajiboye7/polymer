@@ -46,7 +46,9 @@ const Payment = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{
+          router.push(ROUTES.LOCAL_TRANSFER)
+        }}>
           <Image
             source={images.localTransfer}
             className="h-[240px] w-full"

@@ -468,60 +468,104 @@ export const currencies = [
 ];
 
 export const banks = [
-  {
-    id: "1",
-    name: "Guaranty Trust Bank (GTB)",
+  { 
+    id: "1", 
+    name: "Guaranty Trust Bank (GTB)", 
     icon: icons.gtBank,
+    accountHolder: "Chijioke Michael Okafor",
+    accountNumber: "1234567890"
   },
-
-  {
-    id: "2",
-    name: "Access Bank",
+  { 
+    id: "2", 
+    name: "Access Bank", 
     icon: icons.accessBank,
+    accountHolder: "Ngozi Elizabeth Nwosu",
+    accountNumber: "2345678901"
   },
-
-  {
-    id: "3",
-    name: "Opay",
+  { 
+    id: "3", 
+    name: "Opay", 
     icon: icons.opay,
+    accountHolder: "Adeola David Akinwale",
+    accountNumber: "3456789012"
   },
-
-  {
-    id: "4",
-    name: "Guaranty Trust Bank (GTB)",
-    icon: icons.gtBank,
+  { 
+    id: "4", 
+    name: "Sterling", 
+    icon: icons.sterling,
+    accountHolder: "Ngozi Grace Okeke",
+    accountNumber: "4567890123"
   },
-
-  {
-    id: "5",
-    name: "Access Bank",
-    icon: icons.accessBank,
+  { 
+    id: "5", 
+    name: "Wema", 
+    icon: icons.wema,
+    accountHolder: "Chinonso James Udo",
+    accountNumber: "5678901234"
   },
-
-  {
-    id: "6",
-    name: "Opay",
-    icon: icons.opay,
+  { 
+    id: "6", 
+    name: "Providus", 
+    icon: icons.providus,
+    accountHolder: "Temidayo Marie Bello",
+    accountNumber: "6789012345"
   },
-
-  {
-    id: "7",
-    name: "Guaranty Trust Bank (GTB)",
-    icon: icons.gtBank,
+  { 
+    id: "7", 
+    name: "Polaris", 
+    icon: icons.polaris,
+    accountHolder: "Emeka Andrew Okoro",
+    accountNumber: "7890123456"
   },
-
-  {
-    id: "8",
-    name: "Access Bank",
-    icon: icons.accessBank,
+  { 
+    id: "8", 
+    name: "Union", 
+    icon: icons.union,
+    accountHolder: "Amaka Louise Eze",
+    accountNumber: "8901234567"
   },
-
-  {
-    id: "9",
-    name: "Opay",
-    icon: icons.opay,
+  { 
+    id: "9", 
+    name: "Uba", 
+    icon: icons.uba,
+    accountHolder: "Chijioke Allen Obi",
+    accountNumber: "9012345678"
   },
-
+  { 
+    id: "10", 
+    name: "Fcmb", 
+    icon: icons.fcmb,
+    accountHolder: "Oluwaseun Grace Akinyi",
+    accountNumber: "0123456789"
+  },
+  { 
+    id: "11", 
+    name: "Wema", 
+    icon: icons.alatByWema,
+    accountHolder: "Ayodele Oliver Ogunleye",
+    accountNumber: "1234567891"
+  },
+  { 
+    id: "12", 
+    name: "Verve", 
+    icon: icons.verve,
+    accountHolder: "Oluwatobiloba Rose Adeyemi",
+    accountNumber: "2345678902"
+  },
+  { 
+    id: "13", 
+    name: "Kuda", 
+    icon: icons.kuda,
+    accountHolder: "Chukwudi William Okafor",
+    accountNumber: "3456789013"
+  },
+  { 
+    id: "14", 
+    name: "Zenith", 
+    icon: icons.zenith,
+    accountHolder: "Ifunanya Grace Nwachukwu",
+    accountNumber: "4567890124"
+  }
 ];
 
 

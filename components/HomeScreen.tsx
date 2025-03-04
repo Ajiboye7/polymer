@@ -8,8 +8,14 @@ import { transactions } from "@/constants";
 import { currencies } from "@/constants";
 import HomeBackground from "@/components/HomeBackground";
 import { SafeAreaView } from "react-native-safe-area-context";
+import fetchExchangeRates from "@/utils/fetchExchangeRates";
 
 const HomeScreen = () => {
+  interface ExchangeRate {
+    name: string;
+    rate: number;
+  }
+
   const [currentCurrencyIndex, setCurrentCurrencyIndex] = useState(0);
 
   useEffect(() => {
@@ -19,12 +25,30 @@ const HomeScreen = () => {
 
     return () => clearInterval(interval);
   }, [currencies.length]);
+  const [exchangeRates, setExchangeRates] = useState<ExchangeRate[]>([]);
 
   const currentCurrency = currencies[currentCurrencyIndex];
 
+  useEffect(() => {
+    const getRates = async () => {
+      const rates = await fetchExchangeRates();
+      if (rates) {
+        setExchangeRates(rates);
+      }
+    };
+    getRates();
+  }, []);
+
+
+  //Real time
+  const rates = exchangeRates.map(({ name, rate }) => ({ name, rate }));
+
   return (
     <View className="flex-1 bg-primary-300">
-      <Layout backgroundComponent={<HomeBackground />} snapPoints={["48", "50"]}>
+      <Layout
+        backgroundComponent={<HomeBackground />}
+        snapPoints={["48", "50"]}
+      >
         <View className="flex flex-row items-center justify-between px-3 mb-3 mt-5">
           <View className="flex flex-row items-center justify-center gap-2 ">
             <Text className="text-[20px] text-primary-300 font-gilroyBold">
@@ -61,6 +85,15 @@ const HomeScreen = () => {
             <Text className="text-[16px] text-[#303030] font-bold">
               ₦{currentCurrency.rate.toLocaleString()}
             </Text>
+
+            {/*
+            Real time data
+            <Text className="text-[16px] text-[#303030] font-bold">
+              ₦
+              {exchangeRates
+                .find((rate) => rate.name === currentCurrency.short)
+                ?.rate || "Loading..."}
+            </Text>*/}
           </View>
 
           <View className="relative">
@@ -108,6 +141,26 @@ const HomeScreen = () => {
               </Text>
             </View>
           ))}
+
+          
+          {/*
+          Real time data
+          {currencies.map((currency, index) => {
+            const currencyRate = rates.find(
+              (rate) => rate.name === currency.short
+            );
+
+            return (
+              <View key={index} className="flex items-center justify-center">
+                <Text className="text-[16px] text-primary-300 font-bold">
+                  1 {currency.short} - ₦
+                  {currencyRate
+                    ? currencyRate.rate
+                    : "Loading..."}
+                </Text>
+              </View>
+            );
+          })}*/}
         </Swiper>
 
         <View className="bg-primary-200 mx-3 rounded-[20px] px-5 py-2  ">
@@ -134,6 +187,20 @@ const HomeScreen = () => {
             </View>
           </View>
         </View>
+
+        {/*<View className="flex gap-2">
+          {exchangeRates.length > 0 ? (
+            exchangeRates.map((currency, index) => (
+              <View key={index} className="flex flex-row items-center justify-between w-full px-3 h-[64px] border-y-[1px] border-gray-200">
+                <Text className="text-[16px] text-secondary-600 font-semibold">
+                  1 {currency.name} = ₦{currency.rate}
+                </Text>
+              </View>
+            ))
+          ) : (
+            <Text className="text-center text-secondary-600 font-semibold">Loading exchange rates...</Text>
+          )}
+        </View>*/}
 
         <View className="mx-3 mt-7">
           <View className="flex flex-row items-center justify-between">

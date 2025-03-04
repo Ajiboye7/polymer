@@ -1,11 +1,9 @@
 import mongoose from "mongoose";
-import User from "../src/models/UserModels"; // Adjust the path as needed
-
-// Increase timeout for all tests in this suite
+import User from "../src/models/UserModels"; 
 jest.setTimeout(60000);
 
 beforeEach(async () => {
-  await User.deleteMany({}); // Clears all users before each test
+  await User.deleteMany({}); 
 });
 
 describe("User Model", () => {

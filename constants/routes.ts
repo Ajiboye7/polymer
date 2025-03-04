@@ -1,4 +1,4 @@
-// constants/routes.ts
+
 export const ROUTES = {
   ONBOARDING: "(auth)/welcome",
   SIGN_IN: "/(auth)/sign-in",
@@ -17,6 +17,10 @@ export const ROUTES = {
   INTERNATIONAL_BANK_DETAILS:"/(screens)/international-bank-details",
   TRANSFER_SUCCESSFUL:"/(screens)/transfer-successful",
   TRANSACTION_DETAILS:"/(screens)/transaction-details",
+  NEW_TRANSFER:"/(screens)/new-transfer",
+  LOCAL_BANK_DETAILS:"/(screens)/local-bank-details",
+  LOCAL_TRANSFER:"/(screens)/local-transfer"
+
 
 } as const;
 export type AppRoutes = keyof typeof ROUTES; 
