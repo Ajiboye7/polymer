@@ -21,8 +21,8 @@ import {
         <View>
             <ScrollView>
         <SafeAreaView className="flex-1">
-          <TransferHeader title="Analytics" />
-          <CustomView viewStyle="pb-28">
+          <TransferHeader title="Analytics" headerStyle="-mb-5"  />
+          <CustomView viewStyle="pb-28 h-full">
             <Text className="text-white text-[20px] my-5 font-gilroyBold ">
               Your Spending
             </Text>

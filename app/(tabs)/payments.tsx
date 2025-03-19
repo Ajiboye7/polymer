@@ -35,7 +35,7 @@ const Payment = () => {
         </ImageBackground>
       </View>
 
-      <View className=" space-y-4 rounded-t-[30px] px-3 py-5 pt-6 -mt-12 bg-white pb-20" >
+      <View className=" space-y-10 rounded-t-[30px] px-3 py-5 pt-6 -mt-12 bg-white pb-20 h-full" >
         <TouchableOpacity onPress={()=>{
           router.push(ROUTES.INTERNATIONAL_TRANSFER)
         }}>

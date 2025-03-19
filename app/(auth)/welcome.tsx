@@ -14,6 +14,7 @@ import Button from "@/components/Button";
 import LottieView from "lottie-react-native";
 import { router, Link } from "expo-router";
 import { ROUTES } from "@/constants/routes";
+import ScreenWrapper from "@/components/ScreenWrapper";
 
 const Onboarding = () => {
   const swiperRef = useRef<Swiper>(null);
@@ -23,17 +24,82 @@ const Onboarding = () => {
 
   const handleGetStarted = () => {
     if (isLastSlide) {
-      //router.push(ROUTES.SIGN_IN); 
-      router.push(ROUTES.EMAIL_OTP); 
+      //router.push(ROUTES.SIGN_IN);
+      router.push(ROUTES.EMAIL_OTP);
     } else {
       swiperRef.current?.scrollBy(1);
     }
   };
 
   return (
-    <SafeAreaView className="h-full">
-      <ScrollView>
-        <StatusBar hidden />
+    <ScreenWrapper scrollable={false}>
+      <Swiper
+        ref={swiperRef}
+        loop={false}
+        dot={<View className="w-[5px] h-[5px] mx-1 bg-gray-300 rounded-full" />}
+        activeDot={
+          <View className="w-[15px] h-[5px] mx-1 bg-primary-300 rounded-full" />
+        }
+        onIndexChanged={(index) => setActiveIndex(index)}
+      >
+        {onboarding.map((item) => (
+          <View key={item.id} className="flex-1 ">
+            <View className="h-1/2">
+              <ImageBackground
+                source={images.onboardingBgImg}
+                resizeMode="cover"
+                className="w-full h-[422px] justify-center items-center"
+              >
+                <Image
+                  source={item.image}
+                  className="w-[250px] h-[250px] mb-6"
+                  resizeMode="contain"
+                />
+              </ImageBackground>
+            </View>
+
+            <View className="px-2 bg-white h-1/2 mt-5 ">
+              <View className="items-start ">
+                <Text className="text-[32px] text-primary-300 font-bold mb-4 w-[270px] leading-[44.66px]">
+                  {item.title}
+                </Text>
+
+                <Text className="text-[14px] text-secondary-600 font-semibold w-[300px] leading-[25px]">
+                  {item.description}
+                </Text>
+              </View>
+
+              <View className="my-3">
+                <Button
+                  title={isLastSlide ? "Get Started" : "Next"}
+                  buttonStyle="w-[145px] h-[50px]"
+                  handleClick={handleGetStarted}
+                />
+              </View>
+
+              <Text className="mb-10">
+                Already have an account?
+                <Link
+                  href={ROUTES.SIGN_IN}
+                  className="text-primary-300 font-semibold"
+                >
+                  Log in
+                </Link>
+              </Text>
+            </View>
+          </View>
+        ))}
+      </Swiper>
+    </ScreenWrapper>
+  );
+};
+
+export default Onboarding;
+
+{
+  /*<ScreenWrapper scrollable={false} >
+
+       <View></View>
         <Swiper
           ref={swiperRef}
           loop={false}
@@ -41,12 +107,13 @@ const Onboarding = () => {
             <View className="w-[5px] h-[5px] mx-1 bg-gray-300 rounded-full" />
           }
           activeDot={
-            <View className="w-[15px] h-[5px] mx-1 bg-[#0B274F] rounded-full" />
+            <View className="w-[15px] h-[5px] mx-1 bg-primary-300 rounded-full" />
           }
           onIndexChanged={(index) => setActiveIndex(index)}
         >
           {onboarding.map((item) => (
-            <View key={item.id} className="flex-1">
+            <View key={item.id} className="flex-1 ">
+              <View className="h-1/2">
               <ImageBackground
                 source={images.onboardingBgImg}
                 resizeMode="cover"
@@ -59,7 +126,9 @@ const Onboarding = () => {
                 />
               </ImageBackground>
 
-              <View className="px-2 ">
+              </View>
+              
+              <View className="px-2 bg-white h-1/2 mt-5 ">
                 <View className="items-start ">
                   <Text className="text-[32px] text-primary-300 font-bold mb-4 w-[270px] leading-[44.66px]">
                     {item.title}
@@ -80,7 +149,6 @@ const Onboarding = () => {
 
                 <Text className="mb-10">
                   Already have an account?
-                  {/*<Text className="text-primary-300 font-bold">Log in</Text>*/}
                   <Link
                     href={ROUTES.SIGN_IN}
                     className="text-primary-300 font-semibold"
@@ -92,9 +160,5 @@ const Onboarding = () => {
             </View>
           ))}
         </Swiper>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-export default Onboarding;
+       </ScreenWrapper>*/
+}

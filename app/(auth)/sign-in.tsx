@@ -15,28 +15,73 @@ import axios from "axios";
 import { Link, useRouter } from "expo-router";
 import Constants from "expo-constants";
 import { ROUTES } from "@/constants/routes";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp, signIn } from "@/redux/slices/authSlice";
+import { AppDispatch, RootState } from "@/redux/store";
 
-const SignUp = () => {
-  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
-
-  const router = useRouter();
+const SignIn = () => {
 
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const handleSignIn = async () => {
+
+  const dispatch = useDispatch<AppDispatch>()
+ // const { user, status, error } = useSelector((state: RootState) => state.auth);
+ const authState = useSelector((state: RootState) => state.auth);
+ const userName = authState.user?.name;
+
+  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
+
+  const router = useRouter();
+
+  const handleSignIn = () => {
+    dispatch(signIn(form)).unwrap();
+    Alert.alert("Success", `Welcome back ${userName}`)
+    //console.log(user)
+  }
+
+
+  {/*const handleSignIn = async () => {
+    try {
+      const result = await dispatch(signIn(form)).unwrap(); 
+  
+      if (result && result.name) {
+        Alert.alert("Success", `Welcome back ${result.name}`);
+      } else {
+        Alert.alert("Error", "User data is missing. Please try again.");
+      }
+    } catch (error) {
+      Alert.alert("Error", error as string);
+    }
+  };*/}
+  
+  
+  {/*const handleSignIn = async () => {
     try {
       const response = await axios.post(`${Host}/api/auth/sign-in`, form);
-      Alert.alert("Success", "Successfully logged In!");
-      router.replace("/home");
+      const { name } = response.data.data;
+      Alert.alert("Success", `Welcome back ${name}` || response?.data?.message);
+      router.replace(ROUTES.HOME);
       return response;
     } catch (error) {
-      console.error("Sign-up error:", error);
-      Alert.alert("Error", "Failed to log in. Please try again.");
+      if (axios.isAxiosError(error)) {
+        console.error("Sign-in error response:", error.response?.data?.message);
+
+        const errorMessage =
+          error.response?.data?.message ||
+          "Failed SignIn account. Please try again.";
+        Alert.alert("Error", errorMessage);
+      } else if (error instanceof Error) {
+        console.error("Sign-in error:", error.message);
+        Alert.alert("Error", "An error occurred. Please try again.");
+      } else {
+        console.error("Sign-in error:", error);
+        Alert.alert("Error", "An unexpected error occurred. Please try again.");
+      }
     }
-  };
+  };*/}
 
   return (
     <SafeAreaView className="mt-5">
@@ -102,4 +147,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

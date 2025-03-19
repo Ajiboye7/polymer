@@ -14,7 +14,7 @@ const CustomView: React.FC<CustomViewProps> = ({
 }) => {
   return (
     <View
-      className={`bg-primary-300 rounded-t-[20px] px-3 -mt-12  ${viewStyle}`}
+      className={`bg-primary-300 rounded-t-[20px] px-3 -mt-12   ${viewStyle}`}
       style={style}
       {...rest}
     >

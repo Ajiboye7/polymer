@@ -8,7 +8,7 @@ import { transactions } from "@/constants";
 import { currencies } from "@/constants";
 import HomeBackground from "@/components/HomeBackground";
 import { SafeAreaView } from "react-native-safe-area-context";
-import fetchExchangeRates from "@/utils/fetchExchangeRates";
+import fetchExchangeRates from "@/lib/fetchExchangeRates";
 
 const HomeScreen = () => {
   interface ExchangeRate {

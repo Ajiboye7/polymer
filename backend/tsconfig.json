@@ -10,6 +10,6 @@
     "forceConsistentCasingInFileNames": true, // Ensure consistent file casing
     "moduleResolution": "node"       // Use Node.js module resolution
   },
-  "include": ["src/**/*"],           // Include all files in ./src
+  "include": ["src/**/*", ],           // Include all files in ./src
   "exclude": ["node_modules", "tests"] // Exclude node_modules and tests
 }

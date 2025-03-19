@@ -12,7 +12,7 @@ const requiredAuth = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { authorization } = req.body;
+  const { authorization } = req.headers;
 
   if (!authorization) {
     return res.status(401).json({ error: "Authorization token Required" });

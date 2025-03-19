@@ -48,7 +48,7 @@ import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 const AnalyticScreen = () => {
   return (
     <View className="flex-1">
-      <Layout backgroundComponent={<AnalyticBackground />} snapPoints={["10", "50"]}>
+      <Layout backgroundComponent={<AnalyticBackground />} snapPoints={["20", "50"]}>
       <View className="mx-3 mt-7 flex-1">
           <View className="flex flex-row items-center justify-between">
             <Text className="text-[20px] text-primary-300 font-gilroyBold">

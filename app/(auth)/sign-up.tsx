@@ -31,32 +31,32 @@ const SignUp = () => {
   });
 
   const handleSignUp = async () => {
-    if (
-      !form.name ||
-      !form.account ||
-      !form.email ||
-      !form.password ||
-      !form.confirmPassword
-    ) {
-      Alert.alert("All fields are to be field");
-    }
-
-    if (form.password !== form.confirmPassword) {
-      Alert.alert("Passwords do not match");
-      return;
-    }
-
     try {
       const response = await axios.post(`${Host}/api/auth/sign-up`, form);
-      Alert.alert("Success", "Account created successfully!");
+      const { name } = response.data.data;
+      Alert.alert(
+        "Success",
+        `${name} successfully created!` || response?.data?.message
+      );
       router.replace(ROUTES.EMAIL_OTP);
       return response;
     } catch (error) {
-      console.error("Sign-up error:", error);
-      Alert.alert("Error", "Failed to create account. Please try again.");
+      if (axios.isAxiosError(error)) {
+        console.error("Sign-up error response:", error.response?.data?.message);
+
+        const errorMessage =
+          error.response?.data?.message ||
+          "Failed to create account. Please try again.";
+        Alert.alert("Error", errorMessage);
+      } else if (error instanceof Error) {
+        console.error("Sign-up error:", error.message);
+        Alert.alert("Error", "An error occurred. Please try again.");
+      } else {
+        console.error("Sign-up error:", error);
+        Alert.alert("Error", "An unexpected error occurred. Please try again.");
+      }
     }
   };
-
   return (
     <ScrollView className="">
       <SafeAreaView className="mt-5">

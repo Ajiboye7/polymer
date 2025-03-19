@@ -72,3 +72,31 @@ export interface EmailBannerProps {
   childContainer?: string;
 }
 
+
+export interface User{
+  id: string
+  name: string;
+  account: number;
+  email: string;
+  password: string;
+  token: string;
+}
+
+export interface AuthState{
+  user: User | null;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed'
+  error:  string | null
+}
+
+export interface SignUpPayload{
+  name: string;
+  account: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface SignInPayload{
+  email: string;
+  password: string
+}

@@ -8,4 +8,5 @@ export const {
     DB_URI,
     JWT_SECRET,
     HOST,
+    EMAIL_PASSWORD,
 }= process.env

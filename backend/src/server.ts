@@ -1,14 +1,17 @@
 import express from "express";
 import cors from "cors";
 import UserRoute from "../src/routes/UserRoute";
+import OtpRoute from "../src/routes/OtpRoutes";
 const app = express();
 import { HOST, PORT } from "../../backend/src/config/env";
 import connectToDatabase from "./database/mongodb";
+
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", UserRoute);
+app.use('/api', OtpRoute);
 
 // Validate environment variables
 

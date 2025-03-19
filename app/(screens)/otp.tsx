@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import { icons } from "@/constants";
@@ -13,10 +14,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
+import axios from "axios";
+import Constants from "expo-constants";
 
 const OTPVerification: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const inputs = useRef<(TextInput | null)[]>([]);
+
+  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
 
   const handleChange = (text: string, index: number) => {
     const newOtp = [...otp];
@@ -33,11 +38,29 @@ const OTPVerification: React.FC = () => {
     }
   };
 
-  const router = useRouter()
-  const handleSubmit = () => {
-    const enteredOtp = otp.join("");
-    router.replace(ROUTES.VERIFY_IDENTITY)
-    console.log("Entered OTP:", enteredOtp);
+  const router = useRouter();
+
+  const handleVerifyOTP = async () => {
+
+    const otpString = otp.join("");
+    
+    try {
+      const response = await axios.post(`${Host}/api/verify-otp`,  { otp: otpString });
+
+      Alert.alert("Success", response.data.message);
+
+      router.push(ROUTES.VERIFY_IDENTITY);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("OTP error", error.response?.data?.message);
+        const errorMessage =
+          error.response?.data?.message || "Something went wrong";
+        Alert.alert("Error", errorMessage);
+      } else {
+        //Non-Axios errors
+        Alert.alert("Error", "Something went wrong");
+      }
+    }
   };
 
   return (
@@ -72,7 +95,7 @@ const OTPVerification: React.FC = () => {
         <Button
           title="Verify"
           buttonStyle="w-full h-[49.77px]"
-          handleClick={handleSubmit}
+          handleClick={handleVerifyOTP}
         />
 
         <Text className=" text-[14px] text-center mt-6 text-secondary-400 ">
