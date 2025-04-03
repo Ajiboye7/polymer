@@ -1,5 +1,6 @@
 import express from "express"
 import { verifyOtp } from "../controller/OtpController";
+
 import requiredAuth from "../middleware/requiredAuth";
 
 const router = express.Router()

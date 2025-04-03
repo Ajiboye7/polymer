@@ -12,15 +12,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import Button from "@/components/Button";
-import axios from "axios";
 import Constants from "expo-constants";
 import { Link, useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp, signIn } from "@/redux/slices/authSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+
 
 const SignUp = () => {
   const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
 
   const router = useRouter();
+   const dispatch = useDispatch<AppDispatch>()
 
   const [form, setForm] = useState({
     name: "",
@@ -30,33 +34,29 @@ const SignUp = () => {
     confirmPassword: "",
   });
 
-  const handleSignUp = async () => {
+  {/*const handleSignUp = async () => {
+   
     try {
-      const response = await axios.post(`${Host}/api/auth/sign-up`, form);
-      const { name } = response.data.data;
-      Alert.alert(
-        "Success",
-        `${name} successfully created!` || response?.data?.message
-      );
-      router.replace(ROUTES.EMAIL_OTP);
-      return response;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Sign-up error response:", error.response?.data?.message);
+       const user = await dispatch(signUp(form)).unwrap(); 
+       Alert.alert("Success", `Welcome back ${user.name}`);
+       router.replace(ROUTES.EMAIL_OTP);
+     } catch (error) {
+       Alert.alert("Error", error as string);
+     } }
 
-        const errorMessage =
-          error.response?.data?.message ||
-          "Failed to create account. Please try again.";
-        Alert.alert("Error", errorMessage);
-      } else if (error instanceof Error) {
-        console.error("Sign-up error:", error.message);
-        Alert.alert("Error", "An error occurred. Please try again.");
-      } else {
-        console.error("Sign-up error:", error);
-        Alert.alert("Error", "An unexpected error occurred. Please try again.");
-      }
-    }
+    
+  };*/}
+
+  const handleSignUp = () => {
+    dispatch(signUp(form))
+      .unwrap()
+      .then(() => {
+        Alert.alert('Success', 'Account created successfully');
+        router.replace(ROUTES.EMAIL_OTP);
+      })
+      .catch(error => Alert.alert('Error', error.message || 'Registration failed'));
   };
+  
   return (
     <ScrollView className="">
       <SafeAreaView className="mt-5">

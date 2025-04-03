@@ -13,13 +13,10 @@ const UserSchema = new Schema<IUser, IUserModel>({
   },
 
   account: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
-    validate: {
-      validator: Number.isInteger,
-      message: "{VALUE} is not an integer value",
-    },
+    
   },
 
   email: {
@@ -40,14 +37,36 @@ const UserSchema = new Schema<IUser, IUserModel>({
   otpExpiry: {
     type: Date,
   },
+
+  pin: {
+    type: String,
+    required: false,
+  },
+
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+
+  accountType: {
+    type: String,
+    required: false,
+  },
+
+  identityType: { type: String, enum: ["bvn", "nin"] },
+
+  identityNumber: {
+    type: String,
+    required: false,
+  },
 });
 
 UserSchema.statics.signUp = async function (
   name: string,
-  account: number,
+  account: string,
   email: string,
   password: string,
-  confirmPassword: string
+  confirmPassword: string,
 ) {
   try {
     if (!name || !email || !password || !confirmPassword) {
@@ -126,8 +145,7 @@ UserSchema.statics.signUp = async function (
 };
 
 UserSchema.statics.signIn = async function (email: string, password: string) {
-
-  if (!email || !password ) {
+  if (!email || !password) {
     throw new Error("All fields are to be filled ");
   }
 

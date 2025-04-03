@@ -11,129 +11,122 @@ const createToken = (_id: string) => {
   return jwt.sign({ _id }, JWT_SECRET, { expiresIn: "1h" });
 };
 
-export const signUpUser = async (req: Request, res: Response) => {
-  console.log("Signup request received:", req.body);
-
+export const signUpUser = async (req: Request, res: Response): Promise<any> => {
   const { name, account, email, password, confirmPassword } = req.body;
 
   try {
-    const user = await User.signUp(
-      name,
-      account,
-      email,
-      password,
-      confirmPassword
-    );
+    const user = await User.signUp(name, account, email, password, confirmPassword);
     const token = createToken(user._id);
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
-      message: "User created successfully",
-      data: { name, email, account, token },
+      message: "User created successfully. OTP sent to email.",
+      data: {
+        user: {
+          _id: user._id,
+          name: user.name,
+          account: user.account,
+          email: user.email,
+          token,
+        },
+      },
     });
-    
-    
   } catch (error) {
     console.error("Signup error:", error);
-    if (error instanceof Error) {
-      res.status(400).json({ message: error.message });
-    } else {
-      res.status(400).json({ message: "An unknown error occurred" });
-    }
-  }
-};
 
-export const signInUser = async (req: Request, res: Response) => {
+    
+    if (error instanceof Error) {
+      const errorMessage = error.message;
+      
+     
+      const clientErrors = [
+        "All fields are to be filled",
+        "Passwords do not match",
+        "Please enter a valid email",
+        "Account number already exists",
+        "Password not strong enough",
+        "Email already exists",
+        "Failed to send OTP email"
+      ];
+
+      if (clientErrors.some(msg => errorMessage.includes(msg))) {
+        return res.status(400).json({
+          success: false,
+          message: errorMessage,
+        });
+      }
+    }
+
+  
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred during registration",
+    });
+  }
+}
+
+export const signInUser = async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;
 
   try {
     const user = await User.signIn(email, password);
+    
+    // Check if user is verified (you might want to add this in your model)
+    if (!user.isVerified) {
+      return res.status(403).json({
+        success: false,
+        message: "Account not verified. Please check your email for OTP.",
+      });
+    }
 
     const token = createToken(user._id);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
-      message: "User signed in successfully",
-      data: { token, email, name: user.name },
+      message: "Login successful",
+      data: {
+        user: {
+          _id: user._id,
+          name: user.name,
+          account: user.account,
+          email: user.email,
+          token,
+        },
+      },
     });
   } catch (error) {
-    console.error("Sign-in error:", error);
+    console.error("Login error:", error);
 
     if (error instanceof Error) {
-      res.status(400).json({ message: error.message });
-    } else {
-      res.status(400).json({ message: "An unknown error occurred" });
+      const errorMessage = error.message;
+      
+      // Authentication errors (400 Bad Request)
+      const authErrors = [
+        "All fields are to be filled",
+        "Please enter a valid email",
+        "User does not exist",
+        "Incorrect password"
+      ];
+
+      if (authErrors.some(msg => errorMessage.includes(msg))) {
+        return res.status(400).json({
+          success: false,
+          message: errorMessage,
+        });
+      }
     }
+
+    // All other errors (500 Internal Server Error)
+    return res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred during login",
+    });
   }
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/*<ScreenWrapper>
+{
+  /*<ScreenWrapper>
          <StatusBar hidden />
         <Swiper
           ref={swiperRef}
@@ -258,4 +251,5 @@ export const signInUser = async (req: Request, res: Response) => {
                  ))}
                </Swiper>
              </ScrollView>
-           </SafeAreaView>*/}
+           </SafeAreaView>*/
+}

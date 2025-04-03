@@ -27,6 +27,7 @@ export interface InputFieldProps {
   iconClick?: () => void;
   onFocus?: () => void;
   editable?: boolean;
+  error?: string;
 }
 
 export interface SignUpFormProps{
@@ -74,11 +75,10 @@ export interface EmailBannerProps {
 
 
 export interface User{
-  id: string
+  _id: string;
   name: string;
-  account: number;
+  account: string;
   email: string;
-  password: string;
   token: string;
 }
 
@@ -88,15 +88,29 @@ export interface AuthState{
   error:  string | null
 }
 
-export interface SignUpPayload{
+export interface SignUpDetails{
   name: string;
-  account: number;
+  account: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
-export interface SignInPayload{
+export interface SignInDetails{
   email: string;
   password: string
+}
+
+export interface IdentityDetails{
+  userId: string,
+  identityType: 'bvn'| 'nin',
+}
+export interface IdentityNumberDetails {
+  userId: string;
+  identityNumber: string; 
+}
+
+export interface CreatePinDetails {
+  userId: string;
+  pin: string
 }

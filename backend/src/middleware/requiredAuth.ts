@@ -11,7 +11,7 @@ const requiredAuth = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
-) => {
+): Promise<any> => {
   const { authorization } = req.headers;
 
   if (!authorization) {

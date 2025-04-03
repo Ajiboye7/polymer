@@ -21,7 +21,7 @@ const OTPVerification: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const inputs = useRef<(TextInput | null)[]>([]);
 
-  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
+  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
 
   const handleChange = (text: string, index: number) => {
     const newOtp = [...otp];
@@ -41,23 +41,32 @@ const OTPVerification: React.FC = () => {
   const router = useRouter();
 
   const handleVerifyOTP = async () => {
-
     const otpString = otp.join("");
     
     try {
-      const response = await axios.post(`${Host}/api/verify-otp`,  { otp: otpString });
-
-      Alert.alert("Success", response.data.message);
-
-      router.push(ROUTES.VERIFY_IDENTITY);
+      const response = await axios.post(`${Host}/api/auth/verify-otp`, { 
+        otp: otpString 
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (response.data.success) {
+        Alert.alert("Success", response.data.message);
+        router.push(ROUTES.VERIFY_IDENTITY);
+      } else {
+        Alert.alert("Error", response.data.message || "OTP verification failed");
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log("OTP error", error.response?.data?.message);
-        const errorMessage =
-          error.response?.data?.message || "Something went wrong";
+        const errorMessage = error.response?.data?.message || 
+                           error.message || 
+                           "OTP verification failed";
+        console.log("OTP error details:", error.response?.data);
         Alert.alert("Error", errorMessage);
       } else {
-        //Non-Axios errors
+        console.log("Non-Axios error:", error);
         Alert.alert("Error", "Something went wrong");
       }
     }
@@ -108,3 +117,5 @@ const OTPVerification: React.FC = () => {
 };
 
 export default OTPVerification;
+
+

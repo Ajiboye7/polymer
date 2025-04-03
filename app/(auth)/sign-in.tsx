@@ -28,60 +28,32 @@ const SignIn = () => {
 
 
   const dispatch = useDispatch<AppDispatch>()
- // const { user, status, error } = useSelector((state: RootState) => state.auth);
- const authState = useSelector((state: RootState) => state.auth);
- const userName = authState.user?.name;
+  const { user, status, error } = useSelector((state: RootState) => state.auth);
 
-  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
+ //const authState = useSelector((state: RootState) => state.auth);
+
+
 
   const router = useRouter();
 
-  const handleSignIn = () => {
-    dispatch(signIn(form)).unwrap();
-    Alert.alert("Success", `Welcome back ${userName}`)
-    //console.log(user)
+  {/*const handleSignIn = async () => {
+  try {
+    const user = await dispatch(signIn(form)).unwrap(); 
+    Alert.alert("Success", `Welcome back ${user.name}`);
+  } catch (error) {
+    Alert.alert("Error", error as string);
   }
+};*/}
+const handleSignIn = () => {
+  dispatch(signIn(form))
+    .unwrap()
+    .then(user => Alert.alert('Success', `Welcome back ${user.name}`))
+    .catch(error => Alert.alert('Error', error.message || 'Login failed'));
+};
 
 
-  {/*const handleSignIn = async () => {
-    try {
-      const result = await dispatch(signIn(form)).unwrap(); 
-  
-      if (result && result.name) {
-        Alert.alert("Success", `Welcome back ${result.name}`);
-      } else {
-        Alert.alert("Error", "User data is missing. Please try again.");
-      }
-    } catch (error) {
-      Alert.alert("Error", error as string);
-    }
-  };*/}
-  
-  
-  {/*const handleSignIn = async () => {
-    try {
-      const response = await axios.post(`${Host}/api/auth/sign-in`, form);
-      const { name } = response.data.data;
-      Alert.alert("Success", `Welcome back ${name}` || response?.data?.message);
-      router.replace(ROUTES.HOME);
-      return response;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Sign-in error response:", error.response?.data?.message);
 
-        const errorMessage =
-          error.response?.data?.message ||
-          "Failed SignIn account. Please try again.";
-        Alert.alert("Error", errorMessage);
-      } else if (error instanceof Error) {
-        console.error("Sign-in error:", error.message);
-        Alert.alert("Error", "An error occurred. Please try again.");
-      } else {
-        console.error("Sign-in error:", error);
-        Alert.alert("Error", "An unexpected error occurred. Please try again.");
-      }
-    }
-  };*/}
+  
 
   return (
     <SafeAreaView className="mt-5">

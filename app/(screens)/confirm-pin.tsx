@@ -4,13 +4,18 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
-  Image
+  Image,
+  Alert
 } from "react-native";
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import { icons } from "@/constants";
 import {  useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
+import { UseSelector, useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { confirmPin as pinConfirmation } from "@/redux/slices/authSlice";
+
 
 const ConfirmPin = () => {
 
@@ -26,6 +31,59 @@ const ConfirmPin = () => {
     }
   };
 
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const userId = user?._id;
+
+  {/*const handleConfirmPin = async () => {
+    console.log("Confirm PIN button clicked");
+  
+    try {
+      if (!pin) {
+        Alert.alert("Error", "Please input a PIN");
+        console.log("PIN is empty");
+        return;
+      }
+  
+      if (!userId) {
+        Alert.alert("Error", "User not found");
+        console.log("User ID not found");
+        return;
+      }
+  
+      try {
+        console.log("Dispatching confirmPins action", { userId, pin });
+        await dispatch(pinConfirmation({ pin, userId })).unwrap();
+  
+        console.log("PIN confirmation successful");
+        router.push(ROUTES.HOME);
+      } catch (error) {
+        console.error("Error confirming PIN:", error);
+  
+        let errorMessage = "Failed to confirm PIN";
+        if (typeof error === "string") {
+          errorMessage = error;
+        } else if (error && typeof error === "object" && "message" in error) {
+          errorMessage = error.message as string;
+        }
+  
+        Alert.alert("Error", errorMessage);
+      }
+    } catch (error) {
+      console.error("Unexpected error", error);
+      Alert.alert("Error", "An unexpected error occurred. Please try again");
+    }
+  };*/}
+  const handleConfirmPin = () => {
+    if (!pin) return Alert.alert('Error', 'Please input a PIN');
+    if (!userId) return Alert.alert('Error', 'User not found');
+  
+    dispatch(pinConfirmation({ pin, userId }))
+      .unwrap()
+      .then(() => router.push(ROUTES.HOME))
+      .catch(error => Alert.alert('Error', error.message || 'PIN confirmation failed'));
+  };
+  
   return (
     <SafeAreaView className="mt-10">
       <View className="px-4">
@@ -73,10 +131,8 @@ const ConfirmPin = () => {
             pin.length === 4 ? "bg-primary-300" : "bg-secondary-500"
           }`}
           disabled={pin.length < 4}
-          handleClick={() => {
-            router.replace(ROUTES.ACCOUNT_TYPE)
-            console.log("PIN Created confirmed:", pin);
-          }}
+          handleClick={handleConfirmPin}
+          
         />
       </View>
     </SafeAreaView>

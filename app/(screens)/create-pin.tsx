@@ -5,12 +5,16 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import { icons } from "@/constants";
+import { UseSelector, useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { createPin } from "@/redux/slices/authSlice";
 
 const CreatePin = () => {
   const [pin, setPin] = useState("");
@@ -22,6 +26,53 @@ const CreatePin = () => {
   };
 
   const router = useRouter();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const userId = user?._id;
+
+  {/*const handleCreatePin = async () => {
+    try {
+      if (!pin) {
+        Alert.alert("Error", "Please input a PIN");
+        return;
+      }
+  
+      if (!userId) {
+        Alert.alert("Error", "User not found");
+        return;
+      }
+  
+      try {
+        await dispatch(createPin({ pin, userId })).unwrap();
+        router.push(ROUTES.CONFIRM_FOUR_DIGIT_PIN);
+        console.log("PIN created:", pin);
+      } catch (error) {
+        console.error("Error creating PIN:", error);
+  
+        let errorMessage = "Failed to create PIN";
+        if (typeof error === "string") {
+          errorMessage = error;
+        } else if (error && typeof error === "object" && "message" in error) {
+          errorMessage = error.message as string;
+        }
+  
+        Alert.alert("Error", errorMessage);
+      }
+    } catch (error) {
+      console.error("Unexpected error", error);
+      Alert.alert("Error", "An unexpected error occurred. Please try again.");
+    }
+  };*/}
+  const handleCreatePin = () => {
+    if (!pin) return Alert.alert('Error', 'Please input a PIN');
+    if (!userId) return Alert.alert('Error', 'User not found');
+  
+    dispatch(createPin({ pin, userId }))
+      .unwrap()
+      .then(() => router.push(ROUTES.CONFIRM_FOUR_DIGIT_PIN))
+      .catch(error => Alert.alert('Error', error.message || 'Failed to create PIN'));
+  };
 
   return (
     <SafeAreaView className="mt-10">
@@ -61,10 +112,7 @@ const CreatePin = () => {
             pin.length === 4 ? "bg-primary-300" : "bg-secondary-500"
           }`}
           disabled={pin.length < 4}
-          handleClick={() => {
-            router.replace(ROUTES.CONFIRM_FOUR_DIGIT_PIN);
-            console.log("PIN Created:", pin);
-          }}
+          handleClick={handleCreatePin}
         />
       </View>
     </SafeAreaView>
@@ -72,3 +120,46 @@ const CreatePin = () => {
 };
 
 export default CreatePin;
+
+
+{/* Reusable PININPUT component
+  import React from "react";
+import { View, TextInput } from "react-native";
+
+const PinInput = ({ pin, setPin, maxLength, autoFocus, ...props }) => {
+  return (
+    <View className="mb-4">
+      <View className="flex-row justify-center space-x-4 mb-4">
+        {Array(maxLength)
+          .fill(0)
+          .map((_, index) => (
+            <View
+              key={index}
+              className={`w-12 h-12 rounded-lg border-2 items-center justify-center ${
+                pin.length > index
+                  ? "border-primary-300 bg-primary-50"
+                  : "border-secondary-300"
+              }`}
+            >
+              {pin.length > index && (
+                <View className="w-3 h-3 rounded-full bg-primary-300" />
+              )}
+            </View>
+          ))}
+      </View>
+      <TextInput
+        className="absolute opacity-0 h-12 w-full"
+        value={pin}
+        onChangeText={setPin}
+        maxLength={maxLength}
+        keyboardType="numeric"
+        autoFocus={autoFocus}
+        secureTextEntry
+        {...props}
+      />
+    </View>
+  );
+};
+
+export default PinInput;
+  */}

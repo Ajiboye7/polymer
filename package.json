@@ -63,6 +63,7 @@
     "@babel/core": "^7.25.2",
     "@babel/plugin-transform-class-properties": "^7.25.9",
     "@babel/plugin-transform-optional-chaining": "^7.25.9",
+    "@types/express": "^5.0.1",
     "@types/jest": "^29.5.12",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "~18.3.12",

@@ -17,7 +17,7 @@ const BusinessVerificationEmail = () => {
     headerText='Business verification' 
     message='To have total access to all the great features on our Polymer business account , verify your email using the link below for a smooth and easy transaction. '
     link='abbcebvcvbhh//ggddjhuhuffjjdddh/nig.com'
-    showFooterText={true}
+    //showFooterText={true}
     />
     <EmailFooter/>
    </SafeAreaView>
