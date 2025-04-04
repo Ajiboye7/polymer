@@ -91,6 +91,10 @@ export const signInUser = async (req: Request, res: Response): Promise<any> => {
           account: user.account,
           email: user.email,
           token,
+          pinSet: user.pinSet,
+          isVerified: user.isVerified,
+          identityNumber: user.identityNumber,
+          identityType: user.identityType, 
         },
       },
     });

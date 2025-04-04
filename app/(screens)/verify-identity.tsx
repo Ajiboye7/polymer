@@ -20,6 +20,7 @@ const VerificationScreen: React.FC = () => {
   const handleContinue = () => {
     if (!selectedMode) return Alert.alert('Error', 'Please select an identity type');
     if (!userId) return Alert.alert('Error', 'User not found');
+    //console.log(selectedMode, userId)
   
     dispatch(IdentityType({ userId, identityType: selectedMode }))
       .unwrap()

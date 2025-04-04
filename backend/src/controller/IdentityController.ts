@@ -110,7 +110,7 @@ export const updateIdentity = async (req: Request, res: Response): Promise<any> 
       success: true,
       message: "Identity type updated successfully",
       data: {
-        userId: updatedUser._id,
+        //userId: updatedUser._id,
         identityType: updatedUser.identityType
       }
     });
@@ -155,7 +155,7 @@ export const identityNumber = async (req: Request, res: Response): Promise<any> 
       success: true,
       message: "Identity number updated successfully",
       data: {
-        userId: updatedUser._id,
+        //userId: updatedUser._id,
         identityNumber: updatedUser.identityNumber
       }
     });

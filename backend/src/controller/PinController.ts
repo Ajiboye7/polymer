@@ -44,7 +44,7 @@ export const createPin = async (req: Request, res: Response): Promise<any> => {
       success: true,
       message: "PIN created successfully",
       data: {
-        userId: updatedUser._id,
+
         pinSet: true,
       }
     });
@@ -94,7 +94,7 @@ export const confirmPin = async (req: Request, res: Response): Promise<any> => {
       success: true,
       message: "PIN verified successfully",
       data: {
-        userId: user._id,
+      
         isVerified: true
       }
     });

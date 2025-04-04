@@ -73,14 +73,47 @@ export interface EmailBannerProps {
   childContainer?: string;
 }
 
-
-export interface User{
+export interface BaseUser {
   _id: string;
   name: string;
   account: string;
   email: string;
   token: string;
 }
+
+export interface FullUser extends BaseUser {
+  pinSet: boolean;
+  isVerified: boolean;
+  identityNumber?: string;
+  identityType?: string;
+}
+
+xport type IdentityPayload = {
+  identityType: string;
+};
+
+export type IdentityNumberPayload = {
+  identityNumber: string;
+};
+
+export type PinStatusPayload = {
+  pinSet: boolean;
+};
+
+export type VerificationPayload = {
+  isVerified: boolean;
+};
+
+
+
+{/*export interface User{
+  _id: string;
+  name: string;
+  account: string;
+  email: string;
+  token: string;
+  [key: string]: any;
+}*/}
 
 export interface AuthState{
   user: User | null;

@@ -8,12 +8,13 @@ import { router } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
-import { identityNumber } from "@/redux/slices/authSlice";
+import { identityNumber as identityFigure } from "@/redux/slices/authSlice";
 
 const InputIdentity = () => {
   const [identityNumber, setIdentityNumber] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.auth.user);
+
   const userId = user._id
 
   {/*const handleContinue = async () => {
@@ -55,8 +56,9 @@ const InputIdentity = () => {
   const handleContinue = () => {
     if (!identityNumber) return Alert.alert('Error', 'Please input your Identity Number');
     if (!userId) return Alert.alert('Error', 'User not found');
+    //console.log(user, identityNumber)
   
-    dispatch(identityNumber({ userId, identityNumber: identityNumber }))
+    dispatch(identityFigure({ userId, identityNumber: identityNumber }))
       .unwrap()
       .then(() => router.push(ROUTES.CREATE_FOUR_DIGIT_PIN))
       .catch(error => Alert.alert('Error', error.message || 'Failed to add identity'));
@@ -74,7 +76,7 @@ const InputIdentity = () => {
       </View>
       <View>
         <Text className="text-[32px] text-primary-300 font-gilroyBold mt-5 mb-3 ">
-          Verify Identity
+          Input Identity Number
         </Text>
         <Text className="text-[14px] text-secondary-600 leading-[20px] w-[358px] mb-5">
           Let’s get you verified and get your payments {"\n"}
@@ -84,7 +86,7 @@ const InputIdentity = () => {
       <InputField
         title="Identity Number"
         placeholder="Enter your BVN"
-        value={IdentityNumber}
+        value={identityNumber}
         handleChangeText={(value) => setIdentityNumber(value)}
         keyboardType="numeric"
         textContentType="none"
