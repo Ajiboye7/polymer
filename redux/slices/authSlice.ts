@@ -15,9 +15,11 @@ import {
   IdentityNumberPayload,
   VerificationPayload,
   PinStatusPayload,
+  accountTypeDetails,
+  accountTypePayload
 } from "@/types/types";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
 
 const initialState: AuthState = {
   user: null,
@@ -81,7 +83,7 @@ export const IdentityType = createAsyncThunk(
         identityType,
       });
 
-      if (!response.data.data) {
+      if(!response.data.success) {
         throw new Error("User data not returned from server");
       }
 
@@ -107,7 +109,7 @@ export const identityNumber = createAsyncThunk(
         userId,
         identityNumber,
       });
-      if (!response.data.data) {
+      if(!response.data.success) {
         throw new Error("User data not returned from server");
       }
       return response.data.data;
@@ -121,6 +123,30 @@ export const identityNumber = createAsyncThunk(
   }
 );
 
+export const accountType = createAsyncThunk('auth/accountType',
+  async ({userId, accountType}: accountTypeDetails, {rejectWithValue} ) =>{
+    try{
+      const response = await axios.put(`${Host}/api/auth/add-account-type`, {
+        userId,
+        accountType
+      });
+
+      if(!response.data.success){ 
+        throw new Error(response.data.message || 'Failed to update account type');
+      }
+
+      //console.log('Data from backend', response.data.data);
+      return response.data.data;  
+    }catch(error){
+      let errorMessage = "Failed to add account type";
+      if (axios.isAxiosError(error)) {
+        errorMessage = error.response?.data?.message || errorMessage;
+      }
+      return rejectWithValue(errorMessage);
+    }
+  }
+)
+
 export const createPin = createAsyncThunk(
   "auth/createPin",
   async ({ userId, pin }: CreatePinDetails, { rejectWithValue }) => { 
@@ -131,7 +157,7 @@ export const createPin = createAsyncThunk(
         pin, 
       });
 
-      if (!response.data.data) {
+      if(!response.data.success) {
         throw new Error("User data not returned from server");
       }
 
@@ -160,11 +186,11 @@ export const confirmPin = createAsyncThunk(
         pin, 
       });
 
-      if (!response.data) {
+      if(!response.data.success) {
         throw new Error("User data not returned from server");
       }
 
-      return response.data;
+      return response.data.data;
     } catch (error) {
       let errorMessage = "Failed to create pin";
       if (axios.isAxiosError(error)) {
@@ -192,14 +218,14 @@ const authSlice = createSlice({
         state.status = "succeeded";
         state.user = action.payload;
       })*/}
-      builder.addCase(signUpUser.fulfilled, (state, action: PayloadAction<BaseUser>) => {
+      builder.addCase(signUp.fulfilled, (state, action: PayloadAction<BaseUser>) => {
         state.status = "succeeded";
         state.user = {
           ...action.payload,
           pinSet: false,
           isVerified: false
         };
-      });
+      })
       .addCase(signUp.rejected, (state, action) => {
         state.status = "failed";
         state.error = (action.payload as string) || "Sign up failed";
@@ -213,10 +239,10 @@ const authSlice = createSlice({
         state.user = action.payload;
       }) */}
 
-      builder.addCase(signInUser.fulfilled, (state, action: PayloadAction<FullUser>) => {
+      builder.addCase(signIn.fulfilled, (state, action: PayloadAction<FullUser>) => {
         state.status = "succeeded";
         state.user = action.payload;
-      });
+      })
        
       .addCase(signIn.rejected, (state, action) => {
         state.status = "failed";
@@ -230,8 +256,7 @@ const authSlice = createSlice({
           .addCase(IdentityType.fulfilled, (state, action: PayloadAction<IdentityPayload>) => {
             if (state.user) {
               state.user.identityType = action.payload.identityType;
-              // If using FullUser type and you want to mark the object as updated:
-              state.user = { ...state.user, identityType: action.payload.identityType };
+              
             }
           })
           .addCase(IdentityType.rejected, (state, action) => {
@@ -242,8 +267,7 @@ const authSlice = createSlice({
           .addCase(identityNumber.fulfilled, (state, action: PayloadAction<IdentityNumberPayload>) => {
             if (state.user) {
               state.user.identityNumber = action.payload.identityNumber;
-              // Alternative immutable update:
-              state.user = { ...state.user, identityNumber: action.payload.identityNumber };
+              
             }
           })
           .addCase(identityNumber.rejected, (state, action) => {
@@ -252,10 +276,11 @@ const authSlice = createSlice({
         
           // Create PIN
           .addCase(createPin.fulfilled, (state, action: PayloadAction<PinStatusPayload>) => {
+            //console.log('createPin payload:', action.payload);
+            //console.log('createPin state', state.user)
             if (state.user) {
               state.user.pinSet = action.payload.pinSet;
-              // Or immutably:
-              state.user = { ...state.user, pinSet: action.payload.pinSet };
+             
             }
           })
           .addCase(createPin.rejected, (state, action) => {
@@ -264,14 +289,27 @@ const authSlice = createSlice({
           
           // Confirm PIN
           .addCase(confirmPin.fulfilled, (state, action: PayloadAction<VerificationPayload>) => {
+            //console.log('confirmPin payload:', action.payload);
+            //console.log('confirmPin state', state.user)
             if (state.user) {
               state.user.isVerified = action.payload.isVerified;
-              // Or immutably:
-              state.user = { ...state.user, isVerified: action.payload.isVerified };
+              
             }
           })
           .addCase(confirmPin.rejected, (state, action) => {
             state.error = (action.payload as string) || "Failed to verify pin";
+          })
+
+          .addCase(accountType.fulfilled, (state, action: PayloadAction<accountTypePayload>) => {
+            console.log('account type payload:', action.payload);
+            console.log('account type state', state.user)
+            if (state.user) {
+              state.user.accountType = action.payload.accountType;
+              
+            }
+          })
+          .addCase(accountType.rejected, (state, action) => {
+            state.error = (action.payload as string) || "Failed to add account type";
           });
       
   },

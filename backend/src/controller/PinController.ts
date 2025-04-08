@@ -34,7 +34,7 @@ export const createPin = async (req: Request, res: Response): Promise<any> => {
     }
 
     const hashedPin = await bcrypt.hash(pin, MIN_SALT_ROUNDS);
-    const updatedUser = await User.findByIdAndUpdate(userId, { pin: hashedPin }, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(userId, { pin: hashedPin, pinSet: true }, { new: true });
 
     if (!updatedUser) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -71,7 +71,11 @@ export const confirmPin = async (req: Request, res: Response): Promise<any> => {
       });
     }
 
-    const user = await User.findById(userId).select("pin");
+    const user =  await User.findByIdAndUpdate(
+      userId, 
+      { isVerified: true },
+      { new: true }
+    );
 
     if (!user || !user.pin) {
       return res.status(400).json({

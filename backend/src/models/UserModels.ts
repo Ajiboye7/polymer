@@ -42,6 +42,10 @@ const UserSchema = new Schema<IUser, IUserModel>({
     type: String,
     required: false,
   },
+  pinSet:{
+    type:Boolean,
+    default: false,
+  },
 
   isVerified: {
     type: Boolean,

@@ -80,7 +80,7 @@ const ConfirmPin = () => {
   
     dispatch(pinConfirmation({ pin, userId }))
       .unwrap()
-      .then(() => router.push(ROUTES.HOME))
+      .then(() => router.push(ROUTES.ACCOUNT_TYPE))
       .catch(error => Alert.alert('Error', error.message || 'PIN confirmation failed'));
   };
   

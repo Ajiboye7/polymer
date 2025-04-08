@@ -12,7 +12,8 @@ export interface IUser extends Document {
   identityType?: string;
   identityNumber?: string;
   pin?: string;
-  accountType: string;
+  pinSet?:boolean;
+  accountType?: string;
 }
 
 export interface IUserModel extends Model<IUser> {

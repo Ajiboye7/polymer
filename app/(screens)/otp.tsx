@@ -21,7 +21,7 @@ const OTPVerification: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const inputs = useRef<(TextInput | null)[]>([]);
 
-  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
+  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
 
   const handleChange = (text: string, index: number) => {
     const newOtp = [...otp];

@@ -86,9 +86,10 @@ export interface FullUser extends BaseUser {
   isVerified: boolean;
   identityNumber?: string;
   identityType?: string;
+  accountType?: string;
 }
 
-xport type IdentityPayload = {
+export type IdentityPayload = {
   identityType: string;
 };
 
@@ -103,6 +104,10 @@ export type PinStatusPayload = {
 export type VerificationPayload = {
   isVerified: boolean;
 };
+
+export type accountTypePayload = {
+  accountType: string;
+}
 
 
 
@@ -146,4 +151,9 @@ export interface IdentityNumberDetails {
 export interface CreatePinDetails {
   userId: string;
   pin: string
+}
+ 
+export interface accountTypeDetails{
+  userId: string;
+  accountType: "business" | "regular"
 }
