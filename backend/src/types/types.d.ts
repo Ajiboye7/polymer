@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Document } from "mongoose";
 
 export interface IUser extends Document {
   _id: string;
@@ -12,7 +12,7 @@ export interface IUser extends Document {
   identityType?: string;
   identityNumber?: string;
   pin?: string;
-  pinSet?:boolean;
+  pinSet?: boolean;
   accountType?: string;
 }
 
@@ -26,6 +26,28 @@ export interface IUserModel extends Model<IUser> {
   ) => Promise<IUser>;
 
   signIn: (email: string, password: string) => Promise<IUser>;
+}
+
+export interface IProfile extends Document {
+  userId: Types.ObjectId; // Reference to User
+  phoneNumber: string;
+
+  address: string;
+  nextOfKin: string;
+  nextOfKinRelationship: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface IProfileModel extends Model<IProfile> {
+  profile: (
+    phoneNumber: string,
+
+    address: string,
+    nextOfKin: string,
+    nextOfKinRelationship: string,
+    userId: Types.ObjectId
+  ) => Promise<IProfile>;
 }
 
 export interface sendOtpProps {

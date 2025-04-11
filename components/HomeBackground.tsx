@@ -14,16 +14,15 @@ import { BlurView } from "expo-blur";
 import Button from "./Button";
 import { Link, useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
+import { UseDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+
 
 const  HomeBackground = () => {
 
   const router = useRouter();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-
-  /*const [isBusiness, setIsBusiness] = useState(false);
-
-  const toggleSwitch = () => setIsBusiness((prevState) => !prevState);*/
 
   const [isBusiness, setIsBusiness] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -40,6 +39,10 @@ const  HomeBackground = () => {
     setModalVisible(false);
   };
 
+  const user = useSelector((state: RootState)=> state.auth.user)
+
+  const userName = user?.name
+
   return (
     <SafeAreaView className="bg-primary-300">
       <View className="flex flex-row items-center justify-between px-3 mt-10">
@@ -51,7 +54,7 @@ const  HomeBackground = () => {
           />
 
           <Text className="text-[16px] font-gilroyBold text-white">
-            Hi, User
+            Hi, {userName}
           </Text>
         </View>
 

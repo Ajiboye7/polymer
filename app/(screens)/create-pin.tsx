@@ -12,7 +12,7 @@ import Button from "@/components/Button";
 import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import { icons } from "@/constants";
-import { UseSelector, useDispatch, useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { createPin } from "@/redux/slices/authSlice";
 
@@ -31,39 +31,7 @@ const CreatePin = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const userId = user?._id;
 
-  {/*const handleCreatePin = async () => {
-    try {
-      if (!pin) {
-        Alert.alert("Error", "Please input a PIN");
-        return;
-      }
   
-      if (!userId) {
-        Alert.alert("Error", "User not found");
-        return;
-      }
-  
-      try {
-        await dispatch(createPin({ pin, userId })).unwrap();
-        router.push(ROUTES.CONFIRM_FOUR_DIGIT_PIN);
-        console.log("PIN created:", pin);
-      } catch (error) {
-        console.error("Error creating PIN:", error);
-  
-        let errorMessage = "Failed to create PIN";
-        if (typeof error === "string") {
-          errorMessage = error;
-        } else if (error && typeof error === "object" && "message" in error) {
-          errorMessage = error.message as string;
-        }
-  
-        Alert.alert("Error", errorMessage);
-      }
-    } catch (error) {
-      console.error("Unexpected error", error);
-      Alert.alert("Error", "An unexpected error occurred. Please try again.");
-    }
-  };*/}
   const handleCreatePin = () => {
     if (!pin) return Alert.alert('Error', 'Please input a PIN');
     if (!userId) return Alert.alert('Error', 'User not found');

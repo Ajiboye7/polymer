@@ -10,6 +10,7 @@ export const ROUTES = {
   CREATE_FOUR_DIGIT_PIN: "/(screens)/create-pin",
   CONFIRM_FOUR_DIGIT_PIN: "/(screens)/confirm-pin",
   ACCOUNT_TYPE: "/(screens)/accounts-type",
+  PERSONAL_DETAILS:"/(screens)/personal-details",
   FUND_ACCOUNT: "/(screens)/fund-account",
   BUSINESS_PROFILE_SCREEN: "/(screens)/business-profile",
   BUSINESS_PROFILE_ANIMATION_SCREEN: "/(screens)/business-profile-animation",

@@ -20,40 +20,38 @@ import { signUp, signIn } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 
 const SignIn = () => {
-
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   const { user, status, error } = useSelector((state: RootState) => state.auth);
 
- //const authState = useSelector((state: RootState) => state.auth);
-
-
+  //const authState = useSelector((state: RootState) => state.auth);
 
   const router = useRouter();
 
-  {/*const handleSignIn = async () => {
+  {
+    /*const handleSignIn = async () => {
   try {
     const user = await dispatch(signIn(form)).unwrap(); 
     Alert.alert("Success", `Welcome back ${user.name}`);
   } catch (error) {
     Alert.alert("Error", error as string);
   }
-};*/}
-const handleSignIn = () => {
-  dispatch(signIn(form))
-    .unwrap()
-    .then(user => Alert.alert('Success', `Welcome back ${user.name}`))
-    .catch(error => Alert.alert('Error', error.message || 'Login failed'));
-};
+};*/
+  }
+  const handleSignIn = () => {
+    dispatch(signIn(form))
+      .unwrap()
+      .then(() => {
+        router.replace(ROUTES.HOME);
+        Alert.alert("Success", `Welcome back ${user.name}`);
+      })
 
-
-
-  
+      .catch((error) => Alert.alert("Error", error.message || "Login failed"));
+  };
 
   return (
     <SafeAreaView className="mt-5">

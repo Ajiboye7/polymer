@@ -55,6 +55,7 @@ import dropDown from "@/assets/icons/arrow-square-down.png";
 import exchange from "@/assets/icons/Exchange Button.png";
 import ring from "@/assets/icons/Group 2086.png";
 import arrowSquareRight from "@/assets/icons/arrow-square-right.png";
+import arrowRightWhite from '@/assets/icons/arrowRightWhite.png';
 import arrowSquareDown from "@/assets/icons/arrow-square-down.png";
 import copy from "@/assets/icons/copy.png";
 import share from "@/assets/icons/share.png";
@@ -200,6 +201,7 @@ export const icons = {
   activeBeneficiary,
   inActiveBeneficiary,
   arrowSquareDown,
+  arrowRightWhite,
   success,
   search,
   trash,

@@ -1,4 +1,4 @@
-import mongoose, { Error } from "mongoose";
+import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import { IUser, IUserModel } from "../types/types";
 import validator from "validator";
@@ -16,7 +16,6 @@ const UserSchema = new Schema<IUser, IUserModel>({
     type: String,
     required: true,
     unique: true,
-    
   },
 
   email: {
@@ -42,14 +41,14 @@ const UserSchema = new Schema<IUser, IUserModel>({
     type: String,
     required: false,
   },
-  pinSet:{
-    type:Boolean,
+  pinSet: {
+    type: Boolean,
     default: false,
   },
 
   isVerified: {
     type: Boolean,
-    default: false
+    default: false,
   },
 
   accountType: {
@@ -70,7 +69,7 @@ UserSchema.statics.signUp = async function (
   account: string,
   email: string,
   password: string,
-  confirmPassword: string,
+  confirmPassword: string
 ) {
   try {
     if (!name || !email || !password || !confirmPassword) {

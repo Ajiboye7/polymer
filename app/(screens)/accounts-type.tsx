@@ -24,7 +24,7 @@ const AccountType = () => {
 
       dispatch(accountMode({userId, accountType}))
       .unwrap()
-      .then(()=>router.push(ROUTES.HOME))
+      .then(()=>router.push(ROUTES.PERSONAL_DETAILS))
       .catch(error => Alert.alert('Error', error.message || 'Failed to add account type'))
   }
   return (

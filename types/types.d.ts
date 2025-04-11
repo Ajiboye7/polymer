@@ -110,16 +110,6 @@ export type accountTypePayload = {
 }
 
 
-
-{/*export interface User{
-  _id: string;
-  name: string;
-  account: string;
-  email: string;
-  token: string;
-  [key: string]: any;
-}*/}
-
 export interface AuthState{
   user: User | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -156,4 +146,26 @@ export interface CreatePinDetails {
 export interface accountTypeDetails{
   userId: string;
   accountType: "business" | "regular"
+}
+
+export interface userState{
+  userProfile: Profile | null;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed'
+  error:  string | null
+}
+
+export interface Profile{
+  phoneNumber: string,
+  address: string,
+  nextOfKin: string,
+  nextOfKinRelationship: string,
+  userId: string
+}
+
+export interface ProfileDetail{
+  phoneNumber: string,
+  address: string,
+  nextOfKin: string,
+  nextOfKinRelationship: string,
+  userId: string
 }

@@ -6,7 +6,7 @@ import { icons } from "@/constants";
 interface PinInputModalProps {
   isVisible: boolean;
   onClose: () => void;
-  onPinEntered: (pin: string) => void;
+  onPinEntered: (pin: string, userId: string) => void;
 }
 
 const PinInputModal: React.FC<PinInputModalProps> = ({
@@ -14,37 +14,28 @@ const PinInputModal: React.FC<PinInputModalProps> = ({
   onClose,
   onPinEntered,
 }) => {
-  const [pin, setPin] = useState<string[]>(["", "", "", ""]);
+  const [pin, setPin] = useState(""); 
 
   const handleNumberPress = (number: string) => {
-    const emptyIndex = pin.findIndex((digit) => digit === "");
-    if (emptyIndex !== -1) {
-      const updatedPin = [...pin];
-      updatedPin[emptyIndex] = number;
-      setPin(updatedPin);
+    if (pin.length < 4) {
+      const newPin = pin + number;
+      setPin(newPin);
 
-      if (updatedPin.join("").length === 4) {
+      if (newPin.length === 4) {
         setTimeout(() => {
           onClose();
-          onPinEntered(updatedPin.join(""));
-          setPin(["", "", "", ""]);
+          onPinEntered(newPin);
+          setPin("");
         }, 500);
       }
     }
   };
 
   const handleDeletePress = () => {
-    const lastFilledIndex = pin
-      .slice()
-      .reverse()
-      .findIndex((digit) => digit !== "");
-    if (lastFilledIndex !== -1) {
-      const updatedPin = [...pin];
-      updatedPin[3 - lastFilledIndex] = "";
-      setPin(updatedPin);
+    if (pin.length > 0) {
+      setPin(pin.slice(0, -1));
     }
   };
-
   return (
     <Modal transparent animationType="slide" visible={isVisible}>
       <BlurView
@@ -61,15 +52,21 @@ const PinInputModal: React.FC<PinInputModalProps> = ({
         </View>
 
         <View className="flex-row justify-center mb-6">
-          {pin.map((digit, index) => (
-            <View
-              key={index}
-              className="bg-gray-200 w-10 h-10 mx-2 flex items-center justify-center text-xl rounded-md"
-            >
-              <Text className="text-2xl">{digit}</Text>
-            </View>
-          ))}
-        </View>
+  {Array(4).fill(0).map((_, index) => (
+    <View
+      key={index}
+      className={`w-10 h-10 mx-2 rounded-md border ${
+        pin.length > index 
+          ? "border-primary-300 bg-primary-300/10" 
+          : "border-gray-300"
+      } flex items-center justify-center`}
+    >
+      {pin.length > index && (
+        <View className="w-[10px] h-[10px] rounded-full bg-primary-300" />
+      )}
+    </View>
+  ))}
+</View>
 
         {/* Custom Numeric Keyboard */}
         <View className="flex-wrap flex-row justify-center">

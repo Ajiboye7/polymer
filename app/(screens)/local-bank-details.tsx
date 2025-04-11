@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Image, ScrollView } from "react-native";
+import { View, Text, ImageBackground, Image, ScrollView, Alert } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "@/constants";
@@ -10,9 +10,28 @@ import CustomSwipeButton from "@/components/CustomSwipeButton";
 import PinInputModal from "@/components/PinInputModal";
 import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
+import { useLocalSearchParams } from "expo-router";
+import {  useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { confirmPin as verifyPin } from "@/redux/slices/authSlice";
+
 
 const LocalBankDetails = () => {
   const router = useRouter();
+  const params = useLocalSearchParams()
+
+  const {
+    bankName = 'GTB',
+    accountNumber = '0325642061',
+    accountHolder = 'Ajiboye Muyideen Olanrewaju',
+    bankIcon = icons.gtBank
+  } = params;
+
+  const getBankAcronym = (name: string) => {
+    return name.slice(0, 4).toUpperCase();
+  };
+  
+
 
   const [isPinInputVisible, setPinInputVisible] = useState(false);
   const [details, setDetails] = useState({
@@ -21,13 +40,28 @@ const LocalBankDetails = () => {
   });
 
   const handleSwipeSuccess = () => {
-    router.replace(ROUTES.TRANSFER_SUCCESSFUL)
+    setPinInputVisible(true);
   };
 
-  const handlePinVerified = (pin: string) => {
-    alert(`PIN Verified: ${pin}! Proceeding to payment...`);
-    router.push("/(tabs)/home");
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const userId = user?._id;
+
+  const handlePinVerified = (pin: string, userId: string) => {
+    if (!userId) return Alert.alert('Error', 'User not found');
+   
+  
+    dispatch(verifyPin({ pin, userId }))
+      .unwrap()
+      .then(() => {
+        Alert.alert('Success', `PIN Verified: ${pin}! Proceeding to payment...`);
+        router.push(ROUTES.ACCOUNT_TYPE);
+      })
+      .catch(error => {
+        Alert.alert('Error', error.message || 'PIN confirmation failed');
+      });
   };
+  
 
   return (
     <ScrollView>
@@ -60,30 +94,29 @@ const LocalBankDetails = () => {
           </Text>
 
           <View className="bg-primary-200 h-[120px] justify-center p-5 rounded-[20px]">
-            <Text className="text-[12px] text-[#7E95B7]">Account Number</Text>
-            <View className="flex flex-row items-center justify-between">
-              <Text className="text-white text-[25px] font-gilroyBold ">
-                0325642061
-              </Text>
-              <View className="flex flex-row items-center justify-center rounded-full space-x-2 w-[85px] h-[40px] bg-white">
-                <Image source={icons.gtBank} resizeMode="contain" />
-                <Text className="">GTB</Text>
-              </View>
-            </View>
-
-            <View className="flex flex-row items-center space-x-1  ">
-              <Image source={icons.success} resizeMode="contain" />
-
-              <Text className="text-white text-[16px] font-gilroyBold">
-                Ajiboye Muyideen Olanrewaju
-              </Text>
-            </View>
+        <Text className="text-[12px] text-[#7E95B7]">Account Number</Text>
+        <View className="flex flex-row items-center justify-between">
+          <Text className="text-white text-[25px] font-gilroyBold">
+            {accountNumber}
+          </Text>
+          <View className="flex flex-row items-center justify-center rounded-full space-x-2 w-[85px] h-[40px] bg-white">
+            <Image source={bankIcon} resizeMode="contain" />
+            <Text className="">{getBankAcronym(bankName.toString())}</Text>
           </View>
+        </View>
+
+        <View className="flex flex-row items-center space-x-1">
+          <Image source={icons.success} resizeMode="contain" />
+          <Text className="text-white text-[16px] font-gilroyBold">
+            {accountHolder}
+          </Text>
+        </View>
+      </View>
 
           <View className="mb-16">
             <InputField
-              title="Account Number"
-              placeholder="1234567890"
+              title="Amount"
+             // placeholder="1234567890"
               value={details.accountNumber}
               handleChangeText={(value) =>
                 setDetails({ ...details, accountNumber: value })
@@ -93,8 +126,8 @@ const LocalBankDetails = () => {
             />
 
             <InputField
-              title="Bank Name"
-              placeholder="Select your bank name"
+              title="Remarks(optional)"
+              placeholder="Enter note (Within 50 Characters)"
               value={details.remark}
               handleChangeText={(value) =>
                 setDetails({ ...details, remark: value })
@@ -115,7 +148,7 @@ const LocalBankDetails = () => {
         <PinInputModal
           isVisible={isPinInputVisible}
           onClose={() => setPinInputVisible(false)}
-          onPinEntered={handlePinVerified}
+          onPinEntered={(pin) => handlePinVerified(pin, userId)}
         />
       </SafeAreaView>
     </ScrollView>

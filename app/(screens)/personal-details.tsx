@@ -1,17 +1,45 @@
-import { View, Text, Image, StatusBar, ScrollView } from "react-native";
+import { View, Text, Image, StatusBar, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import Button from "@/components/Button";
+import {  useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
+import {  useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { createProfile } from "@/redux/slices/userSlice";
 
 const PersonalDetails = () => {
   const [form, setForm] = useState({
-    phone: "",
-    nokName: "",
-    nokRelationship: "",
-    nin: "",
+    phoneNumber: "",
+    address: "",
+    nextOfKin: "",
+    nextOfKinRelationship: "",
+    
   });
+
+  
+   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+    const user = useSelector((state: RootState) => state.auth.user);
+    const userId = user?._id;
+
+    const profileData = {
+      ...form,
+      userId, 
+    };
+
+
+  const handleComplete = ()=> {
+    dispatch(createProfile(profileData))
+    
+    .unwrap()
+    .then(()=>{
+      Alert.alert('Success', 'Profile created successfully')
+      router.replace(ROUTES.HOME)
+    })
+  }
 
   return (
     <SafeAreaView className="mt-5">
@@ -34,8 +62,8 @@ const PersonalDetails = () => {
             <InputField
               title="Phone Number"
               placeholder="08172710973"
-              value={form.phone}
-              handleChangeText={(value) => setForm({ ...form, phone: value })}
+              value={form.phoneNumber}
+              handleChangeText={(value) => setForm({ ...form, phoneNumber: value })}
               keyboardType="numeric"
               textContentType="none"
             />
@@ -43,8 +71,8 @@ const PersonalDetails = () => {
             <InputField
               title="Next of Kin Name"
               placeholder="John Doe"
-              value={form.nokName}
-              handleChangeText={(value) => setForm({ ...form, nokName: value })}
+              value={form.nextOfKin}
+              handleChangeText={(value) => setForm({ ...form, nextOfKin: value })}
               keyboardType="numeric"
               textContentType="name"
             />
@@ -52,18 +80,20 @@ const PersonalDetails = () => {
             <InputField
               title="Next of Kin Relationship"
               placeholder="Father"
-              value={form.nokRelationship}
-              handleChangeText={(value) => setForm({ ...form, nokRelationship: value })}
+              value={form.nextOfKinRelationship}
+              handleChangeText={(value) =>
+                setForm({ ...form, nextOfKinRelationship: value })
+              }
               keyboardType="email-address"
               textContentType="name"
             />
 
             <InputField
-              title="NIN"
-              placeholder="2324546576897"
-              value={form.nin}
-              handleChangeText={(value) => setForm({ ...form, nin: value })}
-              keyboardType="numeric"
+              title="address"
+              placeholder=""
+              value={form.address}
+              handleChangeText={(value) => setForm({ ...form, address: value })}
+              keyboardType="default"
               textContentType="none"
             />
           </View>
@@ -71,6 +101,7 @@ const PersonalDetails = () => {
           <Button
             title="Complete Profile"
             buttonStyle="w-[358px] h-[49.77px] mt-14"
+            handleClick={handleComplete}
           />
         </View>
       </ScrollView>

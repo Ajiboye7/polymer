@@ -21,7 +21,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 
 
 const SignUp = () => {
-  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
+  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
 
   const router = useRouter();
    const dispatch = useDispatch<AppDispatch>()
@@ -34,18 +34,6 @@ const SignUp = () => {
     confirmPassword: "",
   });
 
-  {/*const handleSignUp = async () => {
-   
-    try {
-       const user = await dispatch(signUp(form)).unwrap(); 
-       Alert.alert("Success", `Welcome back ${user.name}`);
-       router.replace(ROUTES.EMAIL_OTP);
-     } catch (error) {
-       Alert.alert("Error", error as string);
-     } }
-
-    
-  };*/}
 
   const handleSignUp = () => {
     dispatch(signUp(form))
