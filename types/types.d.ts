@@ -152,6 +152,7 @@ export interface userState{
   userProfile: Profile | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error:  string | null
+  profilePictureUploadStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
 }
 
 export interface Profile{
@@ -159,7 +160,8 @@ export interface Profile{
   address: string,
   nextOfKin: string,
   nextOfKinRelationship: string,
-  userId: string
+  profilePicture: string | null;
+
 }
 
 export interface ProfileDetail{
@@ -167,5 +169,12 @@ export interface ProfileDetail{
   address: string,
   nextOfKin: string,
   nextOfKinRelationship: string,
-  userId: string
+  
+ 
+ // profilePicture: string | null;
+}
+
+export interface profilePictureDetail{
+  imageUri: string | null;
+  
 }

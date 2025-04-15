@@ -1,3 +1,4 @@
+import Profile from '../models/ProfileModels'
 import UserProfile from "../models/ProfileModels";
 import { Request, Response } from "express";
 
@@ -9,11 +10,12 @@ export const createProfile = async (
     const {
       phoneNumber,
       address,
-
       nextOfKin,
       nextOfKinRelationship,
-      userId,
     } = req.body;
+    const userId = req.user._id;
+    console.log('userId from request',userId)
+    console.log('Received data:', req.body);
     const existingProfile = await UserProfile.findOne({ userId });
     if (existingProfile) {
       return res.status(400).json({
@@ -24,7 +26,6 @@ export const createProfile = async (
 
     const profile = await UserProfile.profile(
       phoneNumber,
-
       address,
       nextOfKin,
       nextOfKinRelationship,
@@ -61,3 +62,51 @@ export const createProfile = async (
     });
   }
 };
+
+
+export const uploadProfilePicture = async (req: Request, res: Response): Promise<any> =>{
+  const {userId, imageUri} = req.body
+  try{
+
+    if(!userId){
+      return res.status(400).json({
+      success: false,
+      message: 'User ID is required'
+      })
+    }
+    if(!imageUri){
+      return res.status(400).json({
+        success: false,
+        message: 'No file uploaded'
+      })
+    }
+
+    const updatedProfile = await Profile.findByIdAndUpdate(
+      userId,
+      { profilePicture: imageUri },
+      {new : true}
+    )
+    if(!updatedProfile){
+      return res.status(400).json({
+        success: false ,
+        message: 'Profile not found'
+      })
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Profile picture uploaded successfully',
+      data:{
+        profilePicture: updatedProfile.profilePicture
+      }
+    })
+    
+
+  }catch(error){
+    console.log('profile picture upload error', error)
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error while uploading profile picture'
+    })
+  }
+}

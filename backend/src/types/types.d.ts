@@ -29,12 +29,12 @@ export interface IUserModel extends Model<IUser> {
 }
 
 export interface IProfile extends Document {
-  userId: Types.ObjectId; // Reference to User
+  userId: Types.ObjectId;
   phoneNumber: string;
-
   address: string;
   nextOfKin: string;
   nextOfKinRelationship: string;
+  profilePicture: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -42,11 +42,12 @@ export interface IProfile extends Document {
 export interface IProfileModel extends Model<IProfile> {
   profile: (
     phoneNumber: string,
-
     address: string,
     nextOfKin: string,
     nextOfKinRelationship: string,
-    userId: Types.ObjectId
+    //profilePicture: string,
+    userId: Types.ObjectId,
+
   ) => Promise<IProfile>;
 }
 

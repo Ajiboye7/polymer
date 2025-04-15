@@ -98,7 +98,6 @@ export const confirmPin = async (req: Request, res: Response): Promise<any> => {
       success: true,
       message: "PIN verified successfully",
       data: {
-      
         isVerified: true
       }
     });

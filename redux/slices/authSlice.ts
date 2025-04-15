@@ -19,7 +19,7 @@ import {
   accountTypePayload,
 } from "@/types/types";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.2:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.6:5000";
 
 const initialState: AuthState = {
   user: null,
@@ -236,7 +236,7 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action: PayloadAction<FullUser>) => {
         state.status = "succeeded";
         state.user = action.payload;
-        console.log(state)
+        //console.log(state)
       })
 
       .addCase(signIn.rejected, (state, action) => {

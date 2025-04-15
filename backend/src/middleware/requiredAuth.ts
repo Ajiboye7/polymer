@@ -2,13 +2,14 @@ import jwt from "jsonwebtoken";
 import User from "../models/UserModels";
 import { Request, Response, NextFunction } from "express";
 import { JWT_SECRET } from "../config/env";
+import { AuthRequest } from "../types/express";
 
-interface AuthRequest extends Request {
+/*interface AuthRequest extends Request {
   user?: { _id: string };
-}
+}*/
 
 const requiredAuth = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ): Promise<any> => {

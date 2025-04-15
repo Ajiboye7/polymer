@@ -14,6 +14,7 @@ import { useLocalSearchParams } from "expo-router";
 import {  useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { confirmPin as verifyPin } from "@/redux/slices/authSlice";
+import { deductAmount } from "@/redux/slices/balanceSlice";
 
 
 const LocalBankDetails = () => {
@@ -46,6 +47,7 @@ const LocalBankDetails = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.auth.user);
   const userId = user?._id;
+  const balance = useSelector((state: RootState) => state.balance.value);
 
   const handlePinVerified = (pin: string, userId: string) => {
     if (!userId) return Alert.alert('Error', 'User not found');
@@ -84,7 +86,7 @@ const LocalBankDetails = () => {
               </View>
 
               <Text className="text-[25px] font-gilroyBold text-white">
-                ₦ 113,000.00
+              ₦ {balance.toLocaleString()}
               </Text>
             </View>
           </ImageBackground>
@@ -116,13 +118,16 @@ const LocalBankDetails = () => {
           <View className="mb-16">
             <InputField
               title="Amount"
-             // placeholder="1234567890"
+              placeholder="₦ 0.00"
               value={details.accountNumber}
-              handleChangeText={(value) =>
+              handleChangeText={(value) =>{
                 setDetails({ ...details, accountNumber: value })
-              }
+                const amount = parseFloat(value) || 0;
+                dispatch(deductAmount(amount));
+              }}
               keyboardType="numeric"
               textContentType="none"
+              
             />
 
             <InputField

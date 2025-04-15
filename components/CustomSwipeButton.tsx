@@ -1,10 +1,10 @@
-
 import SwipeButton from "rn-swipe-button";
 import { icons } from "@/constants";
 
 interface CustomSwipeButtonProps {
   title: string;
   onSwipeSuccess: () => void;
+
   titleStyles?: object;
   containerStyles?: object;
 }
@@ -14,6 +14,7 @@ const CustomSwipeButton: React.FC<CustomSwipeButtonProps> = ({
   onSwipeSuccess,
   titleStyles,
   containerStyles,
+
   ...props
 }) => {
   return (

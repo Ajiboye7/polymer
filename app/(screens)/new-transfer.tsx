@@ -21,6 +21,8 @@ import { useRouter } from "expo-router";
 import { banks } from "@/constants";
 import { BlurView } from "expo-blur";
 import { ROUTES } from "@/constants/routes";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const NewTransfer = () => {
   const router = useRouter();
@@ -29,6 +31,7 @@ const NewTransfer = () => {
     bankName: "",
     accountNumber: "",
   });
+  
 
   const handleBankSelection = (bankName: string) => {
     setDetails({ ...details, bankName });
@@ -41,7 +44,7 @@ const NewTransfer = () => {
   }
 
   const handleSwipeSuccess = () => {
-    //setPinInputVisible(true);
+   
     router.replace(ROUTES.LOCAL_BANK_DETAILS);
     //console.log("Swipe successful!");
   };
@@ -52,6 +55,8 @@ const NewTransfer = () => {
   const [selectedMode, setSelectMode] = useState<"newTransfer" | "beneficiary">(
     "newTransfer"
   );
+
+  const balance = useSelector((state: RootState) => state.balance.value);
 
   const ListHeader = () => {
     return (
@@ -153,7 +158,11 @@ const NewTransfer = () => {
               </View>
 
               <Text className="text-[25px] font-gilroyBold text-white">
-                ₦ 113,000.00
+              ₦{" "}
+            {balance.toLocaleString("en-NG", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
               </Text>
             </View>
           </ImageBackground>

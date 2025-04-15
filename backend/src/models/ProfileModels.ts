@@ -31,26 +31,29 @@ const ProfileSchema = new Schema<IProfile, IProfileModel>(
       required: [true, "Next of kin relationship is required"],
       trim: true,
     },
+
+    profilePicture: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
 
 ProfileSchema.statics.profile = async function (
   phoneNumber: string,
-  //dateOfBirth: string,
   address: string,
   nextOfKin: string,
   nextOfKinRelationship: string,
-  userId: string
+  userId: string 
+
 ) {
   try {
     if (
       !phoneNumber ||
-     
       !address ||
       !nextOfKin ||
-      !nextOfKinRelationship ||
-      !userId
+      !nextOfKinRelationship
+     
     ) {
       throw new Error("All fields are to be filled");
     }
@@ -64,12 +67,12 @@ ProfileSchema.statics.profile = async function (
     }
 
     const UserProfile = await this.create({
+      userId,
       phoneNumber,
-     // dateOfBirth,
       address,
       nextOfKin,
       nextOfKinRelationship,
-      userId,
+
     });
 
     return UserProfile;

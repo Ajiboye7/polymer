@@ -4,9 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import Button from "@/components/Button";
-import {  useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
-import {  useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { createProfile } from "@/redux/slices/userSlice";
 
@@ -16,30 +16,19 @@ const PersonalDetails = () => {
     address: "",
     nextOfKin: "",
     nextOfKinRelationship: "",
-    
   });
 
-  
-   const router = useRouter();
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-    const user = useSelector((state: RootState) => state.auth.user);
-    const userId = user?._id;
 
-    const profileData = {
-      ...form,
-      userId, 
-    };
-
-
-  const handleComplete = ()=> {
-    dispatch(createProfile(profileData))
-    
-    .unwrap()
-    .then(()=>{
-      Alert.alert('Success', 'Profile created successfully')
-      router.replace(ROUTES.HOME)
-    })
-  }
+  const handleComplete = () => {
+    dispatch(createProfile(form))
+      .unwrap()
+      .then(() => {
+        Alert.alert("Success", "Profile created successfully");
+        router.replace(ROUTES.HOME);
+      });
+  };
 
   return (
     <SafeAreaView className="mt-5">
@@ -63,7 +52,9 @@ const PersonalDetails = () => {
               title="Phone Number"
               placeholder="08172710973"
               value={form.phoneNumber}
-              handleChangeText={(value) => setForm({ ...form, phoneNumber: value })}
+              handleChangeText={(value) =>
+                setForm({ ...form, phoneNumber: value })
+              }
               keyboardType="numeric"
               textContentType="none"
             />
@@ -72,8 +63,10 @@ const PersonalDetails = () => {
               title="Next of Kin Name"
               placeholder="John Doe"
               value={form.nextOfKin}
-              handleChangeText={(value) => setForm({ ...form, nextOfKin: value })}
-              keyboardType="numeric"
+              handleChangeText={(value) =>
+                setForm({ ...form, nextOfKin: value })
+              }
+              keyboardType="default"
               textContentType="name"
             />
 

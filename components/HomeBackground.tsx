@@ -12,14 +12,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
 import Button from "./Button";
-import { Link, useRouter } from "expo-router";
+import {  useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
-import { UseDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
+import {  useSelector } from "react-redux";
+import {  RootState } from "@/redux/store";
 
-
-const  HomeBackground = () => {
-
+const HomeBackground = () => {
   const router = useRouter();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -39,9 +37,10 @@ const  HomeBackground = () => {
     setModalVisible(false);
   };
 
-  const user = useSelector((state: RootState)=> state.auth.user)
+  const user = useSelector((state: RootState) => state.auth.user);
 
-  const userName = user?.name
+  const userName = user?.name.split(" ")[0];
+  const balance = useSelector((state: RootState) => state.balance.value);
 
   return (
     <SafeAreaView className="bg-primary-300">
@@ -54,7 +53,7 @@ const  HomeBackground = () => {
           />
 
           <Text className="text-[16px] font-gilroyBold text-white">
-            Hi, {userName}
+            Hi, {userName} 👋
           </Text>
         </View>
 
@@ -94,25 +93,31 @@ const  HomeBackground = () => {
         <View className="ml-3">
           <View className="flex flex-row items-center gap-2 mb-2">
             <Image source={icons.nigeria} resizeMode="contain" />
-            <Text className="text-[#7E95B7] ">Ngerian Naira</Text>
+            <Text className="text-[#7E95B7] ">Nigerian Naira</Text>
           </View>
           <Text className="text-[25px] font-gilroyBold text-white">
-            ₦ 113,000.00
+            ₦{" "}
+            {balance.toLocaleString("en-NG", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </Text>
         </View>
       </ImageBackground>
 
       <View className="flex flex-row items-center justify-around mt-5">
-        <TouchableOpacity onPress={()=>{
-          router.push(ROUTES.FUND_ACCOUNT)
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            router.push(ROUTES.FUND_ACCOUNT);
+          }}
+        >
           <View className="space-y-2">
             <Image source={icons.add} resizeMode="contain" />
             <Text className="text-[12px] text-secondary-600">Fund</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity >
+        <TouchableOpacity>
           <View className="space-y-2">
             <Image source={icons.send2} resizeMode="contain" />
             <Text className="text-[12px] text-secondary-600">Send</Text>
@@ -139,24 +144,29 @@ const  HomeBackground = () => {
           className="flex-1 justify-end items-center"
         >
           <View className="w-[358px] h-[330px] bg-white rounded-lg px-4 py-5  mb-5">
-            <Image source={icons.modalBusinessImage} className="w-16 h-16 mb-4 mx-auto"/>
+            <Image
+              source={icons.modalBusinessImage}
+              className="w-16 h-16 mb-4 mx-auto"
+            />
             <Text className="text-[20px] text-center font-bold text-gray-900">
               Set Up Your Business Profile
             </Text>
             <Text className="text-[12px] text-center text-secondary-500 mt-2 mb-4 leading-[25px] font-semibold">
-              Hey there! We noticed you haven’t set up your business {'\n'} profile.
-              Set it up now to start making payments in the {'\n'} name of your
-              business.
+              Hey there! We noticed you haven’t set up your business {"\n"}{" "}
+              profile. Set it up now to start making payments in the {"\n"} name
+              of your business.
             </Text>
 
-
-            <Button title="Set up now"
-             buttonStyle=" h-[49.77px] w-full my-3 bg-primary-200"
-             
-             handleClick={() => setModalVisible(false)} />
+            <Button
+              title="Set up now"
+              buttonStyle=" h-[49.77px] w-full my-3 bg-primary-200"
+              handleClick={() => setModalVisible(false)}
+            />
 
             <TouchableOpacity onPress={handleCancel} className="mt-4">
-              <Text className="text-[16px] text-primary-200 font-gilroyBold text-center ">Not Now</Text>
+              <Text className="text-[16px] text-primary-200 font-gilroyBold text-center ">
+                Not Now
+              </Text>
             </TouchableOpacity>
           </View>
         </BlurView>
@@ -166,4 +176,3 @@ const  HomeBackground = () => {
 };
 
 export default HomeBackground;
-

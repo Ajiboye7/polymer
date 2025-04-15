@@ -28,26 +28,15 @@ const SignIn = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user, status, error } = useSelector((state: RootState) => state.auth);
 
-  //const authState = useSelector((state: RootState) => state.auth);
-
   const router = useRouter();
 
-  {
-    /*const handleSignIn = async () => {
-  try {
-    const user = await dispatch(signIn(form)).unwrap(); 
-    Alert.alert("Success", `Welcome back ${user.name}`);
-  } catch (error) {
-    Alert.alert("Error", error as string);
-  }
-};*/
-  }
+  
   const handleSignIn = () => {
     dispatch(signIn(form))
       .unwrap()
-      .then(() => {
-        router.replace(ROUTES.HOME);
-        Alert.alert("Success", `Welcome back ${user.name}`);
+      .then((userData) => {
+        router.replace(ROUTES.PERSONAL_DETAILS);
+        Alert.alert("Success", `Welcome back ${userData.name}`);
       })
 
       .catch((error) => Alert.alert("Error", error.message || "Login failed"));
