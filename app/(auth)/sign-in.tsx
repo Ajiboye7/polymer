@@ -35,7 +35,7 @@ const SignIn = () => {
     dispatch(signIn(form))
       .unwrap()
       .then((userData) => {
-        router.replace(ROUTES.PERSONAL_DETAILS);
+        router.replace(ROUTES.HOME);
         Alert.alert("Success", `Welcome back ${userData.name}`);
       })
 

@@ -6,7 +6,8 @@ import { useEffect, } from 'react';
 import { View } from 'react-native';
 import 'react-native-reanimated';
 import { Provider } from 'react-redux';
-import { store } from '@/redux/store';
+import { store, persistor } from '@/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -54,7 +55,8 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-       <View style={{ flex: 1, backgroundColor: "#0B274F" }}>  
+      <PersistGate loading={null} persistor={persistor}>
+      <View style={{ flex: 1, backgroundColor: "#0B274F" }}>  
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
@@ -63,6 +65,8 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" />
       </Stack>
     </View>
+      </PersistGate>
+     
     </Provider>
    
       

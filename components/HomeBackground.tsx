@@ -6,7 +6,7 @@ import {
   Text,
   ImageBackground,
   Modal,
-  Alert
+  Alert,
 } from "react-native";
 import { icons, images } from "@/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -46,61 +46,56 @@ const HomeBackground = () => {
   const userName = user?.name.split(" ")[0];
   const balance = useSelector((state: RootState) => state.balance.value);
 
-    const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const profilePicture = useSelector(
     (state: RootState) => state.user.userProfile?.profilePicture
   );
-  console.log("Profile picture path:", profilePicture);
- 
+  //console.log("Profile picture path:", profilePicture);
+
   const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.2:5000";
 
   const handleUpload = () => {
     dispatch(uploadProfilePicture())
-    .unwrap()
-    .then((response) => {
-      Alert.alert("Success", response.message);
-    })
-    .catch((error) => {
-      Alert.alert(
-        "Upload Failed",
-        error || "Failed to upload profile picture"
-      );
-    });
+      .unwrap()
+      .then((response) => {
+        Alert.alert("Success", response.message);
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Upload Failed",
+          error || "Failed to upload profile picture"
+        );
+      });
   };
 
-  const imageUri = `${Host}${profilePicture}?${Date.now()}`;
-//console.log("Image URI:", imageUri);
-/*const imageUri = profilePicture 
-  ? `${Host}${profilePicture.startsWith('/') ? '' : '/'}${profilePicture}?${Date.now()}`
-  : null;*/
+  //const imageUri = `${Host}${profilePicture}?${Date.now()}`;
+  //console.log("Image URI:", imageUri);
+  const imageUri = profilePicture
+    ? `${Host}${
+        profilePicture.startsWith("/") ? "" : "/"
+      }${profilePicture}?${Date.now()}`
+    : null;
 
-     console.log("Final Image URL:", imageUri);
+  //console.log("Final Image URL:", imageUri);
 
   return (
     <SafeAreaView className="bg-primary-300">
       <View className="flex flex-row items-center justify-between px-3 mt-10">
         <View className="flex flex-row items-center justify-start gap-3">
-        
-
-<TouchableOpacity onPress={handleUpload}>
-<Image
-  source={
-    profilePicture
-      ? { 
-          uri: imageUri,
-          cache: 'force-cache' // Try different cache strategies
-        }
-      : icons.profile
-  }
-  onError={(e) => {
-    console.log("Image load error:", e.nativeEvent.error);
-    console.log("Attempted URL:", imageUri);
-  }}
-  onLoad={() => console.log("Image loaded successfully")}
-  className="w-[50px] h-[50px] rounded-full"
-  resizeMode="cover"
-/>
-    </TouchableOpacity>
+          <TouchableOpacity onPress={handleUpload}>
+            <Image
+              source={
+                profilePicture
+                  ? {
+                      uri: imageUri,
+                      cache: "force-cache", // Try different cache strategies
+                    }
+                  : icons.profile
+              }
+              className="w-[50px] h-[50px] rounded-full"
+              resizeMode="cover"
+            />
+          </TouchableOpacity>
 
           <Text className="text-[16px] font-gilroyBold text-white">
             Hi, {userName} 👋
