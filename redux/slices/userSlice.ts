@@ -3,10 +3,9 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userState, ProfileDetail, profilePictureDetail } from "@/types/types";
 import * as ImagePicker from "expo-image-picker";
-import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.6:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.2:5000";
 
 const initialState: userState = {
   userProfile: null,
@@ -14,7 +13,6 @@ const initialState: userState = {
   error: null,
   profilePictureUploadStatus: "idle",
 };
-
 
 export const createProfile = createAsyncThunk(
   "profile/createProfile",
@@ -50,82 +48,60 @@ export const createProfile = createAsyncThunk(
     }
   }
 );
-
-{
-  /*export const uploadProfilePicture = createAsyncThunk(
-  "profile/uploadProfilePicture",
-  async ({profilePicture, userId}: profilePictureDetail, {rejectWithValue}) => {
-    try{
-        const response = await axios.post(
-            `${Host}/user/profile/uploadProfilePicture`,
-            profilePicture
-        );
-        return response.data.data
-    }catch(error){
-        let errorMessage = "An unexpected error occurred. Please try again.";
-        if(axios.isAxiosError(error)){
-            errorMessage = error.response?.data.message || 'Failed to upload picture'
-        }else if(error instanceof Error){
-            errorMessage = error.message
-        }
-        console.log('error uploading profile picture', errorMessage)
-
-        return rejectWithValue(errorMessage)
+const pickImage = async (): Promise<{ uri: string; name: string; type: string } | null> => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+    if (!permissionResult.granted) {
+      alert("Permission to access gallery is required!");
+      return null;
     }
-  }
-);*/
-}
-const pickImage = async () => {
-  const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
-  if (!permissionResult.granted) {
-    alert("Permission to access camera roll is required!");
+  
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      quality: 1,
+    });
+  
+    if (!result.canceled && result.assets?.[0]?.uri) {
+      const uri = result.assets[0].uri;
+      const fileName = uri.split('/').pop() || `profile_${Date.now()}.jpg`;
+      const fileType = `image/${uri.split('.').pop()}`;
+      
+      return {
+        uri,
+        name: fileName,
+        type: fileType,
+      };
+    }
     return null;
-  }
+  };
 
-  const result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ["images"],
-    allowsEditing: true,
-    quality: 1,
-  });
 
-  if (!result.canceled && result.assets && result.assets.length > 0) {
-    return result.assets[0].uri;
-  }
-
-  if (!result.canceled && result.assets && result.assets[0]) {
-    const pickedImageUri = result.assets[0].uri;
-
-    if (pickedImageUri) {
-      const uriParts = pickedImageUri.split(".");
-      const fileType = uriParts[uriParts.length - 1];
-
-      const formData = new FormData();
-      formData.append("photo", {
-        uri: pickedImageUri,
-        name: `profile_picture.${fileType}`,
-        type: `image/${fileType}`,
-      } as any);
-    }
-  }
-};
 export const uploadProfilePicture = createAsyncThunk(
   "profile/uploadProfilePicture",
-  async (
-    { /*userId,*/ imageUri }: profilePictureDetail,
-    { rejectWithValue }
-  ) => {
-    pickImage();
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const response = await axios.post(
+      const imageFile = await pickImage();
+      console.log(imageFile)
+      if (!imageFile) return rejectWithValue("No image selected");
+
+      const formData = new FormData();
+      formData.append('photo', {
+        uri: imageFile.uri,
+        name: imageFile.name,
+        type: imageFile.type,
+      } as any);
+
+      const state = getState() as RootState;
+      const token = state.auth.user?.token;
+
+      const response = await axios.put(
         `${Host}/user/profile/upload-picture`,
-        {
-          /*userId,*/
-          imageUri,
-        },
+        formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
           },
         }
       );
@@ -157,7 +133,6 @@ const userSlice = createSlice({
         createProfile.fulfilled,
         (state, action: PayloadAction<ProfileDetail>) => {
           state.status = "succeeded";
-          // state.userProfile = action.payload
           state.userProfile = {
             ...action.payload,
             profilePicture: null,
@@ -178,8 +153,9 @@ const userSlice = createSlice({
         uploadProfilePicture.fulfilled,
         (state, action: PayloadAction<profilePictureDetail>) => {
           if (state.userProfile) {
-            state.userProfile.profilePicture = action.payload.imageUri;
+            state.userProfile.profilePicture = action.payload.profilePicture;
           }
+          //console.log(state)
         }
       )
 

@@ -48,7 +48,7 @@ const UserSchema = new Schema<IUser, IUserModel>({
 
   isVerified: {
     type: Boolean,
-    default: false,
+   default: false,
   },
 
   accountType: {

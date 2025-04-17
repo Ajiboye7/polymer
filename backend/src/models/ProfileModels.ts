@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { IProfile, IProfileModel } from "../types/types";
-import { isValidPhoneNumber, parsePhoneNumber } from "libphonenumber-js";
+import { isValidPhoneNumber} from "libphonenumber-js";
 
 const ProfileSchema = new Schema<IProfile, IProfileModel>(
   {
@@ -34,6 +34,7 @@ const ProfileSchema = new Schema<IProfile, IProfileModel>(
 
     profilePicture: {
       type: String,
+      default: null,
     },
   },
   { timestamps: true }
@@ -44,7 +45,8 @@ ProfileSchema.statics.profile = async function (
   address: string,
   nextOfKin: string,
   nextOfKinRelationship: string,
-  userId: string 
+  userId: string ,
+
 
 ) {
   try {
@@ -72,12 +74,14 @@ ProfileSchema.statics.profile = async function (
       address,
       nextOfKin,
       nextOfKinRelationship,
-
     });
 
     return UserProfile;
   } catch (error) {
-    throw Error;
+    if (error instanceof Error) {
+      throw error; 
+    }
+    throw new Error("An unexpected error occurred while creating profile");
   }
 };
 

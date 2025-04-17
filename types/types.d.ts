@@ -169,12 +169,10 @@ export interface ProfileDetail{
   address: string,
   nextOfKin: string,
   nextOfKinRelationship: string,
-  
- 
- // profilePicture: string | null;
+  //profilePicture: string | null;
 }
 
 export interface profilePictureDetail{
-  imageUri: string | null;
+  profilePicture: string | null;
   
 }

@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", UserRoute);
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 
 export default app;

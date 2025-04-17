@@ -1,21 +1,17 @@
-import Profile from '../models/ProfileModels'
+import Profile from "../models/ProfileModels";
 import UserProfile from "../models/ProfileModels";
 import { Request, Response } from "express";
+import path from "path";
 
 export const createProfile = async (
   req: Request,
   res: Response
 ): Promise<any> => {
   try {
-    const {
-      phoneNumber,
-      address,
-      nextOfKin,
-      nextOfKinRelationship,
-    } = req.body;
+    const { phoneNumber, address, nextOfKin, nextOfKinRelationship } = req.body;
     const userId = req.user._id;
-    console.log('userId from request',userId)
-    console.log('Received data:', req.body);
+    //console.log("userId from request", userId);
+    //console.log("Received data:", req.body);
     const existingProfile = await UserProfile.findOne({ userId });
     if (existingProfile) {
       return res.status(400).json({
@@ -63,50 +59,60 @@ export const createProfile = async (
   }
 };
 
+export const uploadProfilePicture = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  const userId = req.user._id;
 
-export const uploadProfilePicture = async (req: Request, res: Response): Promise<any> =>{
-  const {userId, imageUri} = req.body
-  try{
+  const imageUri = `/uploads/profile-pictures/${req.file?.filename}`;
 
-    if(!userId){
-      return res.status(400).json({
-      success: false,
-      message: 'User ID is required'
-      })
-    }
-    if(!imageUri){
+  try {
+    //console.log(req.file)
+    if (!req.file) {
       return res.status(400).json({
         success: false,
-        message: 'No file uploaded'
-      })
+        message: "No file uploaded",
+      });
     }
 
-    const updatedProfile = await Profile.findByIdAndUpdate(
-      userId,
-      { profilePicture: imageUri },
-      {new : true}
-    )
-    if(!updatedProfile){
+    if (!userId) {
       return res.status(400).json({
-        success: false ,
-        message: 'Profile not found'
-      })
+        success: false,
+        message: "User ID is required",
+      });
+    }
+    if (!imageUri) {
+      return res.status(400).json({
+        success: false,
+        message: "No file uploaded",
+      });
+    }
+
+    const updatedProfile = await Profile.findOneAndUpdate(
+      { userId: userId },
+      { profilePicture: imageUri },
+      { new: true }
+    );
+    if (!updatedProfile) {
+      return res.status(400).json({
+        success: false,
+        message: "Profile not found",
+      });
     }
 
     return res.status(200).json({
       success: true,
-      message: 'Profile picture uploaded successfully',
-      data:{
-        profilePicture: updatedProfile.profilePicture
-      }
-    })
-    
-
-  }catch(error){
-    console.log('profile picture upload error', error)
+      message: "Profile picture uploaded successfully",
+      data: {
+        profilePicture: updatedProfile.profilePicture,
+      },
+    });
+  } catch (error) {
+    console.log("profile picture upload error", error);
     return res.status(500).json({
       success: false,
-      message: 'Internal server error while uploading profile picture'
-    })
+      message: "Internal server error while uploading profile picture",
+    });
   }
-}
+};

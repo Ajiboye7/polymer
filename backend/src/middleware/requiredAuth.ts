@@ -4,9 +4,6 @@ import { Request, Response, NextFunction } from "express";
 import { JWT_SECRET } from "../config/env";
 import { AuthRequest } from "../types/express";
 
-/*interface AuthRequest extends Request {
-  user?: { _id: string };
-}*/
 
 const requiredAuth = async (
   req: Request,
@@ -33,7 +30,7 @@ const requiredAuth = async (
       return res.status(401).json({ error: "User not found" });
     }
 
-    req.user = { _id: user._id.toString() };
+    req.user = { _id: user._id.toString()};
 
     next();
   } catch (error) {

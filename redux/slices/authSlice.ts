@@ -19,7 +19,7 @@ import {
   accountTypePayload,
 } from "@/types/types";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.6:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.2:5000";
 
 const initialState: AuthState = {
   user: null,
@@ -283,7 +283,7 @@ const authSlice = createSlice({
         state.error = (action.payload as string) || "Failed to create pin";
       })
 
-      // Confirm PIN
+      
       .addCase(
         confirmPin.fulfilled,
         (state, action: PayloadAction<VerificationPayload>) => {
@@ -299,8 +299,8 @@ const authSlice = createSlice({
       .addCase(
         accountType.fulfilled,
         (state, action: PayloadAction<accountTypePayload>) => {
-          console.log("account type payload:", action.payload);
-          console.log("account type state", state.user);
+          //console.log("account type payload:", action.payload);
+          //console.log("account type state", state.user);
           if (state.user) {
             state.user.accountType = action.payload.accountType;
           }

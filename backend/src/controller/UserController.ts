@@ -71,7 +71,7 @@ export const signInUser = async (req: Request, res: Response): Promise<any> => {
   try {
     const user = await User.signIn(email, password);
     
-    // Check if user is verified (you might want to add this in your model)
+   
     if (!user.isVerified) {
       return res.status(403).json({
         success: false,
@@ -104,7 +104,7 @@ export const signInUser = async (req: Request, res: Response): Promise<any> => {
     if (error instanceof Error) {
       const errorMessage = error.message;
       
-      // Authentication errors (400 Bad Request)
+    
       const authErrors = [
         "All fields are to be filled",
         "Please enter a valid email",
@@ -120,7 +120,7 @@ export const signInUser = async (req: Request, res: Response): Promise<any> => {
       }
     }
 
-    // All other errors (500 Internal Server Error)
+    
     return res.status(500).json({
       success: false,
       message: "An unexpected error occurred during login",
