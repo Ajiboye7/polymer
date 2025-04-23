@@ -95,7 +95,7 @@ export const uploadProfilePicture = async (
       { new: true }
     );
     if (!updatedProfile) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         message: "Profile not found",
       });
@@ -113,6 +113,31 @@ export const uploadProfilePicture = async (
     return res.status(500).json({
       success: false,
       message: "Internal server error while uploading profile picture",
+    });
+  }
+};
+
+export const getProfile = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const userId = req.user._id;
+    const profile = await Profile.findOne({ userId });
+    
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: profile,
+    });
+  } catch (error) {
+    console.error("Profile fetch error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error while fetching profile",
     });
   }
 };

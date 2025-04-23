@@ -6,6 +6,7 @@ import IdentityRoute from "../src/routes/IdentityRoute";
 import PinRoutes from "../src/routes/PinRoutes";
 import AccountTypeRoute from "../src/routes/AccountTypeRoute";
 import ProfileRoutes from "../src/routes/ProfileRoutes";
+import BalanceRoute from "../src/routes/BalanceRoute"
 
 import { HOST, PORT } from "../../backend/src/config/env";
 import connectToDatabase from "./database/mongodb";
@@ -30,6 +31,8 @@ app.use("/api/auth", PinRoutes);
 app.use("/api/auth", AccountTypeRoute);
 
 app.use("/user/profile", ProfileRoutes);
+app.use('/user/balance', BalanceRoute)
+
 
 const uploadsDir = path.join(__dirname, "../../backend/uploads");
 

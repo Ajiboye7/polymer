@@ -1,4 +1,4 @@
-import React, { Children, useRef, useState } from "react";
+import React, { Children, useRef, useState, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
@@ -43,8 +43,8 @@ const HomeBackground = () => {
 
   const user = useSelector((state: RootState) => state.auth.user);
 
-  const userName = user?.name.split(" ")[0];
-  const balance = useSelector((state: RootState) => state.balance.value);
+  const userName = user?.name?.split(" ")[0] || 'Guest';
+  const balance = useSelector((state: RootState) => state.balance.amount);
 
   const dispatch = useDispatch<AppDispatch>();
   const profilePicture = useSelector(
@@ -68,6 +68,13 @@ const HomeBackground = () => {
       });
   };
 
+  /*useEffect(() => {
+    if (profilePicture) {
+      console.log("Profile picture updated:", profilePicture);
+    }
+  }, [profilePicture]);*/
+  
+
   //const imageUri = `${Host}${profilePicture}?${Date.now()}`;
   //console.log("Image URI:", imageUri);
   const imageUri = profilePicture
@@ -75,6 +82,8 @@ const HomeBackground = () => {
         profilePicture.startsWith("/") ? "" : "/"
       }${profilePicture}?${Date.now()}`
     : null;
+
+    
 
   //console.log("Final Image URL:", imageUri);
 
@@ -88,7 +97,7 @@ const HomeBackground = () => {
                 profilePicture
                   ? {
                       uri: imageUri,
-                      cache: "force-cache", // Try different cache strategies
+                      cache: "force-cache",
                     }
                   : icons.profile
               }
@@ -98,7 +107,7 @@ const HomeBackground = () => {
           </TouchableOpacity>
 
           <Text className="text-[16px] font-gilroyBold text-white">
-            Hi, {userName} 👋
+            Hi, {userName || 'Guest'} 👋
           </Text>
         </View>
 

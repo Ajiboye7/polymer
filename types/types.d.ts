@@ -169,10 +169,16 @@ export interface ProfileDetail{
   address: string,
   nextOfKin: string,
   nextOfKinRelationship: string,
-  //profilePicture: string | null;
+  profilePicture?: string | null;
 }
 
 export interface profilePictureDetail{
   profilePicture: string | null;
   
+}
+
+export interface BalanceState {
+  amount : number,
+   status: 'idle' | 'loading' | 'succeeded' | 'failed'
+  error : string | null
 }

@@ -5,7 +5,7 @@ import { userState, ProfileDetail, profilePictureDetail } from "@/types/types";
 import * as ImagePicker from "expo-image-picker";
 import { RootState } from "../store";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.2:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
 
 const initialState: userState = {
   userProfile: null,
@@ -48,45 +48,49 @@ export const createProfile = createAsyncThunk(
     }
   }
 );
-const pickImage = async (): Promise<{ uri: string; name: string; type: string } | null> => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-  
-    if (!permissionResult.granted) {
-      alert("Permission to access gallery is required!");
-      return null;
-    }
-  
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: true,
-      quality: 1,
-    });
-  
-    if (!result.canceled && result.assets?.[0]?.uri) {
-      const uri = result.assets[0].uri;
-      const fileName = uri.split('/').pop() || `profile_${Date.now()}.jpg`;
-      const fileType = `image/${uri.split('.').pop()}`;
-      
-      return {
-        uri,
-        name: fileName,
-        type: fileType,
-      };
-    }
-    return null;
-  };
+const pickImage = async (): Promise<{
+  uri: string;
+  name: string;
+  type: string;
+} | null> => {
+  const permissionResult =
+    await ImagePicker.requestMediaLibraryPermissionsAsync();
 
+  if (!permissionResult.granted) {
+    alert("Permission to access gallery is required!");
+    return null;
+  }
+
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ["images"],
+    allowsEditing: true,
+    quality: 1,
+  });
+
+  if (!result.canceled && result.assets?.[0]?.uri) {
+    const uri = result.assets[0].uri;
+    const fileName = uri.split("/").pop() || `profile_${Date.now()}.jpg`;
+    const fileType = `image/${uri.split(".").pop()}`;
+
+    return {
+      uri,
+      name: fileName,
+      type: fileType,
+    };
+  }
+  return null;
+};
 
 export const uploadProfilePicture = createAsyncThunk(
   "profile/uploadProfilePicture",
   async (_, { rejectWithValue, getState }) => {
     try {
       const imageFile = await pickImage();
-      console.log(imageFile)
+      console.log(imageFile);
       if (!imageFile) return rejectWithValue("No image selected");
 
       const formData = new FormData();
-      formData.append('photo', {
+      formData.append("photo", {
         uri: imageFile.uri,
         name: imageFile.name,
         type: imageFile.type,
@@ -100,8 +104,8 @@ export const uploadProfilePicture = createAsyncThunk(
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -113,6 +117,29 @@ export const uploadProfilePicture = createAsyncThunk(
         errorMessage = error.response?.data.message || errorMessage;
       } else if (error instanceof Error) {
         errorMessage = error.message;
+      }
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+export const fetchUserProfile = createAsyncThunk(
+  "profile/fetchProfile",
+  async (_, { rejectWithValue, getState }) => {
+    try {
+      const state = getState() as RootState;
+      const token = state.auth.user?.token;
+
+      const response = await axios.get(`${Host}/user/profile/get-profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      let errorMessage = "Failed to fetch user profile";
+      if (axios.isAxiosError(error)) {
+        errorMessage = error.response?.data?.message || errorMessage;
       }
       return rejectWithValue(errorMessage);
     }
@@ -152,15 +179,38 @@ const userSlice = createSlice({
       .addCase(
         uploadProfilePicture.fulfilled,
         (state, action: PayloadAction<profilePictureDetail>) => {
+          /*if (state.userProfile) {
+                state.userProfile.profilePicture = action.payload.profilePicture;
+              }*/
           if (state.userProfile) {
-            state.userProfile.profilePicture = action.payload.profilePicture;
+            state.userProfile = {
+              ...state.userProfile,
+              profilePicture: action.payload.profilePicture,
+            };
           }
-          //console.log(state)
         }
       )
 
       .addCase(uploadProfilePicture.rejected, (state, action) => {
         state.error = (action.payload as string) || "failed to upload image";
+      })
+
+      .addCase(fetchUserProfile.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        fetchUserProfile.fulfilled,
+        (state, action: PayloadAction<ProfileDetail>) => {
+          state.status = "succeeded";
+          state.userProfile = {
+            ...action.payload,
+            profilePicture: action.payload.profilePicture || null,
+          };
+        }
+      )
+      .addCase(fetchUserProfile.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = (action.payload as string) || "failed to fetch profile";
       });
   },
 });

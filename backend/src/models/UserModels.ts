@@ -62,6 +62,12 @@ const UserSchema = new Schema<IUser, IUserModel>({
     type: String,
     required: false,
   },
+
+  balance: {
+    type: Number,  
+    default: 113000,
+    min: [0, 'Balance cannot be negative']
+  }
 });
 
 UserSchema.statics.signUp = async function (

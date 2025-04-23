@@ -19,7 +19,7 @@ import {
   accountTypePayload,
 } from "@/types/types";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.2:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
 
 const initialState: AuthState = {
   user: null,

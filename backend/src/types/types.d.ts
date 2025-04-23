@@ -14,6 +14,7 @@ export interface IUser extends Document {
   pin?: string;
   pinSet?: boolean;
   accountType?: string;
+  balance?: number;
 }
 
 export interface IUserModel extends Model<IUser> {

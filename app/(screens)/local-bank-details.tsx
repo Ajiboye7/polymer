@@ -14,7 +14,8 @@ import { useLocalSearchParams } from "expo-router";
 import {  useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { confirmPin as verifyPin } from "@/redux/slices/authSlice";
-import { deductAmount } from "@/redux/slices/balanceSlice";
+import { deductBalance } from "@/redux/slices/balanceSlice";
+
 
 
 const LocalBankDetails = () => {
@@ -37,7 +38,7 @@ const LocalBankDetails = () => {
   const [isPinInputVisible, setPinInputVisible] = useState(false);
   const [details, setDetails] = useState({
     remark: "",
-    accountNumber: "",
+    amount: "",
   });
 
   const handleSwipeSuccess = () => {
@@ -47,7 +48,7 @@ const LocalBankDetails = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.auth.user);
   const userId = user?._id;
-  const balance = useSelector((state: RootState) => state.balance.value);
+  const balance = useSelector((state: RootState) => state.balance.amount);
 
   const handlePinVerified = (pin: string, userId: string) => {
     if (!userId) return Alert.alert('Error', 'User not found');
@@ -119,11 +120,11 @@ const LocalBankDetails = () => {
             <InputField
               title="Amount"
               placeholder="₦ 0.00"
-              value={details.accountNumber}
+              value={details.amount}
               handleChangeText={(value) =>{
-                setDetails({ ...details, accountNumber: value })
+                setDetails({ ...details, amount: value })
                 const amount = parseFloat(value) || 0;
-                dispatch(deductAmount(amount));
+                dispatch(deductBalance(amount));
               }}
               keyboardType="numeric"
               textContentType="none"

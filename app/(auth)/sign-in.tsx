@@ -18,6 +18,8 @@ import { ROUTES } from "@/constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp, signIn } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import { fetchUserProfile } from "@/redux/slices/userSlice";
+import { fetchBalance } from "@/redux/slices/balanceSlice";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -30,18 +32,51 @@ const SignIn = () => {
 
   const router = useRouter();
 
-  
   const handleSignIn = () => {
     dispatch(signIn(form))
       .unwrap()
       .then((userData) => {
-        router.replace(ROUTES.HOME);
-        Alert.alert("Success", `Welcome back ${userData.name}`);
-      })
+        const userName = userData.name;
 
-      .catch((error) => Alert.alert("Error", error.message || "Login failed"));
+        return dispatch(fetchUserProfile())
+          .unwrap()
+          .then(() => {
+            router.replace(ROUTES.HOME);
+            Alert.alert("Success", `Welcome back ${userName}`);
+          });
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message || "Login failed");
+      });
   };
 
+  {/**
+    
+    const handleSignIn = () => {
+  dispatch(signIn(form))
+    .unwrap()
+    .then((userData) => {
+      const userName = userData.name;
+      
+      // Fetch all necessary data in parallel
+      return Promise.all([
+        dispatch(fetchUserProfile()),
+        dispatch(fetchBalance()) // Add balance fetching
+      ])
+        .then(() => {
+          router.replace(ROUTES.HOME);
+          Alert.alert("Success", `Welcome back ${userName}`);
+          
+          // Optional: Log balance for debugging
+          const currentBalance = useSelector((state: RootState) => state.balance.amount);
+          console.log('User balance:', currentBalance);
+        });
+    })
+    .catch((error) => {
+      Alert.alert("Error", error.message || "Login failed");
+    });
+};
+*/}
   return (
     <SafeAreaView className="mt-5">
       <View className="px-2">
