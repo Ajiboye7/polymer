@@ -1,27 +1,11 @@
-/*import { createSlice } from "@reduxjs/toolkit";
 
-const balanceSlice = createSlice({
-  name: "balance",
-  initialState: { value: 113000.00 },
-  reducers: {
-    deductAmount: (state, action) => {
-      state.value -= action.payload;
-    },
-    resetBalance: (state) => {
-      state.value = 113000.00;
-    },
-  },
-});
-
-export const { deductAmount, resetBalance } = balanceSlice.actions;
-export default balanceSlice.reducer;*/
 import Constants from "expo-constants";
 import { BalanceState } from "@/types/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import axios from "axios";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
 
 const initialState: BalanceState = {
   amount: 113000,
@@ -68,10 +52,11 @@ export const deductBalance = createAsyncThunk(
 
       const response = await axios.post(
         `${Host}/user/balance/deduct-balance`,
-        amount,
+        {amount},
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );

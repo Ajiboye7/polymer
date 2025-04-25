@@ -6,7 +6,6 @@ import {
   SignUpDetails,
   SignInDetails,
   IdentityDetails,
-  //User,
   IdentityNumberDetails,
   CreatePinDetails,
   BaseUser,
@@ -18,8 +17,9 @@ import {
   accountTypeDetails,
   accountTypePayload,
 } from "@/types/types";
+import { RootState } from "../store";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
 
 const initialState: AuthState = {
   user: null,
@@ -76,16 +76,23 @@ export const signIn = createAsyncThunk(
 
 export const IdentityType = createAsyncThunk(
   "auth/identityType",
-  async ({ userId, identityType }: IdentityDetails, { rejectWithValue }) => {
+  async ({ identityType }: IdentityDetails, { rejectWithValue, getState }) => {
     try {
-      const response = await axios.put(`${Host}/api/auth/add-identity-type`, {
-        userId,
-        identityType,
-      });
-
-      if (!response.data.success) {
-        throw new Error("User data not returned from server");
-      }
+      const state = getState() as RootState;
+      const token = state.auth.user?.token;
+      //console.log('toke', token)
+      const response = await axios.put(
+        `${Host}/api/auth/add-identity-type`,
+        {
+          identityType,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       return response.data.data;
     } catch (error) {
@@ -101,17 +108,26 @@ export const IdentityType = createAsyncThunk(
 export const identityNumber = createAsyncThunk(
   "auth/identityNumber",
   async (
-    { userId, identityNumber }: IdentityNumberDetails,
-    { rejectWithValue }
+    { identityNumber }: IdentityNumberDetails,
+    { rejectWithValue, getState }
   ) => {
     try {
-      const response = await axios.put(`${Host}/api/auth/add-identity-number`, {
-        userId,
-        identityNumber,
-      });
-      if (!response.data.success) {
-        throw new Error("User data not returned from server");
-      }
+      const state = getState() as RootState;
+      const token = state.auth.user?.token;
+      //console.log(token)
+      const response = await axios.put(
+        `${Host}/api/auth/add-identity-number`,
+        {
+          identityNumber,
+        },
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data.data;
     } catch (error) {
       let errorMessage = "Failed to add Identity Number";
@@ -125,18 +141,26 @@ export const identityNumber = createAsyncThunk(
 
 export const accountType = createAsyncThunk(
   "auth/accountType",
-  async ({ userId, accountType }: accountTypeDetails, { rejectWithValue }) => {
+  async (
+    { accountType }: accountTypeDetails,
+    { rejectWithValue, getState }
+  ) => {
     try {
-      const response = await axios.put(`${Host}/api/auth/add-account-type`, {
-        userId,
-        accountType,
-      });
+      const state = getState() as RootState;
+      const token = state.auth.user?.token;
+      const response = await axios.put(
+        `${Host}/api/auth/add-account-type`,
+        {
+          accountType,
+        },
 
-      if (!response.data.success) {
-        throw new Error(
-          response.data.message || "Failed to update account type"
-        );
-      }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       return response.data.data;
     } catch (error) {
@@ -151,16 +175,24 @@ export const accountType = createAsyncThunk(
 
 export const createPin = createAsyncThunk(
   "auth/createPin",
-  async ({ userId, pin }: CreatePinDetails, { rejectWithValue }) => {
+  async ({ pin }: CreatePinDetails, { rejectWithValue, getState }) => {
     try {
-      const response = await axios.put(`${Host}/api/auth/create-pin`, {
-        userId,
-        pin,
-      });
-
-      if (!response.data.success) {
-        throw new Error("User data not returned from server");
-      }
+      const state = getState() as RootState;
+      const token = state.auth.user?.token;
+      //console.log(token)
+      const response = await axios.put(
+        `${Host}/api/auth/create-pin`,
+        {
+          pin,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      
 
       return response.data.data;
     } catch (error) {
@@ -176,18 +208,36 @@ export const createPin = createAsyncThunk(
   }
 );
 
+{/**
+  catch (error) {
+  console.log('Full error object:', error); // Debug
+  if (axios.isAxiosError(error)) {
+    console.log('Response data:', error.response?.data); // Debug
+    const serverMessage = error.response?.data?.message;
+    return rejectWithValue(serverMessage || "API request failed");
+  }
+  return rejectWithValue("Network or unexpected error");
+} */}
+
 export const confirmPin = createAsyncThunk(
   "auth/confirmPin",
-  async ({ userId, pin }: CreatePinDetails, { rejectWithValue }) => {
+  async ({ pin }: CreatePinDetails, { rejectWithValue, getState }) => {
     try {
-      const response = await axios.post(`${Host}/api/auth/confirm-pin`, {
-        userId,
-        pin,
-      });
-
-      if (!response.data.success) {
-        throw new Error("User data not returned from server");
-      }
+      const state = getState() as RootState;
+      const token = state.auth.user?.token;
+      //console.log(token)
+      const response = await axios.post(
+        `${Host}/api/auth/confirm-pin`,
+        {
+          pin,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       return response.data.data;
     } catch (error) {
@@ -236,7 +286,6 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action: PayloadAction<FullUser>) => {
         state.status = "succeeded";
         state.user = action.payload;
-        //console.log(state)
       })
 
       .addCase(signIn.rejected, (state, action) => {
@@ -248,7 +297,10 @@ const authSlice = createSlice({
         IdentityType.fulfilled,
         (state, action: PayloadAction<IdentityPayload>) => {
           if (state.user) {
-            state.user.identityType = action.payload.identityType;
+            state.user = {
+              ...state.user,
+              identityType: action.payload.identityType,
+            };
           }
         }
       )
@@ -256,12 +308,14 @@ const authSlice = createSlice({
         state.error = (action.payload as string) || "Failed to update identity";
       })
 
-      // Identity Number
       .addCase(
         identityNumber.fulfilled,
         (state, action: PayloadAction<IdentityNumberPayload>) => {
           if (state.user) {
-            state.user.identityNumber = action.payload.identityNumber;
+            state.user = {
+              ...state.user,
+              identityNumber: action.payload.identityNumber,
+            };
           }
         }
       )
@@ -270,12 +324,14 @@ const authSlice = createSlice({
           (action.payload as string) || "Failed to add identity number";
       })
 
-      // Create PIN
       .addCase(
         createPin.fulfilled,
         (state, action: PayloadAction<PinStatusPayload>) => {
           if (state.user) {
-            state.user.pinSet = action.payload.pinSet;
+            state.user = {
+              ...state.user,
+              pinSet: action.payload.pinSet,
+            };
           }
         }
       )
@@ -283,12 +339,14 @@ const authSlice = createSlice({
         state.error = (action.payload as string) || "Failed to create pin";
       })
 
-      
       .addCase(
         confirmPin.fulfilled,
         (state, action: PayloadAction<VerificationPayload>) => {
           if (state.user) {
-            state.user.isVerified = action.payload.isVerified;
+            state.user = {
+              ...state.user,
+              isVerified: action.payload.isVerified,
+            };
           }
         }
       )
@@ -299,10 +357,11 @@ const authSlice = createSlice({
       .addCase(
         accountType.fulfilled,
         (state, action: PayloadAction<accountTypePayload>) => {
-          //console.log("account type payload:", action.payload);
-          //console.log("account type state", state.user);
           if (state.user) {
-            state.user.accountType = action.payload.accountType;
+            state.user = {
+              ...state.user,
+              accountType: action.payload.accountType,
+            };
           }
         }
       )

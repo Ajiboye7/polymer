@@ -43,8 +43,9 @@ const HomeBackground = () => {
 
   const user = useSelector((state: RootState) => state.auth.user);
 
-  const userName = user?.name?.split(" ")[0] || 'Guest';
+  const userName = user?.name?.split(" ")[0] || "Guest";
   const balance = useSelector((state: RootState) => state.balance.amount);
+  //console.log(balance)
 
   const dispatch = useDispatch<AppDispatch>();
   const profilePicture = useSelector(
@@ -73,7 +74,6 @@ const HomeBackground = () => {
       console.log("Profile picture updated:", profilePicture);
     }
   }, [profilePicture]);*/
-  
 
   //const imageUri = `${Host}${profilePicture}?${Date.now()}`;
   //console.log("Image URI:", imageUri);
@@ -82,8 +82,6 @@ const HomeBackground = () => {
         profilePicture.startsWith("/") ? "" : "/"
       }${profilePicture}?${Date.now()}`
     : null;
-
-    
 
   //console.log("Final Image URL:", imageUri);
 
@@ -107,7 +105,7 @@ const HomeBackground = () => {
           </TouchableOpacity>
 
           <Text className="text-[16px] font-gilroyBold text-white">
-            Hi, {userName || 'Guest'} 👋
+            Hi, {userName || "Guest"} 👋
           </Text>
         </View>
 
@@ -150,11 +148,14 @@ const HomeBackground = () => {
             <Text className="text-[#7E95B7] ">Nigerian Naira</Text>
           </View>
           <Text className="text-[25px] font-gilroyBold text-white">
-            ₦{" "}
-            {balance.toLocaleString("en-NG", {
+            {`₦ ${balance.toLocaleString("en-NG", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
-            })}
+            })}`}
+            {/*{balance.toLocaleString("en-NG", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}*/}
           </Text>
         </View>
       </ImageBackground>

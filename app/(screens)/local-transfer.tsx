@@ -22,6 +22,8 @@ import { useRouter } from "expo-router";
 import { banks } from "@/constants";
 import { BlurView } from "expo-blur";
 import { ROUTES } from "@/constants/routes";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const LocalTransfer = () => {
   const router = useRouter();
@@ -73,6 +75,7 @@ const LocalTransfer = () => {
   const [selectedMode, setSelectMode] = useState<"newTransfer" | "beneficiary">(
     "newTransfer"
   );
+  const balance = useSelector((state: RootState) => state.balance.amount);
 
   React.useEffect(() => {
     if (details.bankName && details.accountNumber) {
@@ -198,7 +201,10 @@ const LocalTransfer = () => {
               </View>
 
               <Text className="text-[25px] font-gilroyBold text-white">
-                ₦ 113,000.00
+              {`₦ ${balance.toLocaleString("en-NG", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}`}
               </Text>
             </View>
           </ImageBackground>

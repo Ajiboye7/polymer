@@ -21,13 +21,20 @@ const PersonalDetails = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleComplete = () => {
-    dispatch(createProfile(form))
-      .unwrap()
-      .then(() => {
-        Alert.alert("Success", "Profile created successfully");
-        router.replace(ROUTES.HOME);
-      });
+  const handleComplete =async () => {
+    try{
+
+      dispatch(createProfile(form)).unwrap()
+      
+      Alert.alert("Success", "Profile created successfully");
+      router.replace(ROUTES.HOME);
+
+    }catch(error : any){
+      Alert.alert('Error', error?.message || error || 'Failed to create profile')
+      console.log('Error creating profile', error)
+    }
+   
+     
   };
 
   return (

@@ -5,28 +5,26 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import { ROUTES } from "@/constants/routes";
 import { useRouter } from "expo-router";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
+import {  useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 import { IdentityType } from "@/redux/slices/authSlice";
 
 const VerificationScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedMode, setSelectedMode] = useState<"bvn" | "nin" | null>(null);
-  const user = useSelector((state: RootState) => state.auth.user);
 
-  const userId = user._id
-
-  const handleContinue = () => {
+  const handleContinue = async() => {
     if (!selectedMode) return Alert.alert('Error', 'Please select an identity type');
-    if (!userId) return Alert.alert('Error', 'User not found');
-    //console.log(selectedMode, userId)
-  
-    dispatch(IdentityType({ userId, identityType: selectedMode }))
-      .unwrap()
-      .then(() => router.push(ROUTES.INPUT_IDENTITY))
-      .catch(error => Alert.alert('Error', error.message || 'Failed to update identity'));
-  };
+    try{
+
+      await dispatch(IdentityType({identityType: selectedMode})).unwrap()
+      router.push(ROUTES.INPUT_IDENTITY)
+    }catch(error : any){
+      Alert.alert('Error', error?.message || error || 'Failed to add identity type')
+      console.log('Error adding identity type', error)
+    }
+  }
 
   const router = useRouter();
 

@@ -4,7 +4,6 @@ import {
   Image,
   ImageBackground,
   Switch,
-  FlatList,
   TouchableOpacity,
   ScrollView
 } from "react-native";
@@ -14,6 +13,8 @@ import TransferHeader from "@/components/TransferHeader";
 import CustomView from "@/components/CustomView";
 import { icons, images } from "@/constants";
 import { account } from "@/constants";
+import { useRouter } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
 const Account = () => {
   const [isSwitch1Enabled, setIsSwitch1Enabled] = useState(false);
@@ -22,45 +23,8 @@ const Account = () => {
   const toggleSwitch1 = () => setIsSwitch1Enabled((prevState) => !prevState);
   const toggleSwitch2 = () => setIsSwitch2Enabled((prevState) => !prevState);
 
-  const ListHeader = () => (
-    <View>
-      <View className="flex flex-row items-center justify-between">
-        <Text className="text-[16px] text-secondary-600 font-gilroyBold">
-          Hi, Ajiboye
-        </Text>
-        <Image source={icons.profile} className="w-[50px] h-[50px]" />
-      </View>
-
-      <View className="mb-5">
-        <ImageBackground
-          source={images.balanceBg}
-          className="-mx-3 mt-5 py-2 h-[91px] "
-        >
-          <View className="flex flex-row justify-between items-center mb-3 mx-3 text-[14px]">
-            <Text className="text-white">Enable Finger Print/Face ID</Text>
-            <Switch
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
-              thumbColor={isSwitch1Enabled ? "#3555F5" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch1}
-              value={isSwitch1Enabled}
-            />
-          </View>
-
-          <View className="flex flex-row justify-between items-center mb-3 mx-3 text-[14px]">
-            <Text className="text-white">Show Dashboard Account Balance</Text>
-            <Switch
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
-              thumbColor={isSwitch2Enabled ? "#3555F5" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch2}
-              value={isSwitch2Enabled}
-            />
-          </View>
-        </ImageBackground>
-      </View>
-    </View>
-  );
+  const router = useRouter();
+  
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -110,7 +74,13 @@ const Account = () => {
         <View className="bg-[#233C5E] h-[415px] rounded-[20px] px-3 space-y-1 pt-2">
           {account.map((item, index) => (
             <View key={item.id} className=" h-[45px] justify-center">
-              <TouchableOpacity>
+              <TouchableOpacity 
+              onPress={()=>{
+                if(index === 0){
+                   router.push(ROUTES.PERSONAL_DETAILS);
+                }
+              }}
+              >
                 <View className="flex flex-row items-center justify-between ">
                   <View className="flex flex-row items-center space-x-2 ">
                     <View

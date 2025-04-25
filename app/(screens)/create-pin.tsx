@@ -1,19 +1,10 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  SafeAreaView,
-  Image,
-  Alert,
-} from "react-native";
+import { View, Text, TextInput, SafeAreaView, Alert } from "react-native";
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
-import { icons } from "@/constants";
-import {  useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 import { createPin } from "@/redux/slices/authSlice";
 
 const CreatePin = () => {
@@ -28,19 +19,33 @@ const CreatePin = () => {
   const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector((state: RootState) => state.auth.user);
-  const userId = user?._id;
 
-  
-  const handleCreatePin = () => {
-    if (!pin) return Alert.alert('Error', 'Please input a PIN');
-    if (!userId) return Alert.alert('Error', 'User not found');
-  
-    dispatch(createPin({ pin, userId }))
-      .unwrap()
-      .then(() => router.push(ROUTES.CONFIRM_FOUR_DIGIT_PIN))
-      .catch(error => Alert.alert('Error', error.message || 'Failed to create PIN'));
+  /*const handleCreatePin = async () => {
+    if (!pin) return Alert.alert("Error", "Please input a PIN");
+    try {
+      dispatch(createPin({ pin })).unwrap();
+      router.push(ROUTES.CONFIRM_FOUR_DIGIT_PIN);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        Alert.alert("Error", error.message || "Failed to create pin");
+      } else {
+        console.log("error crating pin");
+      }
+    }
+  };*/
+
+  const handleCreatePin = async () => {
+    if (!pin) return Alert.alert("Error", "Please input a PIN");
+    try {
+      await dispatch(createPin({ pin })).unwrap();
+      router.push(ROUTES.CONFIRM_FOUR_DIGIT_PIN);
+    } catch (error: any) { // Use 'any' or properly type the rejected value
+      // Error from rejectWithValue will be the string you passed
+      Alert.alert("Error", error?.message || error || "Failed to create pin");
+      console.log("Error creating pin:", error);
+    }
   };
+  
 
   return (
     <SafeAreaView className="mt-10">
@@ -89,8 +94,8 @@ const CreatePin = () => {
 
 export default CreatePin;
 
-
-{/* Reusable PININPUT component
+{
+  /* Reusable PININPUT component
   import React from "react";
 import { View, TextInput } from "react-native";
 
@@ -130,4 +135,5 @@ const PinInput = ({ pin, setPin, maxLength, autoFocus, ...props }) => {
 };
 
 export default PinInput;
-  */}
+  */
+}

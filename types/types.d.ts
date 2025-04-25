@@ -130,21 +130,21 @@ export interface SignInDetails{
 }
 
 export interface IdentityDetails{
-  userId: string,
+
   identityType: 'bvn'| 'nin',
 }
 export interface IdentityNumberDetails {
-  userId: string;
+   
   identityNumber: string; 
 }
 
 export interface CreatePinDetails {
-  userId: string;
+  
   pin: string
 }
  
 export interface accountTypeDetails{
-  userId: string;
+  
   accountType: "business" | "regular"
 }
 

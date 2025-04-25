@@ -35,7 +35,7 @@ const SignUp = () => {
   });
 
 
-  const handleSignUp = () => {
+  /*const handleSignUp = () => {
     dispatch(signUp(form))
       .unwrap()
       .then(() => {
@@ -43,8 +43,26 @@ const SignUp = () => {
         router.replace(ROUTES.EMAIL_OTP);
       })
       .catch(error => Alert.alert('Error', error.message || 'Registration failed'));
-  };
+  };*/
   
+  const handleSignUp = async() =>{
+    try{
+      const userData = await dispatch(signUp(form)).unwrap();
+      router.replace(ROUTES.EMAIL_OTP);
+      //Alert.alert('Success', 'Account created successfully');
+      const token = userData.token
+      console.log(token)
+
+    }catch(error: unknown){
+      if(error instanceof Error){
+        Alert.alert('Error', error.message || 'Signup failed');
+        console.log(error.message)
+      }else{
+        Alert.alert("Error", 'signup failed');
+
+      }
+    }
+  }
   return (
     <ScrollView className="">
       <SafeAreaView className="mt-5">

@@ -1,4 +1,11 @@
-import { View, Text, ImageBackground, Image, ScrollView, Alert } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  ScrollView,
+  Alert,
+} from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "@/constants";
@@ -11,29 +18,25 @@ import PinInputModal from "@/components/PinInputModal";
 import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import { useLocalSearchParams } from "expo-router";
-import {  useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { confirmPin as verifyPin } from "@/redux/slices/authSlice";
 import { deductBalance } from "@/redux/slices/balanceSlice";
 
-
-
 const LocalBankDetails = () => {
   const router = useRouter();
-  const params = useLocalSearchParams()
+  const params = useLocalSearchParams();
 
   const {
-    bankName = 'GTB',
-    accountNumber = '0325642061',
-    accountHolder = 'Ajiboye Muyideen Olanrewaju',
-    bankIcon = icons.gtBank
+    bankName = "GTB",
+    accountNumber = "0325642061",
+    accountHolder = "Ajiboye Muyideen Olanrewaju",
+    bankIcon = icons.gtBank,
   } = params;
 
   const getBankAcronym = (name: string) => {
     return name.slice(0, 4).toUpperCase();
   };
-  
-
 
   const [isPinInputVisible, setPinInputVisible] = useState(false);
   const [details, setDetails] = useState({
@@ -50,21 +53,29 @@ const LocalBankDetails = () => {
   const userId = user?._id;
   const balance = useSelector((state: RootState) => state.balance.amount);
 
-  const handlePinVerified = (pin: string, userId: string) => {
-    if (!userId) return Alert.alert('Error', 'User not found');
-   
-  
-    dispatch(verifyPin({ pin, userId }))
-      .unwrap()
-      .then(() => {
-        Alert.alert('Success', `PIN Verified: ${pin}! Proceeding to payment...`);
-        router.push(ROUTES.ACCOUNT_TYPE);
-      })
-      .catch(error => {
-        Alert.alert('Error', error.message || 'PIN confirmation failed');
-      });
+  const handlePinVerified = async (pin: string, userId: string) => {
+    if (!userId) return Alert.alert("Error", "User not found");
+
+    try {
+      const amount = parseFloat(details.amount) || 0;
+
+      await dispatch(verifyPin({ pin})).unwrap();
+
+      await dispatch(deductBalance(amount)).unwrap();
+
+      Alert.alert(
+        "Success",
+        `Payment of ₦${amount.toLocaleString()} successful!`
+      );
+      router.push(ROUTES.ACCOUNT_TYPE);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        Alert.alert("Error", error.message || "Transaction failed");
+      } else {
+        Alert.alert("Error", "Transaction failed");
+      }
+    }
   };
-  
 
   return (
     <ScrollView>
@@ -79,7 +90,7 @@ const LocalBankDetails = () => {
             className="h-[91px] -mx-3 my-5 pl-3 justify-center"
           >
             <View className="space-y-2 ">
-              <View className="flex flex-row items-center space-x-2 ">
+              <View className="flex flex-row items-center space-x-2">
                 <Image source={icons.nigeria} resizeMode="contain" />
                 <Text className="text-[12px] text-secondary-600">
                   Nigeria Naira
@@ -87,7 +98,10 @@ const LocalBankDetails = () => {
               </View>
 
               <Text className="text-[25px] font-gilroyBold text-white">
-              ₦ {balance.toLocaleString()}
+                {`₦ ${balance.toLocaleString("en-NG", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
               </Text>
             </View>
           </ImageBackground>
@@ -97,38 +111,35 @@ const LocalBankDetails = () => {
           </Text>
 
           <View className="bg-primary-200 h-[120px] justify-center p-5 rounded-[20px]">
-        <Text className="text-[12px] text-[#7E95B7]">Account Number</Text>
-        <View className="flex flex-row items-center justify-between">
-          <Text className="text-white text-[25px] font-gilroyBold">
-            {accountNumber}
-          </Text>
-          <View className="flex flex-row items-center justify-center rounded-full space-x-2 w-[85px] h-[40px] bg-white">
-            <Image source={bankIcon} resizeMode="contain" />
-            <Text className="">{getBankAcronym(bankName.toString())}</Text>
-          </View>
-        </View>
+            <Text className="text-[12px] text-[#7E95B7]">Account Number</Text>
+            <View className="flex flex-row items-center justify-between">
+              <Text className="text-white text-[25px] font-gilroyBold">
+                {accountNumber}
+              </Text>
+              <View className="flex flex-row items-center justify-center rounded-full space-x-2 w-[85px] h-[40px] bg-white">
+                <Image source={bankIcon} resizeMode="contain" />
+                <Text className="">{getBankAcronym(bankName.toString())}</Text>
+              </View>
+            </View>
 
-        <View className="flex flex-row items-center space-x-1">
-          <Image source={icons.success} resizeMode="contain" />
-          <Text className="text-white text-[16px] font-gilroyBold">
-            {accountHolder}
-          </Text>
-        </View>
-      </View>
+            <View className="flex flex-row items-center space-x-1">
+              <Image source={icons.success} resizeMode="contain" />
+              <Text className="text-white text-[16px] font-gilroyBold">
+                {accountHolder}
+              </Text>
+            </View>
+          </View>
 
           <View className="mb-16">
             <InputField
               title="Amount"
               placeholder="₦ 0.00"
               value={details.amount}
-              handleChangeText={(value) =>{
-                setDetails({ ...details, amount: value })
-                const amount = parseFloat(value) || 0;
-                dispatch(deductBalance(amount));
+              handleChangeText={(value) => {
+                setDetails({ ...details, amount: value });
               }}
               keyboardType="numeric"
               textContentType="none"
-              
             />
 
             <InputField
@@ -143,12 +154,11 @@ const LocalBankDetails = () => {
             />
           </View>
           <View className="mb-10">
-          <CustomSwipeButton
-            title="Proceed to pay"
-            onSwipeSuccess={handleSwipeSuccess}
-          />
+            <CustomSwipeButton
+              title="Proceed to pay"
+              onSwipeSuccess={handleSwipeSuccess}
+            />
           </View>
-          
         </CustomView>
 
         <PinInputModal

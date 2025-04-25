@@ -2,10 +2,10 @@ import Constants from "expo-constants";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userState, ProfileDetail, profilePictureDetail } from "@/types/types";
-import * as ImagePicker from "expo-image-picker";
 import { RootState } from "../store";
+import { pickImage } from "@/backend/src/utils/imagePicker";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.4:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
 
 const initialState: userState = {
   userProfile: null,
@@ -27,6 +27,7 @@ export const createProfile = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
@@ -48,38 +49,6 @@ export const createProfile = createAsyncThunk(
     }
   }
 );
-const pickImage = async (): Promise<{
-  uri: string;
-  name: string;
-  type: string;
-} | null> => {
-  const permissionResult =
-    await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-  if (!permissionResult.granted) {
-    alert("Permission to access gallery is required!");
-    return null;
-  }
-
-  const result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ["images"],
-    allowsEditing: true,
-    quality: 1,
-  });
-
-  if (!result.canceled && result.assets?.[0]?.uri) {
-    const uri = result.assets[0].uri;
-    const fileName = uri.split("/").pop() || `profile_${Date.now()}.jpg`;
-    const fileType = `image/${uri.split(".").pop()}`;
-
-    return {
-      uri,
-      name: fileName,
-      type: fileType,
-    };
-  }
-  return null;
-};
 
 export const uploadProfilePicture = createAsyncThunk(
   "profile/uploadProfilePicture",
@@ -133,6 +102,7 @@ export const fetchUserProfile = createAsyncThunk(
       const response = await axios.get(`${Host}/user/profile/get-profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
       return response.data.data;

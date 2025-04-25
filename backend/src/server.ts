@@ -3,7 +3,7 @@ import cors from "cors";
 import UserRoute from "../src/routes/UserRoute";
 import OtpRoute from "../src/routes/OtpRoutes";
 import IdentityRoute from "../src/routes/IdentityRoute";
-import PinRoutes from "../src/routes/PinRoutes";
+import PinRoutes from '../src/routes/PinRoutes'
 import AccountTypeRoute from "../src/routes/AccountTypeRoute";
 import ProfileRoutes from "../src/routes/ProfileRoutes";
 import BalanceRoute from "../src/routes/BalanceRoute"

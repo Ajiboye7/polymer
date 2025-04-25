@@ -5,23 +5,19 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import { icons } from "@/constants";
-import {  useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
-import { UseSelector, useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 import { confirmPin as pinConfirmation } from "@/redux/slices/authSlice";
 
-
 const ConfirmPin = () => {
-
-  const router = useRouter()
-
- 
+  const router = useRouter();
 
   const [pin, setPin] = useState("");
 
@@ -32,69 +28,33 @@ const ConfirmPin = () => {
   };
 
   const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector((state: RootState) => state.auth.user);
-  const userId = user?._id;
 
-  {/*const handleConfirmPin = async () => {
-    console.log("Confirm PIN button clicked");
   
+
+  const handleConfirmPin = async () => {
+    if (!pin) return Alert.alert("Error", "Please input a PIN");
     try {
-      if (!pin) {
-        Alert.alert("Error", "Please input a PIN");
-        console.log("PIN is empty");
-        return;
-      }
-  
-      if (!userId) {
-        Alert.alert("Error", "User not found");
-        console.log("User ID not found");
-        return;
-      }
-  
-      try {
-        console.log("Dispatching confirmPins action", { userId, pin });
-        await dispatch(pinConfirmation({ pin, userId })).unwrap();
-  
-        console.log("PIN confirmation successful");
-        router.push(ROUTES.HOME);
-      } catch (error) {
-        console.error("Error confirming PIN:", error);
-  
-        let errorMessage = "Failed to confirm PIN";
-        if (typeof error === "string") {
-          errorMessage = error;
-        } else if (error && typeof error === "object" && "message" in error) {
-          errorMessage = error.message as string;
-        }
-  
-        Alert.alert("Error", errorMessage);
-      }
-    } catch (error) {
-      console.error("Unexpected error", error);
-      Alert.alert("Error", "An unexpected error occurred. Please try again");
+      await dispatch(pinConfirmation({ pin })).unwrap();
+      router.push(ROUTES.ACCOUNT_TYPE);
+    } catch (error: any) {
+      Alert.alert("Error", error?.message || error || "PIN confirmation failed");
+      console.log("Error confirming PIN:", error);
     }
-  };*/}
-  const handleConfirmPin = () => {
-    if (!pin) return Alert.alert('Error', 'Please input a PIN');
-    if (!userId) return Alert.alert('Error', 'User not found');
-  
-    dispatch(pinConfirmation({ pin, userId }))
-      .unwrap()
-      .then(() => router.push(ROUTES.ACCOUNT_TYPE))
-      .catch(error => Alert.alert('Error', error.message || 'PIN confirmation failed'));
   };
-  
+
   return (
     <SafeAreaView className="mt-10">
       <View className="px-4">
-
-      <TouchableOpacity  onPress={()=>{
-         router.back();
-      }} className="mb-5">
+        <TouchableOpacity
+          onPress={() => {
+            router.back();
+          }}
+          className="mb-5"
+        >
           <View className="bg-gray-300 w-[29.77px] h-[29.77px] rounded-full">
             <Image source={icons.arrowLeft} />
           </View>
-          </TouchableOpacity>
+        </TouchableOpacity>
 
         <Text className="text-[32px] text-primary-300 font-gilroyBold">
           Confirm your 4-Digit PIN
@@ -132,7 +92,6 @@ const ConfirmPin = () => {
           }`}
           disabled={pin.length < 4}
           handleClick={handleConfirmPin}
-          
         />
       </View>
     </SafeAreaView>

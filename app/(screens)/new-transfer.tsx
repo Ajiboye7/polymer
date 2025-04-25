@@ -56,7 +56,7 @@ const NewTransfer = () => {
     "newTransfer"
   );
 
-  const balance = useSelector((state: RootState) => state.balance.value);
+  const balance = useSelector((state: RootState) => state.balance.amount);
 
   const ListHeader = () => {
     return (
@@ -158,11 +158,10 @@ const NewTransfer = () => {
               </View>
 
               <Text className="text-[25px] font-gilroyBold text-white">
-              ₦{" "}
-            {balance.toLocaleString("en-NG", {
+              {`₦ ${balance.toLocaleString("en-NG", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
-            })}
+            })}`}
               </Text>
             </View>
           </ImageBackground>

@@ -28,55 +28,28 @@ const SignIn = () => {
   });
 
   const dispatch = useDispatch<AppDispatch>();
-  const { user, status, error } = useSelector((state: RootState) => state.auth);
 
   const router = useRouter();
 
-  const handleSignIn = () => {
-    dispatch(signIn(form))
-      .unwrap()
-      .then((userData) => {
-        const userName = userData.name;
+  const handleSignIn = async () => {
+    try {
+      const userData = await dispatch(signIn(form)).unwrap();
 
-        return dispatch(fetchUserProfile())
-          .unwrap()
-          .then(() => {
-            router.replace(ROUTES.HOME);
-            Alert.alert("Success", `Welcome back ${userName}`);
-          });
-      })
-      .catch((error) => {
-        Alert.alert("Error", error.message || "Login failed");
-      });
+      await Promise.all([
+        dispatch(fetchUserProfile()).unwrap(),
+        dispatch(fetchBalance()).unwrap(),
+      ]);
+
+      router.replace(ROUTES.HOME);
+      Alert.alert("Success", `Welcome back ${userData.name}`);
+    } catch (error: any) {
+      
+      Alert.alert('Error', error?.message || error || 'Signin failed')
+      console.log('Error signing in ', error)
+    }
   };
 
-  {/**
-    
-    const handleSignIn = () => {
-  dispatch(signIn(form))
-    .unwrap()
-    .then((userData) => {
-      const userName = userData.name;
-      
-      // Fetch all necessary data in parallel
-      return Promise.all([
-        dispatch(fetchUserProfile()),
-        dispatch(fetchBalance()) // Add balance fetching
-      ])
-        .then(() => {
-          router.replace(ROUTES.HOME);
-          Alert.alert("Success", `Welcome back ${userName}`);
-          
-          // Optional: Log balance for debugging
-          const currentBalance = useSelector((state: RootState) => state.balance.amount);
-          console.log('User balance:', currentBalance);
-        });
-    })
-    .catch((error) => {
-      Alert.alert("Error", error.message || "Login failed");
-    });
-};
-*/}
+ 
   return (
     <SafeAreaView className="mt-5">
       <View className="px-2">
