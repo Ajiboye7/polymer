@@ -19,12 +19,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUp, signIn } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 
-
 const SignUp = () => {
-  const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
+ 
 
   const router = useRouter();
-   const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
 
   const [form, setForm] = useState({
     name: "",
@@ -33,7 +32,6 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
-
 
   /*const handleSignUp = () => {
     dispatch(signUp(form))
@@ -44,25 +42,20 @@ const SignUp = () => {
       })
       .catch(error => Alert.alert('Error', error.message || 'Registration failed'));
   };*/
-  
-  const handleSignUp = async() =>{
-    try{
+
+  const handleSignUp = async () => {
+    try {
       const userData = await dispatch(signUp(form)).unwrap();
       router.replace(ROUTES.EMAIL_OTP);
-      //Alert.alert('Success', 'Account created successfully');
-      const token = userData.token
-      console.log(token)
-
-    }catch(error: unknown){
-      if(error instanceof Error){
-        Alert.alert('Error', error.message || 'Signup failed');
-        console.log(error.message)
-      }else{
+    } catch (error: any) {
+      Alert.alert("Error", error?.message || "Signup failed");
+      console.log("Error signing up", error);
+      /*else{
         Alert.alert("Error", 'signup failed');
 
-      }
+      }*/
     }
-  }
+  };
   return (
     <ScrollView className="">
       <SafeAreaView className="mt-5">

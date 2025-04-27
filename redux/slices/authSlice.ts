@@ -19,7 +19,7 @@ import {
 } from "@/types/types";
 import { RootState } from "../store";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.5:5000";
 
 const initialState: AuthState = {
   user: null,

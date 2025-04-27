@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import Button from "@/components/Button";
-import axios from "axios";
+///import axios from "axios";
 import { Link, useRouter } from "expo-router";
 import Constants from "expo-constants";
 import { ROUTES } from "@/constants/routes";

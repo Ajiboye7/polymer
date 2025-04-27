@@ -155,11 +155,11 @@ UserSchema.statics.signUp = async function (
 
 UserSchema.statics.signIn = async function (email: string, password: string) {
   if (!email || !password) {
-    throw new Error("All fields are to be filled ");
+    throw new Error("email and password require");
   }
 
   if (!validator.isEmail(email)) {
-    throw new Error("Please enter a valid email");
+    throw new Error("invalid email format");
   }
 
   const normalizedEmail = email.toLowerCase();
