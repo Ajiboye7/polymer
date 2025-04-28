@@ -19,7 +19,7 @@ import {
 } from "@/types/types";
 import { RootState } from "../store";
 
-const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.5:5000";
+const Host = Constants.expoConfig?.extra?.host || "http://192.168.0.3:5000";
 
 const initialState: AuthState = {
   user: null,
@@ -34,19 +34,10 @@ export const signUp = createAsyncThunk(
       const response = await axios.post(`${Host}/api/auth/sign-up`, userData);
       return response.data.data.user;
     } catch (error) {
-      let errorMessage = "An unexpected error occurred. Please try again.";
-
       if (axios.isAxiosError(error)) {
-        errorMessage =
-          error.response?.data?.message ||
-          "Failed to create account. Please try again.";
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
+        return rejectWithValue(error.response?.data.message || error.message);
       }
-
-      console.error("Sign-up error:", errorMessage);
-
-      return rejectWithValue(errorMessage);
+      return rejectWithValue("An unexpected error occurred. Please try again.");
     }
   }
 );
@@ -58,18 +49,10 @@ export const signIn = createAsyncThunk(
       const response = await axios.post(`${Host}/api/auth/sign-in`, userData);
       return response.data.data.user;
     } catch (error) {
-      let errorMessage = "An unexpected error occurred. Please try again.";
       if (axios.isAxiosError(error)) {
-        errorMessage =
-          error.response?.data?.message ||
-          "Failed to SignIn account. Please try again.";
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
+        return rejectWithValue(error.response?.data?.message || error.message);
       }
-
-      console.error("Sign-up error:", errorMessage);
-
-      return rejectWithValue(errorMessage);
+      return rejectWithValue("An unexpected error occurred. Please try again.");
     }
   }
 );
@@ -80,7 +63,6 @@ export const IdentityType = createAsyncThunk(
     try {
       const state = getState() as RootState;
       const token = state.auth.user?.token;
-      //console.log('toke', token)
       const response = await axios.put(
         `${Host}/api/auth/add-identity-type`,
         {
@@ -98,7 +80,8 @@ export const IdentityType = createAsyncThunk(
     } catch (error) {
       let errorMessage = "Failed to update identity";
       if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.message || errorMessage;
+        errorMessage =
+          error.response?.data?.message || error.message || errorMessage;
       }
       return rejectWithValue(errorMessage);
     }
@@ -114,7 +97,6 @@ export const identityNumber = createAsyncThunk(
     try {
       const state = getState() as RootState;
       const token = state.auth.user?.token;
-      //console.log(token)
       const response = await axios.put(
         `${Host}/api/auth/add-identity-number`,
         {
@@ -132,7 +114,8 @@ export const identityNumber = createAsyncThunk(
     } catch (error) {
       let errorMessage = "Failed to add Identity Number";
       if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.message || errorMessage;
+        errorMessage =
+          error.response?.data?.message || error.message || errorMessage;
       }
       return rejectWithValue(errorMessage);
     }
@@ -166,7 +149,8 @@ export const accountType = createAsyncThunk(
     } catch (error) {
       let errorMessage = "Failed to add account type";
       if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.message || errorMessage;
+        errorMessage =
+          error.response?.data?.message || error.message || errorMessage;
       }
       return rejectWithValue(errorMessage);
     }
@@ -179,7 +163,6 @@ export const createPin = createAsyncThunk(
     try {
       const state = getState() as RootState;
       const token = state.auth.user?.token;
-      //console.log(token)
       const response = await axios.put(
         `${Host}/api/auth/create-pin`,
         {
@@ -192,32 +175,21 @@ export const createPin = createAsyncThunk(
           },
         }
       );
-      
 
       return response.data.data;
     } catch (error) {
       let errorMessage = "Failed to create pin";
       if (axios.isAxiosError(error)) {
         errorMessage =
-          error.response?.data?.message ||
-          error.response?.data?.error ||
-          errorMessage;
+          error.response?.data?.message || error.message || errorMessage;
       }
       return rejectWithValue(errorMessage);
     }
   }
 );
 
-{/**
-  catch (error) {
-  console.log('Full error object:', error); // Debug
-  if (axios.isAxiosError(error)) {
-    console.log('Response data:', error.response?.data); // Debug
-    const serverMessage = error.response?.data?.message;
-    return rejectWithValue(serverMessage || "API request failed");
-  }
-  return rejectWithValue("Network or unexpected error");
-} */}
+{
+}
 
 export const confirmPin = createAsyncThunk(
   "auth/confirmPin",
@@ -225,7 +197,6 @@ export const confirmPin = createAsyncThunk(
     try {
       const state = getState() as RootState;
       const token = state.auth.user?.token;
-      //console.log(token)
       const response = await axios.post(
         `${Host}/api/auth/confirm-pin`,
         {
@@ -244,9 +215,7 @@ export const confirmPin = createAsyncThunk(
       let errorMessage = "Failed to create pin";
       if (axios.isAxiosError(error)) {
         errorMessage =
-          error.response?.data?.message ||
-          error.response?.data?.error ||
-          errorMessage;
+          error.response?.data?.message || error.message || errorMessage;
       }
       return rejectWithValue(errorMessage);
     }

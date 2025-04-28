@@ -32,28 +32,13 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
-
-  /*const handleSignUp = () => {
-    dispatch(signUp(form))
-      .unwrap()
-      .then(() => {
-        Alert.alert('Success', 'Account created successfully');
-        router.replace(ROUTES.EMAIL_OTP);
-      })
-      .catch(error => Alert.alert('Error', error.message || 'Registration failed'));
-  };*/
-
   const handleSignUp = async () => {
     try {
-      const userData = await dispatch(signUp(form)).unwrap();
+       await dispatch(signUp(form)).unwrap();
       router.replace(ROUTES.EMAIL_OTP);
     } catch (error: any) {
-      Alert.alert("Error", error?.message || "Signup failed");
+      Alert.alert("Error", error || "Signup failed");
       console.log("Error signing up", error);
-      /*else{
-        Alert.alert("Error", 'signup failed');
-
-      }*/
     }
   };
   return (

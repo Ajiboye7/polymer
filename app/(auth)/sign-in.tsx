@@ -36,7 +36,7 @@ const SignIn = () => {
       const userData = await dispatch(signIn(form)).unwrap();
 
       await Promise.all([
-        dispatch(fetchUserProfile()).unwrap(),
+        //dispatch(fetchUserProfile()).unwrap(),
         dispatch(fetchBalance()).unwrap(),
       ]);
 
@@ -44,8 +44,8 @@ const SignIn = () => {
       Alert.alert("Success", `Welcome back ${userData.name}`);
     } catch (error: any) {
       
-      Alert.alert('Error', error?.message || error || 'Signin failed')
-      console.log('Error signing in ', error)
+      Alert.alert('Error', error || 'Signin failed')
+      console.log('Error signing in ', error);
     }
   };
 

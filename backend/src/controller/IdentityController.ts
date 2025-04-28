@@ -9,7 +9,7 @@ export const updateIdentity = async (
   const userId = req.user._id;
 
   try {
-    // Validate input
+   
     if (!userId || !identityType) {
       return res.status(400).json({
         success: false,
@@ -17,7 +17,7 @@ export const updateIdentity = async (
       });
     }
 
-    // Update operation
+   
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { identityType },
@@ -31,12 +31,12 @@ export const updateIdentity = async (
       });
     }
 
-    // Success response
+    
     return res.status(200).json({
       success: true,
       message: "Identity type updated successfully",
       data: {
-        //userId: updatedUser._id,
+       
         identityType: updatedUser.identityType,
       },
     });

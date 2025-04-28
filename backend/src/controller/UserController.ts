@@ -15,7 +15,13 @@ export const signUpUser = async (req: Request, res: Response): Promise<any> => {
   const { name, account, email, password, confirmPassword } = req.body;
 
   try {
-    const user = await User.signUp(name, account, email, password, confirmPassword);
+    const user = await User.signUp(
+      name,
+      account,
+      email,
+      password,
+      confirmPassword
+    );
     const token = createToken(user._id);
 
     return res.status(201).json({
@@ -34,11 +40,9 @@ export const signUpUser = async (req: Request, res: Response): Promise<any> => {
   } catch (error) {
     console.error("Signup error:", error);
 
-    
     if (error instanceof Error) {
       const errorMessage = error.message;
-      
-     
+
       const clientErrors = [
         "All fields are to be filled",
         "Passwords do not match",
@@ -46,10 +50,10 @@ export const signUpUser = async (req: Request, res: Response): Promise<any> => {
         "Account number already exists",
         "Password not strong enough",
         "Email already exists",
-        "Failed to send OTP email"
+        "Failed to send OTP email. Please try again.",
       ];
 
-      if (clientErrors.some(msg => errorMessage.includes(msg))) {
+      if (clientErrors.some((msg) => errorMessage.includes(msg))) {
         return res.status(400).json({
           success: false,
           message: errorMessage,
@@ -57,21 +61,19 @@ export const signUpUser = async (req: Request, res: Response): Promise<any> => {
       }
     }
 
-  
     return res.status(500).json({
       success: false,
       message: "An unexpected error occurred during registration",
     });
   }
-}
+};
 
 export const signInUser = async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;
 
   try {
     const user = await User.signIn(email, password);
-    
-   
+
     if (!user.isVerified) {
       return res.status(403).json({
         success: false,
@@ -94,7 +96,7 @@ export const signInUser = async (req: Request, res: Response): Promise<any> => {
           pinSet: user.pinSet,
           isVerified: user.isVerified,
           identityNumber: user.identityNumber,
-          identityType: user.identityType, 
+          identityType: user.identityType,
         },
       },
     });
@@ -103,16 +105,15 @@ export const signInUser = async (req: Request, res: Response): Promise<any> => {
 
     if (error instanceof Error) {
       const errorMessage = error.message;
-      
-    
-      const authErrors = [
-        "All fields are to be filled",
+
+      const clientErrors = [
+        "email and password require",
         "Please enter a valid email",
         "User does not exist",
-        "Incorrect password"
+        "Incorrect password",
       ];
 
-      if (authErrors.some(msg => errorMessage.includes(msg))) {
+      if (clientErrors.some((msg) => errorMessage.includes(msg))) {
         return res.status(400).json({
           success: false,
           message: errorMessage,
@@ -120,14 +121,12 @@ export const signInUser = async (req: Request, res: Response): Promise<any> => {
       }
     }
 
-    
     return res.status(500).json({
       success: false,
       message: "An unexpected error occurred during login",
     });
   }
 };
-
 
 {
   /*<ScreenWrapper>

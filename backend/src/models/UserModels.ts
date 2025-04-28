@@ -159,7 +159,7 @@ UserSchema.statics.signIn = async function (email: string, password: string) {
   }
 
   if (!validator.isEmail(email)) {
-    throw new Error("invalid email format");
+    throw new Error("Please enter a valid email");
   }
 
   const normalizedEmail = email.toLowerCase();
