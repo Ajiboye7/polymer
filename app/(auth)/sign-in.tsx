@@ -35,21 +35,21 @@ const SignIn = () => {
     try {
       const userData = await dispatch(signIn(form)).unwrap();
 
-      await Promise.all([
-        //dispatch(fetchUserProfile()).unwrap(),
-        dispatch(fetchBalance()).unwrap(),
-      ]);
+      try {
+        await dispatch(fetchUserProfile()).unwrap();
+      } catch (profileError) {
+        console.log("No profile found, user can create one later");
+      }
+      await dispatch(fetchBalance()).unwrap();
 
       router.replace(ROUTES.HOME);
       Alert.alert("Success", `Welcome back ${userData.name}`);
     } catch (error: any) {
-      
-      Alert.alert('Error', error || 'Signin failed')
-      console.log('Error signing in ', error);
+      Alert.alert("Error", error || "Signin failed");
+      console.log("Error signing in ", error);
     }
   };
 
- 
   return (
     <SafeAreaView className="mt-5">
       <View className="px-2">

@@ -111,7 +111,7 @@ export type accountTypePayload = {
 
 
 export interface AuthState{
-  user: User | null;
+  user: FullUser | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error:  string | null
 }
@@ -153,6 +153,7 @@ export interface userState{
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error:  string | null
   profilePictureUploadStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
+  profileSet: boolean
 }
 
 export interface Profile{

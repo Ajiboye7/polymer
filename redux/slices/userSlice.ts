@@ -12,6 +12,7 @@ const initialState: userState = {
   status: "idle",
   error: null,
   profilePictureUploadStatus: "idle",
+  profileSet: false,
 };
 
 export const createProfile = createAsyncThunk(
@@ -130,10 +131,12 @@ const userSlice = createSlice({
         createProfile.fulfilled,
         (state, action: PayloadAction<ProfileDetail>) => {
           state.status = "succeeded";
+        
           state.userProfile = {
             ...action.payload,
-            profilePicture: null,
+            profilePicture: state.userProfile?.profilePicture || null,
           };
+          state.profileSet = true
         }
       )
       .addCase(createProfile.rejected, (state, action) => {
@@ -149,9 +152,7 @@ const userSlice = createSlice({
       .addCase(
         uploadProfilePicture.fulfilled,
         (state, action: PayloadAction<profilePictureDetail>) => {
-          /*if (state.userProfile) {
-                state.userProfile.profilePicture = action.payload.profilePicture;
-              }*/
+          state.profilePictureUploadStatus = 'succeeded'
           if (state.userProfile) {
             state.userProfile = {
               ...state.userProfile,
@@ -167,6 +168,7 @@ const userSlice = createSlice({
 
       .addCase(fetchUserProfile.pending, (state) => {
         state.status = "loading";
+        
       })
       .addCase(
         fetchUserProfile.fulfilled,
@@ -176,11 +178,17 @@ const userSlice = createSlice({
             ...action.payload,
             profilePicture: action.payload.profilePicture || null,
           };
+          state.profileSet = true
         }
       )
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.status = "failed";
+       if(action.payload === 'profile not found'){
+        state.profileSet = false
+        state.error = null
+       }else{
         state.error = (action.payload as string) || "failed to fetch profile";
+       }
       });
   },
 });

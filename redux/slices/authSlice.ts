@@ -225,7 +225,12 @@ export const confirmPin = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    resetState: (state) => {
+      console.log('Auth state is being reset!', state);
+      return initialState;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(signUp.pending, (state) => {
       state.status = "loading";
@@ -240,21 +245,27 @@ const authSlice = createSlice({
           pinSet: false,
           isVerified: false,
         };
+        state.error = null;
       })
       .addCase(signUp.rejected, (state, action) => {
         state.status = "failed";
         state.error = (action.payload as string) || "Sign up failed";
-      })
-      .addCase(signIn.pending, (state) => {
-        state.status = "loading";
       });
+
     {
     }
 
     builder
+
+      .addCase(signIn.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+
       .addCase(signIn.fulfilled, (state, action: PayloadAction<FullUser>) => {
         state.status = "succeeded";
         state.user = action.payload;
+        state.error = null;
       })
 
       .addCase(signIn.rejected, (state, action) => {
