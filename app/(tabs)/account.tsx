@@ -15,6 +15,9 @@ import { icons, images } from "@/constants";
 import { account } from "@/constants";
 import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
+import {useDispatch} from 'react-redux'
+import { signOut } from "@/redux/slices/authSlice";
+import { persistor } from "@/redux/store";
 
 const Account = () => {
   const [isSwitch1Enabled, setIsSwitch1Enabled] = useState(false);
@@ -24,6 +27,11 @@ const Account = () => {
   const toggleSwitch2 = () => setIsSwitch2Enabled((prevState) => !prevState);
 
   const router = useRouter();
+
+  const handleSignout = async () => {
+    dispatch(signOut());
+    await persistor.purge();
+  };
   
 
   return (

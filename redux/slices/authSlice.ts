@@ -226,9 +226,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    resetState: (state) => {
-      console.log('Auth state is being reset!', state);
-      return initialState;
+    signOut: (state)=>{
+      console.log('user signed out');
+      return initialState
     }
   },
   extraReducers: (builder) => {
@@ -353,3 +353,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const {signOut } = authSlice.actions;

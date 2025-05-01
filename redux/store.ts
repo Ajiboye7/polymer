@@ -7,18 +7,28 @@ import userReducer from "./slices/userSlice";
 import balanceReducer from "./slices/balanceSlice";
 import { combineReducers } from "redux";
 
+const appReducer = combineReducers({
+  auth: authReducer,
+  user: userReducer,
+  balance: balanceReducer,
+});
+
+const rootReducer = (state: any, action: any) => {
+  if (action.type === signOut.type) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+
+
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["auth"],
-  blacklist: ["balance", "user"]
+  whitelist: ['auth', 'balance', 'user'],
+  //blacklist: [ ]
 };
 
-const rootReducer = combineReducers({
-  auth: authReducer,
-  user: userReducer,
-  balance: balanceReducer, 
-});
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
