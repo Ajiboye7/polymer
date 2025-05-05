@@ -16,6 +16,7 @@ import { useRouter } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import axios from "axios";
 import Constants from "expo-constants";
+import { showToast } from "@/components/toastConfig";
 
 const OTPVerification: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
@@ -51,23 +52,17 @@ const OTPVerification: React.FC = () => {
           'Content-Type': 'application/json'
         }
       });
-  
-      if (response.data.success) {
-        Alert.alert("Success", response.data.message);
-        router.push(ROUTES.VERIFY_IDENTITY);
-      } else {
-        Alert.alert("Error", response.data.message || "OTP verification failed");
-      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage = error.response?.data?.message || 
                            error.message || 
                            "OTP verification failed";
         console.log("OTP error details:", error.response?.data);
-        Alert.alert("Error", errorMessage);
+      
+        showToast('error', errorMessage)
       } else {
         console.log("Non-Axios error:", error);
-        Alert.alert("Error", "Something went wrong");
+        showToast('error', "Something went wrong")
       }
     }
   };

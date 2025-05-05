@@ -183,3 +183,12 @@ export interface BalanceState {
    status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error : string | null
 }
+
+export interface ToastProps {
+  type: 'success' | 'error' | 'info';
+  text1?: string;
+  text2?: string;
+  visibilityTime?: number;
+  autoHide?: boolean;
+  handleClick?: () => void
+}

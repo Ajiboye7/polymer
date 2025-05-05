@@ -8,6 +8,7 @@ import { ROUTES } from "@/constants/routes";
 import {  useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { accountType as accountMode } from "@/redux/slices/authSlice";
+import { showToast } from "@/components/toastConfig";
 
 const AccountType = () => {
   const [accountType, setAccountType] = useState<"business" | "regular" | null>(
@@ -23,7 +24,7 @@ const AccountType = () => {
       dispatch(accountMode({ accountType })).unwrap();
       router.push(ROUTES.HOME);
     } catch (error: any) {
-      Alert.alert('Error', error?.message || error || 'Failed to add account type')
+      showToast('error', error?.message || error || 'Failed to add account type')
       console.log('Error selecting account type ', error)
     }
   };

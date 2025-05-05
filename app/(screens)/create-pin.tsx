@@ -6,6 +6,7 @@ import { ROUTES } from "@/constants/routes";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { createPin } from "@/redux/slices/authSlice";
+import { showToast } from "@/components/toastConfig";
 
 const CreatePin = () => {
   const [pin, setPin] = useState("");
@@ -20,28 +21,14 @@ const CreatePin = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  /*const handleCreatePin = async () => {
-    if (!pin) return Alert.alert("Error", "Please input a PIN");
-    try {
-      dispatch(createPin({ pin })).unwrap();
-      router.push(ROUTES.CONFIRM_FOUR_DIGIT_PIN);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        Alert.alert("Error", error.message || "Failed to create pin");
-      } else {
-        console.log("error crating pin");
-      }
-    }
-  };*/
 
   const handleCreatePin = async () => {
     if (!pin) return Alert.alert("Error", "Please input a PIN");
     try {
       await dispatch(createPin({ pin })).unwrap();
       router.push(ROUTES.CONFIRM_FOUR_DIGIT_PIN);
-    } catch (error: any) { // Use 'any' or properly type the rejected value
-      // Error from rejectWithValue will be the string you passed
-      Alert.alert("Error", error?.message || error || "Failed to create pin");
+    } catch (error: any) {
+      showToast('error', error?.message || error || "Failed to create pin")
       console.log("Error creating pin:", error);
     }
   };

@@ -6,7 +6,7 @@ import { icons } from "@/constants";
 interface PinInputModalProps {
   isVisible: boolean;
   onClose: () => void;
-  onPinEntered: (pin: string, userId: string) => void;
+  onPinEntered: (pin: string) => void;
 }
 
 const PinInputModal: React.FC<PinInputModalProps> = ({

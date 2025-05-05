@@ -9,6 +9,7 @@ import { ROUTES } from "@/constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { createProfile } from "@/redux/slices/userSlice";
+import { showToast } from "@/components/toastConfig";
 
 const PersonalDetails = () => {
   const [form, setForm] = useState({
@@ -21,20 +22,16 @@ const PersonalDetails = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleComplete =async () => {
-    try{
+  const handleComplete = async () => {
+    try {
+      dispatch(createProfile(form)).unwrap();
 
-      dispatch(createProfile(form)).unwrap()
-      
-      Alert.alert("Success", "Profile created successfully");
+      showToast("success", "Profile created successfully");
       router.replace(ROUTES.HOME);
-
-    }catch(error : any){
-      Alert.alert('Error', error?.message || error || 'Failed to create profile')
-      console.log('Error creating profile', error)
+    } catch (error: any) {
+      showToast("error", error?.message || error || "Failed to create profile");
+      console.log("Error creating profile", error);
     }
-   
-     
   };
 
   return (

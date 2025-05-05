@@ -15,6 +15,7 @@ import { ROUTES } from "@/constants/routes";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { confirmPin as pinConfirmation } from "@/redux/slices/authSlice";
+import { showToast } from "@/components/toastConfig";
 
 const ConfirmPin = () => {
   const router = useRouter();
@@ -37,7 +38,7 @@ const ConfirmPin = () => {
       await dispatch(pinConfirmation({ pin })).unwrap();
       router.push(ROUTES.ACCOUNT_TYPE);
     } catch (error: any) {
-      Alert.alert("Error", error?.message || error || "PIN confirmation failed");
+      showToast('error',error?.message || error || "PIN confirmation failed")
       console.log("Error confirming PIN:", error);
     }
   };

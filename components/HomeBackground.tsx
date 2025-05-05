@@ -20,6 +20,7 @@ import { RootState, AppDispatch } from "@/redux/store";
 import { useDispatch, UseDispatch, useSelector } from "react-redux";
 
 import { uploadProfilePicture } from "@/redux/slices/userSlice";
+import { showToast } from "./toastConfig";
 
 const HomeBackground = () => {
   const router = useRouter();
@@ -59,24 +60,13 @@ const HomeBackground = () => {
     dispatch(uploadProfilePicture())
       .unwrap()
       .then((response) => {
-        Alert.alert("Success", response.message);
+        showToast("success", response.message);
       })
       .catch((error) => {
-        Alert.alert(
-          "Upload Failed",
-          error || "Failed to upload profile picture"
-        );
+        showToast("error", error || "profile picture upload Failed");
       });
   };
 
-  /*useEffect(() => {
-    if (profilePicture) {
-      console.log("Profile picture updated:", profilePicture);
-    }
-  }, [profilePicture]);*/
-
-  //const imageUri = `${Host}${profilePicture}?${Date.now()}`;
-  //console.log("Image URI:", imageUri);
   const imageUri = profilePicture
     ? `${Host}${
         profilePicture.startsWith("/") ? "" : "/"

@@ -1,4 +1,11 @@
-import { View, Text, Image, ImageBackground, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  ScrollView,
+  Alert,
+} from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
@@ -9,6 +16,12 @@ import { currencies } from "@/constants";
 import HomeBackground from "@/components/HomeBackground";
 import { SafeAreaView } from "react-native-safe-area-context";
 import fetchExchangeRates from "@/lib/fetchExchangeRates";
+import { useSelector, UseSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { router } from "expo-router";
+import { ROUTES } from "@/constants/routes";
+import { showToast } from "./toastConfig";
+import Toast from "react-native-toast-message";
 
 const HomeScreen = () => {
   interface ExchangeRate {
@@ -38,7 +51,21 @@ const HomeScreen = () => {
     };
     getRates();
   }, []);
+  const { profileSet } = useSelector((state: RootState) => state.user);
 
+  useEffect(() => {
+    if (!profileSet) {
+      showToast(
+        "info",
+        "Complete your profile",
+        "You haven’t set up your profile yet",
+        () => {
+          Toast.hide();
+          router.push(ROUTES.PERSONAL_DETAILS);
+        }
+      );
+    }
+  }, [profileSet]);
 
   //Real time
   const rates = exchangeRates.map(({ name, rate }) => ({ name, rate }));
@@ -142,7 +169,6 @@ const HomeScreen = () => {
             </View>
           ))}
 
-          
           {/*
           Real time data
           {currencies.map((currency, index) => {

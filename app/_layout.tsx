@@ -10,12 +10,14 @@ import { store, persistor } from "@/redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LoadingScreen } from "@/components/LoadingScreen";
+import {toastConfig }from '@/components/toastConfig'
+
+import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  
   const [loaded] = useFonts({
     "Gilroy-Bold": require("../assets/fonts/gilroy/Gilroy-Bold.ttf"),
     "Gilroy-Black": require("../assets/fonts/gilroy/Gilroy-Black.ttf"),
@@ -48,15 +50,11 @@ export default function RootLayout() {
     if (loaded) {
       SplashScreen.hideAsync();
     }
-    /*AsyncStorage.getItem("persist:root").then((data) => {
-      console.log("Persisted data:", data);
-    });*/
   }, [loaded]);
-  
+
   if (!loaded) {
     return null;
   }
-  
 
   return (
     <Provider store={store}>
@@ -70,6 +68,8 @@ export default function RootLayout() {
             <Stack.Screen name="(screens)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
+
+          <Toast config={toastConfig} />
         </View>
       </PersistGate>
     </Provider>

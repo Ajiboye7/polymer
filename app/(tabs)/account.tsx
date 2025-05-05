@@ -5,7 +5,8 @@ import {
   ImageBackground,
   Switch,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Alert
 } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,6 +19,7 @@ import { ROUTES } from "@/constants/routes";
 import {useDispatch} from 'react-redux'
 import { signOut } from "@/redux/slices/authSlice";
 import { persistor } from "@/redux/store";
+import { showToast } from "@/components/toastConfig";
 
 const Account = () => {
   const [isSwitch1Enabled, setIsSwitch1Enabled] = useState(false);
@@ -27,10 +29,13 @@ const Account = () => {
   const toggleSwitch2 = () => setIsSwitch2Enabled((prevState) => !prevState);
 
   const router = useRouter();
+  const dispatch = useDispatch()
 
   const handleSignout = async () => {
     dispatch(signOut());
     await persistor.purge();
+    router.replace(ROUTES.SIGN_IN)
+    showToast('success', 'signout successful')
   };
   
 
@@ -84,9 +89,33 @@ const Account = () => {
             <View key={item.id} className=" h-[45px] justify-center">
               <TouchableOpacity 
               onPress={()=>{
-                if(index === 0){
+                /*if(index === 0){
                    router.push(ROUTES.PERSONAL_DETAILS);
-                }
+                }*/
+               if(index === account.length -1){
+                Alert.alert('Sign out', 'Are you sure you want to sign out?',
+                  [
+                    {
+                      text : 'Cancel',
+                      style: 'cancel'
+                    },
+                    {
+                      text: 'Logout',
+                      onPress : () =>{
+                       dispatch(signOut())
+                       router.replace(ROUTES.SIGN_IN)
+                       showToast('success', 'signout successful')
+                      }
+                    }
+                  ],
+                  {cancelable: true}
+                )
+               
+
+
+               }else if(index === 0){
+                router.push(ROUTES.PERSONAL_DETAILS)
+               }
               }}
               >
                 <View className="flex flex-row items-center justify-between ">

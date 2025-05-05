@@ -4,13 +4,13 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  Alert,
 } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons, images } from "@/constants";
 import TransferHeader from "@/components/TransferHeader";
 import * as Clipboard from "expo-clipboard";
+import { showToast } from "@/components/toastConfig";
 
 const FundAccount = () => {
   const [isBusiness, setIsBusiness] = useState(false);
@@ -21,7 +21,7 @@ const FundAccount = () => {
 
   const handleCopyToClipboard = async () => {
     await Clipboard.setStringAsync(accountNumber);
-    Alert.alert("Copied!", "Account number copied to clipboard.");
+    showToast('info', "Account number copied to clipboard.")
   };
 
   return (

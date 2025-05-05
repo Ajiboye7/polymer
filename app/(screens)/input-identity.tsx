@@ -9,6 +9,7 @@ import { ROUTES } from "@/constants/routes";
 import {  useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { identityNumber as identityFigure } from "@/redux/slices/authSlice";
+import { showToast } from "@/components/toastConfig";
 
 const InputIdentity = () => {
   const [identityNumber, setIdentityNumber] = useState("");
@@ -22,7 +23,7 @@ const InputIdentity = () => {
       dispatch(identityFigure({  identityNumber: identityNumber })).unwrap()
       router.push(ROUTES.CREATE_FOUR_DIGIT_PIN)
     }catch(error : any){
-     Alert.alert('Error', error?.message || error || "Failed to add identity number")
+     showToast('error',   error?.message || error || "Failed to add identity number")
      console.log("Error adding identity number")
     }
   }

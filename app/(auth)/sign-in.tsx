@@ -11,15 +11,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import { icons } from "@/constants";
 import Button from "@/components/Button";
-///import axios from "axios";
 import { Link, useRouter } from "expo-router";
-import Constants from "expo-constants";
 import { ROUTES } from "@/constants/routes";
-import { useDispatch, useSelector } from "react-redux";
-import { signUp, signIn } from "@/redux/slices/authSlice";
-import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { signIn } from "@/redux/slices/authSlice";
+import { AppDispatch } from "@/redux/store";
 import { fetchUserProfile } from "@/redux/slices/userSlice";
 import { fetchBalance } from "@/redux/slices/balanceSlice";
+import { showToast } from "@/components/toastConfig";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -43,10 +42,10 @@ const SignIn = () => {
       await dispatch(fetchBalance()).unwrap();
 
       router.replace(ROUTES.HOME);
-      Alert.alert("Success", `Welcome back ${userData.name}`);
+      showToast("success", "Welcome back", `${userData.name}`);
     } catch (error: any) {
-      Alert.alert("Error", error || "Signin failed");
       console.log("Error signing in ", error);
+      showToast("error", "signin failed", error);
     }
   };
 

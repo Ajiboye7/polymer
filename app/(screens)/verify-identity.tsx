@@ -8,6 +8,7 @@ import { useRouter } from "expo-router";
 import {  useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { IdentityType } from "@/redux/slices/authSlice";
+import { showToast } from "@/components/toastConfig";
 
 const VerificationScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,7 +22,7 @@ const VerificationScreen: React.FC = () => {
       await dispatch(IdentityType({identityType: selectedMode})).unwrap()
       router.push(ROUTES.INPUT_IDENTITY)
     }catch(error : any){
-      Alert.alert('Error', error?.message || error || 'Failed to add identity type')
+      showToast('error', error?.message || error || 'Failed to add identity type')
       console.log('Error adding identity type', error)
     }
   }

@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { confirmPin as verifyPin } from "@/redux/slices/authSlice";
 import { deductBalance } from "@/redux/slices/balanceSlice";
+import { showToast } from "@/components/toastConfig";
 
 const LocalBankDetails = () => {
   const router = useRouter();
@@ -53,8 +54,7 @@ const LocalBankDetails = () => {
   const userId = user?._id;
   const balance = useSelector((state: RootState) => state.balance.amount);
 
-  const handlePinVerified = async (pin: string, userId: string) => {
-    if (!userId) return Alert.alert("Error", "User not found");
+  const handlePinVerified = async (pin: string,) => {
 
     try {
       const amount = parseFloat(details.amount) || 0;
@@ -63,17 +63,10 @@ const LocalBankDetails = () => {
 
       await dispatch(deductBalance(amount)).unwrap();
 
-      Alert.alert(
-        "Success",
-        `Payment of ₦${amount.toLocaleString()} successful!`
-      );
+      showToast('success',  `Payment of ₦${amount.toLocaleString()} successful!`)
       router.push(ROUTES.ACCOUNT_TYPE);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        Alert.alert("Error", error.message || "Transaction failed");
-      } else {
-        Alert.alert("Error", "Transaction failed");
-      }
+    } catch (error: any) {
+     showToast('error', error.message || 'Transaction failed')
     }
   };
 
@@ -164,7 +157,7 @@ const LocalBankDetails = () => {
         <PinInputModal
           isVisible={isPinInputVisible}
           onClose={() => setPinInputVisible(false)}
-          onPinEntered={(pin) => handlePinVerified(pin, userId)}
+          onPinEntered={(pin) => handlePinVerified(pin,)}
         />
       </SafeAreaView>
     </ScrollView>

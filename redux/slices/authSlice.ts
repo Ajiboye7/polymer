@@ -226,7 +226,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signOut: (state)=>{
+    signOut: (state) =>{
       console.log('user signed out');
       return initialState
     }

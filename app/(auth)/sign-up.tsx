@@ -18,6 +18,7 @@ import { ROUTES } from "@/constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp, signIn } from "@/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import { showToast } from "@/components/toastConfig";
 
 const SignUp = () => {
  
@@ -37,7 +38,7 @@ const SignUp = () => {
        await dispatch(signUp(form)).unwrap();
       router.replace(ROUTES.EMAIL_OTP);
     } catch (error: any) {
-      Alert.alert("Error", error || "Signup failed");
+      showToast('error', error || "Signup failed")
       console.log("Error signing up", error);
     }
   };

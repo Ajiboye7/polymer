@@ -1,10 +1,5 @@
 import {
   View,
-  Text,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-  Alert,
   ScrollView,
 } from "react-native";
 import { useState } from "react";
@@ -18,6 +13,7 @@ import PinInputModal from "@/components/PinInputModal";
 import TransferHeader from "@/components/TransferHeader";
 import CustomView from "@/components/CustomView";
 import { ROUTES } from "@/constants/routes";
+import { showToast } from "@/components/toastConfig";
 
 const InternationalBankDetails = () => {
   const [form, setForm] = useState({
@@ -36,15 +32,13 @@ const InternationalBankDetails = () => {
 
   const handleCopyToClipboard = async () => {
     await Clipboard.setStringAsync(accountNumber);
-    Alert.alert("Copied!", "Account number copied to clipboard.");
+    showToast('info', "Account number copied to clipboard.")
   };
   const [isPinInputVisible, setPinInputVisible] = useState(false);
   const router = useRouter();
 
   const handleSwipeSuccess = () => {
     setPinInputVisible(true);
-
-    //console.log("This is true");
   };
 
   const handlePinVerified = (pin: string) => {
